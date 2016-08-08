@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">My Library</string>
+    <string name="settings_bg_color_confirm">settings_bg_color_confirm</string>
+    <string name="settings_default_color_confirm">settings_default_color_confirm</string>
+    <string name="settings_bg_color_dialog">settings_bg_color_dialog</string>
+    <string name="save">Сохрaнить</string>
+    <string name="default_color_confirm">Default</string>
+</resources>

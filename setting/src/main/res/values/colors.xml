@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_row_def">#EFFACF</color>
+    <color name="color_row_select">#e9eaef</color>
+    <color name="colorAccent">#FF4081</color>
+</resources>

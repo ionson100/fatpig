@@ -1,5 +1,8 @@
 package com.omsk.bitnic.fatpig;
 
+import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
+
 import com.settings.ion.mylibrary.Reanimator;
 
 import java.io.Serializable;
@@ -20,8 +23,9 @@ public class Settings implements Serializable {
     public int getSateSystem(){
         return _stateSystem;
     }
-    public void setStateSystem(int stateSystem){
+    public void setStateSystem(int stateSystem,Activity activity){
         _stateSystem=stateSystem;
         Reanimator.save(Settings.class);
+        FactoryFragment.Action((AppCompatActivity) activity);
     }
 }

@@ -3,5 +3,5 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="panel_base">#faed88</color>
+    <color name="panel_base">#e7e7e3</color>
 </resources>

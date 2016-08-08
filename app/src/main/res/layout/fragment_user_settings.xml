@@ -3,11 +3,106 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.omsk.bitnic.fatpig.FUserSettings">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9">
+
+            <EditText
+                android:selectAllOnFocus="true"
+                android:id="@+id/user_name"
+                android:hint="Имя:"
+                style="@style/editBase"
+                android:paddingLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:inputType="text"  />
+
+            <RadioGroup
+                android:paddingLeft="40dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/sex_man"
+                    android:layout_marginTop="30dp"
+                    android:textColor="@android:color/black"
+                    android:text="Муж."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:id="@+id/sex_woman"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="30dp"
+                    android:textColor="@android:color/black"
+                    android:text="Жен."
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </RadioGroup>
+            <EditText
+
+                android:layout_marginTop="20dp"
+                android:id="@+id/user_age"
+                style="@style/editBase"
+                android:paddingLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Возраст:"
+                android:inputType="number"/>
+
+            <EditText
+                android:layout_marginTop="20dp"
+                android:id="@+id/user_weight"
+                style="@style/editBase"
+                android:paddingLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Вес:"
+                android:inputType="number"/>
+
+            <EditText
+                android:layout_marginTop="20dp"
+                android:id="@+id/user_рост"
+                style="@style/editBase"
+                android:paddingLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Рост:"
+                android:inputType="number"/>
+
+            <EditText
+                android:layout_marginTop="20dp"
+                android:id="@+id/user_default_calorises"
+                style="@style/editBase"
+                android:paddingLeft="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Расчетные калории:"
+                android:inputType="number"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1">
+
+            <Button
+                android:id="@+id/bt_user_save"
+                android:background="@drawable/button_shape"
+                android:text="Сохранить"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </FrameLayout>

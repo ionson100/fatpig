@@ -26,4 +26,16 @@ public class User {
 
     @Column("calorieses")
     public float calorieses;
+
+    @Column("sex")
+    private int _sex;
+
+    public Sex getSex(){
+       return  _sex==0?Sex.men:Sex.women;
+    }
+    public void setSex(Sex sex){
+        _sex=sex==Sex.men?0:1;
+    }
+
+
 }

@@ -5,7 +5,7 @@ import orm.Column;
 import orm.PrimaryKey;
 import orm.Table;
 
-@Table("Product")
+@Table("product")
 public class Product {
 
 
@@ -17,16 +17,16 @@ public class Product {
     public String name;
 
     @Column("squirrels")
-    public float squirrels;
+    public double squirrels;
 
     @Column("fat")
-    public float fat;
+    public double fat;
 
     @Column("carbohydrates")
-    public float carbohydrates;
+    public double carbohydrates;
 
     @Column("calorieses")
-    public float calorieses;
+    public double calorieses;
 
     @Column("preferences")
     public boolean preferences;

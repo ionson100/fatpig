@@ -26,10 +26,28 @@ public class FactoryFragment {
                 showUserSettings(mFragmentTransaction);
                 break;
             }
+            case StateSystem.PRODUCT: {
+                showProduct(mFragmentTransaction);
+                break;
+            }
+            case StateSystem.WORK: {
+                showWork(mFragmentTransaction);
+                break;
+            }
 
         }
 
 
+    }
+
+    private static void showWork(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FWork(), "work");
+        mFragmentTransaction.commit();
+    }
+
+    private static void showProduct(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FProduct(), "product");
+        mFragmentTransaction.commit();
     }
 
     private static void showUserSettings(FragmentTransaction mFragmentTransaction) {

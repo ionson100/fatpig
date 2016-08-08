@@ -4,7 +4,7 @@ import orm.Column;
 import orm.PrimaryKey;
 import orm.Table;
 
-@Table("Work")
+@Table("work")
 public class Work {
 
     @PrimaryKey("id")
@@ -17,5 +17,5 @@ public class Work {
 
 
     @Column("calorieses")
-    public float calorieses;
+    public double calorieses;
 }

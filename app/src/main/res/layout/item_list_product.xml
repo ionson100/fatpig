@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.9">
+        <TextView
+            android:paddingLeft="10dp"
+            android:id="@+id/product_name"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="Продукт"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8" />
+
+        <TextView
+            android:id="@+id/product_color"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:text="Продукт"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.2" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.1">
+        <CheckBox
+            android:id="@+id/product_pref"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+</LinearLayout>

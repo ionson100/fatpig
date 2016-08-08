@@ -1,0 +1,88 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.omsk.bitnic.fatpig.FProduct">
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="0.9">
+           <LinearLayout
+               android:orientation="horizontal"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+               <ListView
+                   android:id="@+id/list_product"
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+
+                   android:layout_alignParentTop="true"
+                   android:divider="#FFCC00"
+                   android:dividerHeight="2dp"
+                   android:listSelector="@drawable/listitem_selector"
+                   android:stackFromBottom="true"
+                   android:transcriptMode="alwaysScroll"
+                   android:layout_weight="0.95">
+
+               </ListView>
+               <LinearLayout
+                   android:layout_width="0dp"
+                   android:layout_height="match_parent"
+                   android:layout_weight="0.05">
+                   <ListView
+                       android:id="@+id/list_abc_plan"
+                       android:layout_width="0dp"
+                       android:layout_height="match_parent"
+                       android:layout_weight="0.03"
+                       android:background="@android:color/black"
+                       android:divider="@color/colorAccent"
+                       android:dividerHeight="2dp"
+                       android:listSelector="@drawable/listitem_selector"></ListView>
+
+               </LinearLayout>
+           </LinearLayout>
+
+
+
+       </LinearLayout>
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="0.1">
+
+
+           <EditText
+               style="@style/editBase"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:id="@+id/editText"
+               android:layout_weight="1" />
+
+           <Button
+
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:text="select"
+               android:id="@+id/bt_select_product"
+               android:layout_weight="1" />
+
+           <Button
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:text="all"
+               android:id="@+id/bt_show_all_product"
+               android:layout_weight="1" />
+
+       </LinearLayout>
+
+
+   </LinearLayout>
+
+</FrameLayout>

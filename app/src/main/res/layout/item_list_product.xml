@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <LinearLayout
+        android:padding="10dp"
         android:orientation="horizontal"
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -16,7 +17,7 @@
             android:text="Продукт"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.9" />
 
         <TextView
             android:id="@+id/product_color"
@@ -25,16 +26,17 @@
             android:text="Продукт"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.2" />
+            android:layout_weight="0.1" />
     </LinearLayout>
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="0.1">
-        <CheckBox
-            android:id="@+id/product_pref"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </LinearLayout>
+    <!--<LinearLayout-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_weight="0.1">-->
+        <!--<CheckBox-->
+            <!--android:clickable="false"-->
+            <!--android:id="@+id/product_pref"-->
+            <!--android:layout_width="20dp"-->
+            <!--android:layout_height="30dp" />-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

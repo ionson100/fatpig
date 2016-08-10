@@ -70,4 +70,19 @@
         <item name="android:layout_marginBottom">3dp</item>
     </style>
 
+    <style name="buttomHead">
+        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:shadowColor">#05803A</item>
+        <item name="android:shadowRadius">5</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">0</item>
+        <item name="android:layout_width">180dp</item>
+        <item name="android:layout_height">100dp</item>
+    </style>
+
 </resources>

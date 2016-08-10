@@ -12,17 +12,17 @@
 
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="0.9">
+           android:layout_weight="0.92">
            <LinearLayout
                android:orientation="horizontal"
                android:layout_width="match_parent"
-               android:layout_height="match_parent">
+               android:layout_height="match_parent"
+               android:baselineAligned="false">
                <ListView
                    android:id="@+id/list_product"
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
 
-                   android:layout_alignParentTop="true"
                    android:divider="#FFCC00"
                    android:dividerHeight="2dp"
                    android:listSelector="@drawable/listitem_selector"
@@ -34,7 +34,8 @@
                <LinearLayout
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
-                   android:layout_weight="0.05">
+                   android:layout_weight="0.05"
+                   android:baselineAligned="false">
                    <ListView
                        android:id="@+id/list_abc_plan"
                        android:layout_width="0dp"
@@ -43,7 +44,9 @@
                        android:background="@android:color/black"
                        android:divider="@color/colorAccent"
                        android:dividerHeight="2dp"
-                       android:listSelector="@drawable/listitem_selector"></ListView>
+                       android:listSelector="@drawable/listitem_selector">
+
+                   </ListView>
 
                </LinearLayout>
            </LinearLayout>
@@ -55,7 +58,7 @@
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="0.1">
+           android:layout_weight="0.08">
 
 
            <EditText
@@ -63,21 +66,37 @@
                android:layout_width="0dp"
                android:layout_height="wrap_content"
                android:id="@+id/editText"
-               android:layout_weight="1" />
+               android:layout_weight="1"
+               android:inputType="text" />
 
            <Button
-
                android:layout_width="0dp"
                android:layout_height="wrap_content"
-               android:text="select"
+               android:text="@string/select1"
                android:id="@+id/bt_select_product"
                android:layout_weight="1" />
 
            <Button
                android:layout_width="0dp"
                android:layout_height="wrap_content"
-               android:text="all"
+               android:text="@string/all"
                android:id="@+id/bt_show_all_product"
+               android:layout_weight="1" />
+
+           <Button
+               android:visibility="gone"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:text="@string/add"
+               android:id="@+id/bt_add_product"
+               android:layout_weight="1" />
+
+           <Button
+               android:visibility="gone"
+               android:layout_width="0dp"
+               android:layout_height="wrap_content"
+               android:text="@string/edit"
+               android:id="@+id/bt_edit_product"
                android:layout_weight="1" />
 
        </LinearLayout>

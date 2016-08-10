@@ -16,4 +16,10 @@
     <string name="nav_home">Домой</string>
     <string name="products">Продукты</string>
     <string name="work">Энергозатраты</string>
+    <string name="cancel">Закрыть</string>
+    <string name="select">Выбрать</string>
+    <string name="select1">select</string>
+    <string name="all">all</string>
+    <string name="add">add</string>
+    <string name="edit">edit</string>
 </resources>

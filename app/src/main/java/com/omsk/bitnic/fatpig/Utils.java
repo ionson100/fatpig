@@ -6,6 +6,7 @@ import android.content.Context;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
 
 import Model.Sex;
 import Model.User;
@@ -38,6 +39,25 @@ public class Utils {
         }
         reader.close();
         return sb.toString();
+    }
+
+    public static int dateToInt(Date date) {
+        return (int) (date.getTime() / 1000);
+    }
+
+    //bitnic.development@gmail.com
+    private static Date intToDate(int i) {
+
+        return new Date(((long) i * 1000));
+    }
+
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
     }
 
 }

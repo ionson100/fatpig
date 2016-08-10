@@ -185,6 +185,7 @@ public class FUserSettings extends Fragment {
             public void onClick(View v) {
                if(validate()){
                    Configure.getSession().update(user);
+                   FillData.fill(getActivity());
                }
             }
         });

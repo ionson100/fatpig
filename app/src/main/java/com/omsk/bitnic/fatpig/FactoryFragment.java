@@ -12,6 +12,7 @@ public class FactoryFragment {
 
     public static void Action( AppCompatActivity activity) {
 
+        FillData.fill(activity);
         Settings mSettings=Settings.getSettings();
                 ((LinearLayout) activity.findViewById(R.id.panel_base)).removeAllViews();
          android.support.v4.app.FragmentManager mFragmentManager = activity.getSupportFragmentManager();

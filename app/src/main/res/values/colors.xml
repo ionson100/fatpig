@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="panel_base">#e7e7e3</color>
+    <color name="color1">#dec0a8</color>
+    <color name="color2">#aef599</color>
+    <color name="color3">#46c9bc</color>
+    <color name="color4">#f29951</color>
 </resources>

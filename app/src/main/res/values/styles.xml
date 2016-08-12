@@ -71,7 +71,7 @@
     </style>
 
     <style name="buttomHead">
-        <item name="android:background">@drawable/button_selector</item>
+        <item name="android:background">@drawable/button</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
         <item name="android:layout_marginLeft">10dp</item>

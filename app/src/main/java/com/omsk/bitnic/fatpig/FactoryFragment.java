@@ -1,6 +1,7 @@
 package com.omsk.bitnic.fatpig;
 
 
+import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -35,10 +36,29 @@ public class FactoryFragment {
                 showWork(mFragmentTransaction);
                 break;
             }
+            case StateSystem.SETTINGS: {
+                showSettings(mFragmentTransaction);
+                break;
+            }
+            case StateSystem.MAP: {
+                showMap(mFragmentTransaction, activity);
+                break;
+            }
 
         }
 
 
+    }
+
+    private static void showMap(FragmentTransaction mFragmentTransaction, AppCompatActivity activity) {
+
+        mFragmentTransaction.add(R.id.panel_base, new FMap2(), "map");
+        mFragmentTransaction.commit();
+    }
+
+    private static void showSettings(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FSettings(), "settings");
+        mFragmentTransaction.commit();
     }
 
     private static void showWork(FragmentTransaction mFragmentTransaction) {

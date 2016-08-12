@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+        android:selectAllOnFocus="true"
         android:id="@+id/dialog_eat_amount"
         android:layout_marginTop="10dp"
         style="@style/editBase"
@@ -52,13 +53,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-
+            style="@style/buttomHead"
             android:id="@+id/dialog_eat_cancal"
             android:text="закрыть"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <Button
+            style="@style/buttomHead"
             android:id="@+id/dialog_eat_ok"
             android:text="сожрать"
             android:layout_width="wrap_content"

@@ -5,4 +5,7 @@
     <string name="settings_bg_color_dialog">settings_bg_color_dialog</string>
     <string name="save">Сохрaнить</string>
     <string name="default_color_confirm">Default</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

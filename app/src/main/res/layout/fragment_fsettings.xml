@@ -1,0 +1,45 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.omsk.bitnic.fatpig.FSettings">
+
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent">
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="0.93">
+           <com.settings.ion.mylibrary.Settingion
+               android:id="@+id/setting_panel"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent">
+
+           </com.settings.ion.mylibrary.Settingion>
+       </LinearLayout>
+       <LinearLayout
+           android:orientation="horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="0dp"
+           android:layout_weight="0.07">
+           <Button
+               android:text="@string/toHome"
+               android:id="@+id/bt_cancell"
+               style="@style/buttomHead"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1" />
+           <Button
+               android:visibility="gone"
+               android:text="@string/save"
+               android:id="@+id/bt_ok"
+               style="@style/buttomHead"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_weight="1" />
+       </LinearLayout>
+   </LinearLayout>
+
+</FrameLayout>

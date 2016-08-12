@@ -30,6 +30,8 @@ public class User {
     @Column("sex")
     private int _sex;
 
+
+
     public Sex getSex(){
        return  _sex==0?Sex.men:Sex.women;
     }

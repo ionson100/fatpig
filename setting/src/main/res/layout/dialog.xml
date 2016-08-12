@@ -12,6 +12,7 @@
         android:padding="20dp" />
 
     <EditText
+        android:selectAllOnFocus="true"
         android:id="@+id/edittext"
         style="@style/edit_text"
         android:layout_width="match_parent"
@@ -20,9 +21,9 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
+
         android:background="@drawable/eddit_text_style"
-        android:ellipsize="start"
+        android:ellipsize="end"
         android:gravity="center"
         android:hint="Search text"
 
@@ -42,7 +43,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
-            android:background="@drawable/buttonshape"
+            style="@style/buttomHead"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"
@@ -59,7 +60,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:background="@drawable/buttonshape"
+            style="@style/buttomHead"
             android:shadowColor="#A8A8A8"
             android:shadowDx="0"
             android:shadowDy="0"

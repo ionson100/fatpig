@@ -9,5 +9,7 @@ public class StateSystem {
     public static final int USER_SETTINGS=1;
     public static final int PRODUCT=2;
     public static final int WORK=3;
+    public static final int SETTINGS=4;
+    public static final int MAP=5;
 
 }

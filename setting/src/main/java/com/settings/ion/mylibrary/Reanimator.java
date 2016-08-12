@@ -1,6 +1,8 @@
 package com.settings.ion.mylibrary;
 
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Build;
 import android.os.Environment;
 import android.support.annotation.Nullable;
@@ -17,12 +19,27 @@ import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class Reanimator {
+public class Reanimator extends ContextWrapper {
 
+    private final   static  boolean USAGEBASE=true;
     private static final Map<Class, Object> map = new HashMap<>();
+   // public static Context context;
     protected static iListenerСhanges mIListener;
-    private static String filePath = Environment.getExternalStorageDirectory().toString() + "/omsksettings";
+    public static String filePath = Environment.getExternalStorageDirectory().toString() + "/fatpig";
     private static ReadWriteLock rwlock = new ReentrantReadWriteLock();
+
+    public Reanimator(Context base) {
+        super(base);
+    }
+
+    private static Reanimator reanimator;
+    public static void intContext(Context context){
+        reanimator=new Reanimator(context);
+    }
+    public static Context getContext(){
+      return   reanimator.getApplicationContext();
+    }
+
 
     /**
      * Регистрация пути, где будут храниться все  файлы настроек
@@ -83,11 +100,24 @@ public class Reanimator {
      */
 
     public static synchronized Object get(Class aClass) {
-        if (map.containsKey(aClass)) {
-            return map.get(aClass);
-        } else {
-            return getObject(aClass);
-        }
+
+
+
+
+            if (map.containsKey(aClass)) {
+                return map.get(aClass);
+            } else {
+                if(USAGEBASE){
+                    Object dd=  SqliteStorage.getObject(aClass);
+                    map.put(aClass,dd);
+                    return dd;
+                }else{
+                    return getObject(aClass);
+                }
+
+            }
+
+
     }
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
@@ -196,14 +226,22 @@ public class Reanimator {
      * @param aClass
      */
     public static synchronized void save(Class aClass) {
+
+
         Object o = map.get(aClass);
-        if (o == null) {
-            new RuntimeException("save reanimator settings: object not exists  from map");
+
+        if(USAGEBASE){
+            SqliteStorage.saveObject(o, aClass);
+        }else{
+            if (o == null) {
+                new RuntimeException("save reanimator settings: object not exists  from map");
+            }
+            if (filePath == null) {
+                new RuntimeException("save reanimator settings:filePath null");
+            }
+            serializer(o, aClass);
         }
-        if (filePath == null) {
-            new RuntimeException("save reanimator settings:filePath null");
-        }
-        serializer(o, aClass);
+
     }
 
     public static String getHostPath() {

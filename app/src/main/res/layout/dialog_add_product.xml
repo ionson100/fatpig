@@ -6,6 +6,7 @@
 
 
     <EditText
+        android:selectAllOnFocus="true"
         android:layout_marginTop="20dp"
         android:id="@+id/dialog_add_name"
         style="@style/editBase"
@@ -16,6 +17,7 @@
         android:inputType="text"/>
 
     <EditText
+        android:selectAllOnFocus="true"
         android:layout_marginTop="20dp"
         android:id="@+id/dialog_add_calor"
         style="@style/editBase"
@@ -37,14 +39,14 @@
         android:layout_height="wrap_content">
         <Button
             android:id="@+id/bt_dialog_add_canell"
-
+            style="@style/buttomHead"
             android:text="@string/cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
         <Button
             android:id="@+id/bt_dialog_add_ok"
-
+            style="@style/buttomHead"
             android:text="@string/save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

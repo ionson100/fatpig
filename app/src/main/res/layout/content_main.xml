@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
+    android:background="@android:color/black"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.omsk.bitnic.fatpig.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -22,9 +23,10 @@
             style="@style/panelBase"
             android:layout_weight="0.12">
             <LinearLayout
+                android:layout_margin="1dp"
                 android:id="@+id/panel1"
                 android:gravity="center_vertical"
-                android:background="@color/color1"
+
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -36,10 +38,10 @@
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
-
+                android:layout_margin="1dp"
                 android:id="@+id/panel2"
                 android:gravity="center_vertical"
-                android:background="@color/color2"
+
                 android:layout_width="70dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" >
@@ -53,7 +55,7 @@
             <LinearLayout
                 android:id="@+id/panel3"
                 android:gravity="center_vertical"
-                android:background="@color/color3"
+                android:layout_margin="1dp"
                 android:layout_width="220dp"
                 android:layout_height="0dp"
                 android:layout_weight="1">
@@ -67,7 +69,7 @@
             <LinearLayout
                 android:id="@+id/panel4"
                 android:gravity="center_vertical"
-                android:background="@color/color4"
+                android:layout_margin="1dp"
                 android:layout_width="120dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" >

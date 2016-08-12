@@ -11,6 +11,10 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/nav_user" />
         <item
+            android:id="@+id/nav_settings_core"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="@string/nav_settings_core" />
+        <item
             android:id="@+id/nav_settings_button"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/nav_settings_button" />
@@ -22,6 +26,11 @@
             android:id="@+id/nav_work"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/work" />
+
+        <item
+            android:id="@+id/nav_map"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/map" />
     </group>
 
     <item android:title="Communicate">

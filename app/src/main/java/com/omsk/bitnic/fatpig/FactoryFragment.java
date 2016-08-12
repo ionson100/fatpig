@@ -52,7 +52,7 @@ public class FactoryFragment {
 
     private static void showMap(FragmentTransaction mFragmentTransaction, AppCompatActivity activity) {
 
-        mFragmentTransaction.add(R.id.panel_base, new FMap2(), "map");
+        mFragmentTransaction.add(R.id.panel_base, new FMap(), "map");
         mFragmentTransaction.commit();
     }
 

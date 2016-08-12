@@ -12,9 +12,15 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.CoreProtocolPNames;
 import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
+import org.osmdroid.http.HttpClientFactory;
+import org.osmdroid.http.IHttpClientFactory;
+import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
@@ -63,7 +69,16 @@ public class FMap extends Fragment {
 
             mMapView.setMultiTouchControls(true);
             mMapView.setClickable(true);
-            mMapView.setTileSource(TileSourceFactory.PUBLIC_TRANSPORT);
+        HttpClientFactory.setFactoryInstance(new IHttpClientFactory() {
+            @Override
+            public org.apache.http.client.HttpClient createHttpClient() {
+                final DefaultHttpClient client = new DefaultHttpClient();
+                client.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36");
+                return client;
+            }
+        });
+
+            mMapView.setTileSource(TileSourceFactory.MAPNIK);
             mMapView.getController().setZoom(16);
             mMapView.getOverlays().add(myItemizedOverlay);
 
@@ -71,6 +86,7 @@ public class FMap extends Fragment {
 
 
             myItemizedOverlay.addItem(myPoint1, "myPoint1");
+
             mMapView.getController().animateTo(myPoint1);
             mMapView.invalidate();
 

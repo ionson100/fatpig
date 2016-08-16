@@ -30,6 +30,11 @@ public class User {
     @Column("sex")
     private int _sex;
 
+    @Column("delta")
+    public double delta=1.2;
+
+
+
 
 
     public Sex getSex(){

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class FUserSettings extends Fragment {
         textRost.setText(String.valueOf(user.growing==0?"":user.growing));
 
         final EditText user_default_calorises= (EditText) mView.findViewById(R.id.user_default_calorises);
-        user_default_calorises.setText(String.valueOf(Utils.getCalorises(user)));
+        user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
 
 
 
@@ -77,15 +78,21 @@ public class FUserSettings extends Fragment {
                 }else{
                     user.setSex(Sex.women);
                 }
+                if(isChecked){
+                    user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
+                }
             }
         });
         sexWoman.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked){
+                if (isChecked) {
                     user.setSex(Sex.women);
-                }else{
+                } else {
                     user.setSex(Sex.men);
+                }
+                if(isChecked){
+                    user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
                 }
             }
         });
@@ -100,9 +107,9 @@ public class FUserSettings extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length()==0){
+                if (s.length() == 0) {
                     user.name = "";
-                }else{
+                } else {
                     user.name = s.toString();
                 }
 
@@ -127,7 +134,7 @@ public class FUserSettings extends Fragment {
                     user.age=Integer.parseInt(s.toString());
                 }
 
-                user_default_calorises.setText(String.valueOf(Utils.getCalorises(user)));
+                user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
             }
 
             @Override
@@ -148,7 +155,7 @@ public class FUserSettings extends Fragment {
                 }else{
                     user.weight=Integer.parseInt(s.toString());
                 }
-                user_default_calorises.setText(String.valueOf(Utils.getCalorises(user)));
+                user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
             }
 
             @Override
@@ -165,13 +172,13 @@ public class FUserSettings extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.length()==0){
-                    user.growing=0;
-                }else{
-                    user.growing=Integer.parseInt(s.toString());
+                if (s.length() == 0) {
+                    user.growing = 0;
+                } else {
+                    user.growing = Integer.parseInt(s.toString());
                 }
 
-                user_default_calorises.setText(String.valueOf(Utils.getCalorises(user)));
+                user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
             }
 
             @Override
@@ -183,13 +190,29 @@ public class FUserSettings extends Fragment {
         mView.findViewById(R.id.bt_user_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               if(validate()){
-                   Configure.getSession().update(user);
-                   FillData.fill(getActivity());
-               }
+                if (validate()) {
+                    Configure.getSession().update(user);
+                    FillData.fill(getActivity());
+                }
             }
         });
 
+        RadioGroup radio_delta= (RadioGroup) mView.findViewById(R.id.radio_delta);
+        for (int i = 0; i < radio_delta.getChildCount(); i++) {
+            final RadioButton button= (RadioButton) radio_delta.getChildAt(i);
+            if(button.getTag().equals(String.valueOf(user.delta))){
+                button.setChecked(true);
+            }
+            button.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if(isChecked){
+                        user.delta=Double.parseDouble(button.getTag().toString());
+                        user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
+                    }
+                }
+            });
+        }
 
 
 

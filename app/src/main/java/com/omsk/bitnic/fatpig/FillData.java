@@ -55,7 +55,7 @@ public class FillData {
         List<User> users= Configure.getSession().getList(User.class,null);
         if(users.size()==0)return;
         User user=users.get(0);
-        double total=Utils.getCalorises(user);
+        double total=Utils.getCalorisesCore(user);
         textView1.setText(String.valueOf(total) + "    Общее количество  расчетных ккал для ващего тельца.".toUpperCase());
         {
             textView2.setText(String.valueOf(Utils.round(total/100*pecent,1))+"    Требуется ккал для похудания вашего тельца.".toUpperCase());

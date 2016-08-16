@@ -88,6 +88,64 @@
                 android:layout_height="wrap_content"
                 android:hint="Расчетные калории:"
                 android:inputType="number"/>
+            <RadioGroup
+                android:id="@+id/radio_delta"
+                android:paddingLeft="40dp"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+
+                    android:tag="1.2"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text="минимум или отсутствие физической нагрузки"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:tag="1.375"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text="занятия фитнесом 3 раза в неделю"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:tag="1.4625"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text="занятия фитнесом 5 раз в неделю"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:tag="1.550"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text="интенсивная физическая нагрузка 5 раз в неделю"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:tag="1.6375"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text="занятия фитнесом каждый день"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:tag="1.725"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text="каждый день интенсивно или по два раза в день"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+                <RadioButton
+                    android:tag="1.9"
+                    android:textColor="@android:color/black"
+                    android:padding="10dp"
+                    android:text=" ежедневная физическая нагрузка плюс физическая работа"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </RadioGroup>
 
 
         </LinearLayout>

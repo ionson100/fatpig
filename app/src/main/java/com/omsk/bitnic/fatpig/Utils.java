@@ -1,6 +1,7 @@
 package com.omsk.bitnic.fatpig;
 
 
+import android.app.Activity;
 import android.content.Context;
 
 import java.io.BufferedReader;
@@ -16,15 +17,18 @@ public class Utils {
     public static final String[] listABC = {"А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й",
             "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ы", "Э", "Ю", "Я"};
 
-    public static float getCalorises(User user){
-        float d=0;
+    public static double getCalorises(User user,Activity activity){
+        double d=0;
         if(user.getSex()== Sex.women){
            d= (float) (10*user.weight + (6.25*user. growing)-(5 * user.age)-161);
         }
         if(user.getSex()== Sex.men){
              d= (float) (10*user.weight + 6.25*user.growing -5*user.age + 5);
         }
-        return (float) (d*1.2);
+        double res=d*user.delta;
+
+        FillData.fill(activity);
+        return  Utils.round(res,2);
     }
 
     public static String readFromAssets(Context context, String filename) throws IOException {
@@ -60,4 +64,17 @@ public class Utils {
         return (double) tmp / factor;
     }
 
+    public static double getCalorisesCore(User user) {
+        double d=0;
+        if(user.getSex()== Sex.women){
+            d= (float) (10*user.weight + (6.25*user. growing)-(5 * user.age)-161);
+        }
+        if(user.getSex()== Sex.men){
+            d= (float) (10*user.weight + 6.25*user.growing -5*user.age + 5);
+        }
+        double res=d*user.delta;
+
+
+        return  Utils.round(res,2);
+    }
 }

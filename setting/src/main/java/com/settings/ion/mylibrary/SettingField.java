@@ -1,5 +1,7 @@
 package com.settings.ion.mylibrary;
 
+import android.graphics.Color;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -18,6 +20,8 @@ public @interface SettingField {
     int image() default 0;
 
     int styleTitle() default 0;
+
+    int defaultColor() default Color.RED;
 
     int styleDescription() default 0;
 

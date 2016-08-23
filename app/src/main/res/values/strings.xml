@@ -24,7 +24,7 @@
     <string name="edit">edit</string>
     <string name="nav_settings_core">Настройки приложения</string>
     <string name="toHome">На главную</string>
-    <string name="settings_percent_title">Прцент уменьшения потребления калорий</string>
+    <string name="settings_percent_title">Процент уменьшения потребления калорий</string>
     <string name="settings_percent">По умолчанию 80%</string>
     <string name="color_panel1">Цвет первой панели</string>
     <string name="color_panel2">Цвет второй панели</string>

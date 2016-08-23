@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             style="@style/panelBase"
-            android:layout_weight="0.12">
+            android:layout_weight="0.25">
             <LinearLayout
                 android:layout_margin="1dp"
                 android:id="@+id/panel1"
@@ -88,7 +88,7 @@
             android:id="@+id/panel_base"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.83"
+            android:layout_weight="0.75"
             style="@style/panelBase">
 
         </LinearLayout>

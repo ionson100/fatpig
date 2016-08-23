@@ -221,7 +221,7 @@ public class Reanimator extends ContextWrapper {
     }
 
     /**
-     * Сохранение объекта настроек на диск в файл (сериализация)
+     *
      *
      * @param aClass
      */

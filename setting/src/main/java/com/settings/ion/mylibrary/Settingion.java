@@ -3,7 +3,6 @@ package com.settings.ion.mylibrary;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
@@ -282,10 +281,10 @@ public class Settingion extends LinearLayout {
             f.settingField = settingField;
             f.fieldName = fieldName;
 
-            ColorPickerDialog ef = new ColorPickerDialog(context, new ColorPickerDialog.OnColorChangedListener() {
-                @Override
-                public void colorChanged(String key, int color) {
 
+            ColorPickerDialogE dialogE=new ColorPickerDialogE(context, new ColorPickerDialogE.IAction() {
+                @Override
+                public void Action(int color) {
                     Object o = Reanimator.get(aClass);
                     try {
                         Field field = o.getClass().getDeclaredField(fieldName);
@@ -299,10 +298,32 @@ public class Settingion extends LinearLayout {
                     } catch (IllegalAccessException | NoSuchFieldException e) {
                         throw new RuntimeException("Reanimator:" + e.getMessage());
                     }
-
                 }
-            }, val, f);
-            ef.show();
+            });
+            dialogE.show(settingField.defaultColor(),context.getString(settingField.title()));
+
+
+//            ColorPickerDialog ef = new ColorPickerDialog(context, new ColorPickerDialog.OnColorChangedListener() {
+//                @Override
+//                public void colorChanged(String key, int color) {
+//
+//                    Object o = Reanimator.get(aClass);
+//                    try {
+//                        Field field = o.getClass().getDeclaredField(fieldName);
+//                        field.setAccessible(true);
+//                        field.set(o, color);
+//                        if (Reanimator.mIListener != null) {
+//                            Reanimator.mIListener.OnCallListen(aClass, fieldName, null, color);
+//                        }
+//                        Reanimator.save(aClass);
+//
+//                    } catch (IllegalAccessException | NoSuchFieldException e) {
+//                        throw new RuntimeException("Reanimator:" + e.getMessage());
+//                    }
+//
+//                }
+//            }, val, f);
+//            ef.show();
 
         } else if (settingField.typeField() == TypeField.list) {
 
@@ -426,4 +447,6 @@ public class Settingion extends LinearLayout {
     public interface OnSettingChangeListener {
         void SettingChanged(Object objects, String fieldName);
     }
+
+
 }

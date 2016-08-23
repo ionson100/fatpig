@@ -16,7 +16,7 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         Reanimator.intContext(getApplicationContext());
-        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(),false);
+        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(),true);
       //  firstStart.execute(getBaseContext());
     }
 

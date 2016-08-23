@@ -12,7 +12,7 @@
 
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="0.92">
+           android:layout_weight="0.9">
            <LinearLayout
                android:orientation="horizontal"
                android:layout_width="match_parent"
@@ -54,14 +54,18 @@
 
 
        </LinearLayout>
+
+
        <LinearLayout
+           android:minHeight="200dp"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="0dp"
-           android:layout_weight="0.08">
+           android:layout_weight="0.1">
 
 
            <EditText
+               android:minHeight="300dp"
                android:layout_gravity="center_vertical"
                style="@style/editBase"
                android:layout_width="0dp"
@@ -71,7 +75,7 @@
                android:inputType="text" />
 
            <Button
-               android:layout_gravity="center_vertical"
+
                style="@style/buttomHead"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
@@ -80,7 +84,7 @@
                android:layout_weight="1" />
 
            <Button
-               android:layout_gravity="center_vertical"
+
                style="@style/buttomHead"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
@@ -89,6 +93,7 @@
                android:layout_weight="1" />
 
            <Button
+
                android:visibility="gone"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
@@ -97,6 +102,7 @@
                android:layout_weight="1" />
 
            <Button
+
                android:visibility="gone"
                android:layout_width="0dp"
                android:layout_height="wrap_content"

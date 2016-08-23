@@ -17,6 +17,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
+
+        android:windowSoftInputMode="stateAlwaysHidden"
         android:name=".Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -37,7 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--
+        <!-- android:windowSoftInputMode="stateAlwaysHidden"
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
              Note that the API key is linked to the encryption key used to sign the APK.

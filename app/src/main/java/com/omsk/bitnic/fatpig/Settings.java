@@ -16,6 +16,7 @@ public class Settings implements Serializable {
 
 
     @SettingField(
+
             descriptions = R.string.settings_percent,
             index = -1,
             title = R.string.settings_percent_title,
@@ -24,12 +25,15 @@ public class Settings implements Serializable {
 
 
     @SettingField(
+
+            defaultColor = 0x90C3D4,
             index = 2,
             title = R.string.color_panel1,
             typeField = TypeField.Color)
     public int colorPanel1= 0xdec0a8;
 
     @SettingField(
+            defaultColor = 0x7BED90,
             index = 3,
             title = R.string.color_panel2,
             typeField = TypeField.Color)
@@ -37,6 +41,7 @@ public class Settings implements Serializable {
 
 
     @SettingField(
+            defaultColor = 0xD1ADF7,
             index = 4,
             title = R.string.color_panel3,
             typeField = TypeField.Color)
@@ -45,6 +50,7 @@ public class Settings implements Serializable {
 
 
     @SettingField(
+            defaultColor = 0xF1F7AD,
             index = 5,
             title = R.string.color_panel3,
             typeField = TypeField.Color)
@@ -55,6 +61,7 @@ public class Settings implements Serializable {
 
 
     @SettingField(
+            defaultColor = 0xC5C9C6,
             index = 6,
             title = R.string.color_panel_top,
             typeField = TypeField.Color)

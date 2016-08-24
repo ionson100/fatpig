@@ -7,11 +7,18 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
+
+        <ScrollView
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.9">
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
 
             <EditText
 
@@ -26,7 +33,7 @@
                 android:inputType="text"  />
 
             <RadioGroup
-                android:paddingLeft="40dp"
+                android:paddingLeft="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
@@ -145,25 +152,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
+
             </RadioGroup>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.1">
-
-            <Button
+                <Button
+                android:layout_marginTop="20dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/bt_user_save"
                 style="@style/buttomHead"
                 android:text="Сохранить"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            </LinearLayout>
 
-        </LinearLayout>
+        </ScrollView>
+
     </LinearLayout>
 
 

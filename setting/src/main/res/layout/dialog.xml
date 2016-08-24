@@ -12,7 +12,6 @@
         android:padding="20dp" />
 
     <EditText
-        android:selectAllOnFocus="true"
         android:id="@+id/edittext"
         style="@style/edit_text"
         android:layout_width="match_parent"
@@ -21,9 +20,9 @@
         android:layout_marginBottom="20dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
-
+        android:layout_marginTop="15dp"
         android:background="@drawable/eddit_text_style"
-        android:ellipsize="end"
+        android:ellipsize="start"
         android:gravity="center"
         android:hint="Search text"
 
@@ -36,39 +35,24 @@
 
         <Button
 
-            android:id="@+id/btCancel"
-            android:layout_width="270dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="5dp"
             android:layout_weight="1"
+            android:id="@+id/btCancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             style="@style/buttomHead"
-            android:shadowColor="#A8A8A8"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="5"
-            android:text="Cancel"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp" />
+            android:text="Cancel" />
+
 
         <Button
-            android:id="@+id/btOk"
-            android:layout_width="270dp"
-            android:layout_height="60dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
+            android:id="@+id/btOk"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
             style="@style/buttomHead"
-            android:shadowColor="#A8A8A8"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="5"
+            android:text="Ok" />
 
-            android:text="Ok"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp" />
     </LinearLayout>
 
 </LinearLayout>

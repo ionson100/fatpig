@@ -25,15 +25,11 @@ import java.util.Map;
 
 public class Settingion extends LinearLayout {
 
-    //public static  OnSettingChangeListener onSettingChangeListener;
     private static final Map<Class, List<InnerAttribute>> map = new HashMap<>();
-
     private TableLayout table;
-
     private Class aClass;
-    // LinearLayout base;
-    // private Switch switch2;
-    // private CheckBox check2;
+    boolean selectorColorPickerModeShow= true;
+
 
     private Context context;
 
@@ -41,7 +37,6 @@ public class Settingion extends LinearLayout {
         super(context);
         this.context = context;
         ini();
-
     }
 
 
@@ -49,8 +44,6 @@ public class Settingion extends LinearLayout {
         super(context, attrs);
         this.context = context;
         ini();
-
-        // tt.getClass();
     }
 
     public Settingion(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -62,16 +55,14 @@ public class Settingion extends LinearLayout {
     private void ini() {
         View v = inflate(context, R.layout.settinsion, null);
         table = (TableLayout) v.findViewById(R.id.table);
-
-
         this.addView(v);
     }
 
 
-    public void setModelClass(Class modelClass) {
-        this.aClass = modelClass;
-        innerBuilder(aClass);
-    }
+//    public void setModelClass(Class modelClass) {
+//        this.aClass = modelClass;
+//        innerBuilder(aClass);
+//    }
 
     public void setModelClass(Class modelClass, Context context) {
         this.context = context;
@@ -81,13 +72,6 @@ public class Settingion extends LinearLayout {
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
     private void innerBuilder(final Class aClass) {
-
-//        Display display = ((Activity)context).getWindowManager().getDefaultDisplay();
-//        Point size = new Point();
-//        display.getSize(size);
-//        int width = size.x;
-//        int height = size.y;
-
 
         List<InnerAttribute> list = map.get(aClass);
         if (list == null) {
@@ -99,8 +83,8 @@ public class Settingion extends LinearLayout {
 
         for (final InnerAttribute ia : list) {
             final SettingField setting = ia.settingField;
-
             TableRow row;
+
             if (setting.typeField() == TypeField.BooleanCheck) {
                 row = (TableRow) inflate(context, R.layout.boolean_check_row, null);
                 final CheckBox check2 = (CheckBox) row.findViewById(R.id.check2);
@@ -164,17 +148,13 @@ public class Settingion extends LinearLayout {
                             }
                         } catch (IllegalAccessException | NoSuchFieldException e) {
                             throw new RuntimeException("Reanimator:" + e.getMessage());
-
                         }
-
                         switch21.setChecked(val);
                     }
                 });
-
             } else {
                 row = (TableRow) inflate(context, R.layout.row, null);
             }
-
 
             row.setTag(ia);
             if (setting.image() != 0) {
@@ -210,24 +190,19 @@ public class Settingion extends LinearLayout {
                     public void onClick(View v) {
                         Burbulus((TableRow) v);
                         Intent(ia, ob);
-
                     }
                 });
 
             } else if (setting.typeField() == TypeField.BooleanCheck) {
-
-
             } else if (setting.typeField() == TypeField.BooleanSwitch) {
-
-
             } else {
+
                 row.setOnClickListener(new OnClickListener() {
 
                     @Override
                     public void onClick(View v) {
-
                         Burbulus((TableRow) v);
-                        Clicker(setting, sd, aClass, ob);
+                        Clicker(setting, sd, aClass);
 
                     }
                 });
@@ -249,10 +224,6 @@ public class Settingion extends LinearLayout {
     private void Intent(InnerAttribute attribute, Object o) {
         Caption caption = (Caption) attribute.aClass.getAnnotation(Caption.class);
         if (caption == null || caption.SHOW_TYPES() == ShowTypes.Activity) {
-           // Intent intent = new Intent(context, SubMenuActivity.class);
-           // SubMenuActivity.innerAttribute = attribute;
-           // SubMenuActivity.hostObject = o;
-            //context.startActivity(intent);
         } else {
             DialogSubmenu f = new DialogSubmenu();
             f.showDialog(o, attribute, ((Activity) context).getFragmentManager());
@@ -262,12 +233,12 @@ public class Settingion extends LinearLayout {
 
 
     @TargetApi(Build.VERSION_CODES.KITKAT)
-    private void Clicker(SettingField settingField, final String fieldName, final Class aClass, final Object ob) {
+    private void Clicker(SettingField settingField, final String fieldName, final Class aClass) {
 
         if (settingField.typeField() == TypeField.Color) {
 
             Object o = Reanimator.get(aClass);
-            int val = 0;
+            int val;
             try {
                 Field field = o.getClass().getDeclaredField(fieldName);
 
@@ -281,49 +252,61 @@ public class Settingion extends LinearLayout {
             f.settingField = settingField;
             f.fieldName = fieldName;
 
+            if (selectorColorPickerModeShow) {
 
-            ColorPickerDialogE dialogE=new ColorPickerDialogE(context, new ColorPickerDialogE.IAction() {
-                @Override
-                public void Action(int color) {
-                    Object o = Reanimator.get(aClass);
-                    try {
-                        Field field = o.getClass().getDeclaredField(fieldName);
-                        field.setAccessible(true);
-                        field.set(o, color);
-                        if (Reanimator.mIListener != null) {
-                            Reanimator.mIListener.OnCallListen(aClass, fieldName, null, color);
+                ColorPickerDialogE dialogE=new ColorPickerDialogE(context, new ColorPickerDialogE.IAction() {
+                    @Override
+                    public void Action(int color) {
+                        Object o = Reanimator.get(aClass);
+                        try {
+                            Field field = o.getClass().getDeclaredField(fieldName);
+                            field.setAccessible(true);
+                            field.set(o, color);
+                            if (Reanimator.mIListener != null) {
+                                Reanimator.mIListener.OnCallListen(aClass, fieldName, null, color);
+                            }
+                            Reanimator.save(aClass);
+
+                        } catch (IllegalAccessException | NoSuchFieldException e) {
+                            throw new RuntimeException("Reanimator:" + e.getMessage());
                         }
-                        Reanimator.save(aClass);
-
-                    } catch (IllegalAccessException | NoSuchFieldException e) {
-                        throw new RuntimeException("Reanimator:" + e.getMessage());
                     }
+                });
+
+                int color=settingField.defaultColor();
+                if(val!=0){
+                    color=val;
                 }
-            });
-            dialogE.show(settingField.defaultColor(),context.getString(settingField.title()));
+                dialogE.show(color,context.getString(settingField.title()));
+
+            }else{
+
+                ColorPickerDialog ef = new ColorPickerDialog(context, new ColorPickerDialog.OnColorChangedListener() {
+                    @Override
+                    public void colorChanged(String key, int color) {
+
+                        Object o = Reanimator.get(aClass);
+                        try {
+                            Field field = o.getClass().getDeclaredField(fieldName);
+                            field.setAccessible(true);
+                            field.set(o, color);
+                            if (Reanimator.mIListener != null) {
+                                Reanimator.mIListener.OnCallListen(aClass, fieldName, null, color);
+                            }
+                            Reanimator.save(aClass);
+
+                        } catch (IllegalAccessException | NoSuchFieldException e) {
+                            throw new RuntimeException("Reanimator:" + e.getMessage());
+                        }
+
+                    }
+                }, val, f);
+                ef.show();
+            }
 
 
-//            ColorPickerDialog ef = new ColorPickerDialog(context, new ColorPickerDialog.OnColorChangedListener() {
-//                @Override
-//                public void colorChanged(String key, int color) {
-//
-//                    Object o = Reanimator.get(aClass);
-//                    try {
-//                        Field field = o.getClass().getDeclaredField(fieldName);
-//                        field.setAccessible(true);
-//                        field.set(o, color);
-//                        if (Reanimator.mIListener != null) {
-//                            Reanimator.mIListener.OnCallListen(aClass, fieldName, null, color);
-//                        }
-//                        Reanimator.save(aClass);
-//
-//                    } catch (IllegalAccessException | NoSuchFieldException e) {
-//                        throw new RuntimeException("Reanimator:" + e.getMessage());
-//                    }
-//
-//                }
-//            }, val, f);
-//            ef.show();
+
+
 
         } else if (settingField.typeField() == TypeField.list) {
 
@@ -378,75 +361,75 @@ public class Settingion extends LinearLayout {
         return list;
     }
 
-    public View getTableRow(String fiedName) {
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow r = (TableRow) table.getChildAt(i);
-            InnerAttribute a = (InnerAttribute) r.getTag();
-            if (a.fieldName.equals(fiedName)) {
-                return r;
-            }
-        }
-        return null;
-    }
+//    public View getTableRow(String fiedName) {
+//        for (int i = 0; i < table.getChildCount(); i++) {
+//            TableRow r = (TableRow) table.getChildAt(i);
+//            InnerAttribute a = (InnerAttribute) r.getTag();
+//            if (a.fieldName.equals(fiedName)) {
+//                return r;
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public View getTitleTextView(String fiedName) {
+//        for (int i = 0; i < table.getChildCount(); i++) {
+//            TableRow r = (TableRow) table.getChildAt(i);
+//            InnerAttribute a = (InnerAttribute) r.getTag();
+//            if (a.fieldName.equals(fiedName)) {
+//                return r.findViewById(R.id.text1);
+//            }
+//        }
+//        return null;
+//    }
 
-    public View getTitleTextView(String fiedName) {
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow r = (TableRow) table.getChildAt(i);
-            InnerAttribute a = (InnerAttribute) r.getTag();
-            if (a.fieldName.equals(fiedName)) {
-                return r.findViewById(R.id.text1);
-            }
-        }
-        return null;
-    }
-
-    public void itemInvisible(String fiedName) {
-        View v = null;
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow r = (TableRow) table.getChildAt(i);
-            InnerAttribute a = (InnerAttribute) r.getTag();
-            if (a.fieldName.equals(fiedName)) {
-                v = r;
-            }
-        }
-        if (v != null) {
-            table.removeView(v);
-        }
-
-    }
-
-    public TextView getDescriptionTextView(String fiedName) {
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow r = (TableRow) table.getChildAt(i);
-            InnerAttribute a = (InnerAttribute) r.getTag();
-            if (a.fieldName.equals(fiedName)) {
-                return (TextView) r.findViewById(R.id.text2);
-            }
-        }
-        return null;
-    }
-
-    public ImageView getImageView(String fiedName) {
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow r = (TableRow) table.getChildAt(i);
-            InnerAttribute a = (InnerAttribute) r.getTag();
-            if (a.fieldName.equals(fiedName)) {
-                return (ImageView) r.findViewById(R.id.image);
-            }
-        }
-        return null;
-    }
-
-    public void setEnabledE(boolean b) {
-        for (int i = 0; i < table.getChildCount(); i++) {
-            TableRow r = (TableRow) table.getChildAt(i);
-            r.setEnabled(b);
-        }
-    }
-
-    public interface OnSettingChangeListener {
-        void SettingChanged(Object objects, String fieldName);
-    }
+//    public void itemInvisible(String fiedName) {
+//        View v = null;
+//        for (int i = 0; i < table.getChildCount(); i++) {
+//            TableRow r = (TableRow) table.getChildAt(i);
+//            InnerAttribute a = (InnerAttribute) r.getTag();
+//            if (a.fieldName.equals(fiedName)) {
+//                v = r;
+//            }
+//        }
+//        if (v != null) {
+//            table.removeView(v);
+//        }
+//
+//    }
+//
+//    public TextView getDescriptionTextView(String fiedName) {
+//        for (int i = 0; i < table.getChildCount(); i++) {
+//            TableRow r = (TableRow) table.getChildAt(i);
+//            InnerAttribute a = (InnerAttribute) r.getTag();
+//            if (a.fieldName.equals(fiedName)) {
+//                return (TextView) r.findViewById(R.id.text2);
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public ImageView getImageView(String fiedName) {
+//        for (int i = 0; i < table.getChildCount(); i++) {
+//            TableRow r = (TableRow) table.getChildAt(i);
+//            InnerAttribute a = (InnerAttribute) r.getTag();
+//            if (a.fieldName.equals(fiedName)) {
+//                return (ImageView) r.findViewById(R.id.image);
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public void setEnabledE(boolean b) {
+//        for (int i = 0; i < table.getChildCount(); i++) {
+//            TableRow r = (TableRow) table.getChildAt(i);
+//            r.setEnabled(b);
+//        }
+//    }
+//
+//    public interface OnSettingChangeListener {
+//        void SettingChanged(Object objects, String fieldName);
+//    }
 
 
 }

@@ -3,6 +3,7 @@ package com.omsk.bitnic.fatpig;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
 import android.renderscript.Script;
@@ -18,6 +19,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewTreeObserver;
+import android.widget.Toast;
 
 import com.settings.ion.mylibrary.Reanimator;
 import com.settings.ion.mylibrary.iListenerСhanges;
@@ -39,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
@@ -76,7 +80,7 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
-        //startActivity(new Intent(this,MapsActivity.class));
+
 
 
     }
@@ -192,4 +196,6 @@ public class MainActivity extends AppCompatActivity
         }
         return super.onContextItemSelected(item);
     }
+
+
 }

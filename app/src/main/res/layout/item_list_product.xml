@@ -20,6 +20,8 @@
             android:layout_weight="0.83" />
 
         <TextView
+            android:paddingLeft="10dp"
+            android:layout_marginLeft="2dp"
             android:id="@+id/product_color"
             android:layout_gravity="center_vertical"
             android:gravity="center_vertical"

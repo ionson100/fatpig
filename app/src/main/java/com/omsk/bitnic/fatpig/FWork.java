@@ -1,18 +1,26 @@
 package com.omsk.bitnic.fatpig;
 
 
+import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.Collections;
@@ -38,6 +46,13 @@ public class FWork extends Fragment {
     private List<Work> mWorkList;
     private View mView;
     private ListView mListView;
+
+
+
+
+    private RelativeLayout mRelativeLayout;
+    private LinearLayout mLinearLayout;
+    private EditText mEditText;
 
 
 
@@ -107,8 +122,14 @@ public class FWork extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_fwork, container, false);
+        mView=inflater.inflate(R.layout.fragment_product, container, false);
+
+        mRelativeLayout= (RelativeLayout) mView.findViewById(R.id.relative_text);
+        mLinearLayout= (LinearLayout) mView.findViewById(R.id.panel_buttons);
+        mEditText= (EditText) mView.findViewById(R.id.editText);
+
         mListView = (ListView) mView.findViewById(R.id.list_product);
+
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -156,7 +177,36 @@ public class FWork extends Fragment {
         });
 
 
+        setListnerToRootView(mView, new IKeyboardVisibilityListener() {
+            @Override
+            public void onVisibilityChanged(boolean visible) {
+                if (visible) {
+                    mRelativeLayout.setVisibility(View.VISIBLE);
+                    mLinearLayout.setVisibility(View.GONE);
 
+                } else {
+                    mRelativeLayout.setVisibility(View.GONE);
+                    mLinearLayout.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        mView.findViewById(R.id.open_keyBord).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mRelativeLayout.setVisibility(View.VISIBLE);
+                mLinearLayout.setVisibility(View.GONE);
+                Handler mHandler = new Handler();
+                mHandler.post(
+                        new Runnable() {
+                            public void run() {
+                                InputMethodManager inputMethodManager = (InputMethodManager) getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+                                inputMethodManager.toggleSoftInputFromWindow(mEditText.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                                mEditText.requestFocus();
+                            }
+                        });
+            }
+        });
 
 
 
@@ -187,6 +237,33 @@ public class FWork extends Fragment {
                     }
                 }).toList();
                 ActivateList(tempPlans);
+            }
+        });
+    }
+    public void setListnerToRootView(View view, final IKeyboardVisibilityListener listener){
+
+        final View parentView = view. findViewById(R.id.list11);
+        parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+
+            private boolean alreadyOpen;
+            private final int defaultKeyboardHeightDP = 100;
+            private final int EstimatedKeyboardDP = defaultKeyboardHeightDP + (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? 48 : 0);
+            private final Rect rect = new Rect();
+
+            @Override
+            public void onGlobalLayout() {
+
+                int estimatedKeyboardHeight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, EstimatedKeyboardDP, parentView.getResources().getDisplayMetrics());
+                parentView.getWindowVisibleDisplayFrame(rect);
+                int heightDiff = parentView.getRootView().getHeight() - (rect.bottom - rect.top);
+                boolean isShown = heightDiff >= estimatedKeyboardHeight;
+
+                if (isShown == alreadyOpen) {
+                    return;
+                }
+
+                alreadyOpen = isShown;
+                listener.onVisibilityChanged(isShown);
             }
         });
     }

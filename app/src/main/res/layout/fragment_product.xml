@@ -4,7 +4,9 @@
     android:layout_height="match_parent"
     tools:context="com.omsk.bitnic.fatpig.FProduct">
 
+
    <LinearLayout
+       android:id="@+id/list11"
        android:orientation="vertical"
        android:layout_width="match_parent"
        android:layout_height="match_parent">
@@ -18,24 +20,101 @@
                android:layout_width="match_parent"
                android:layout_height="match_parent"
                android:baselineAligned="false">
-               <ListView
-                   android:id="@+id/list_product"
+
+
+
+
+
+
+
+
+               <LinearLayout
+                   android:orientation="vertical"
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
+                   android:layout_weight="0.92">
 
-                   android:divider="#FFCC00"
-                   android:dividerHeight="2dp"
-                   android:listSelector="@drawable/listitem_selector"
-                   android:stackFromBottom="true"
-                   android:transcriptMode="alwaysScroll"
-                   android:layout_weight="0.93">
 
-               </ListView>
+                       <LinearLayout
+                           android:orientation="horizontal"
+                           android:layout_width="match_parent"
+                           android:layout_height="wrap_content">
+                           <TextView
+
+                               android:textSize="16dp"
+                               android:textColor="@color/common_plus_signin_btn_text_dark_default"
+                               android:background="@color/colorPrimary"
+                               android:gravity="center_vertical|center_horizontal"
+                               android:id="@+id/product_name"
+                               android:layout_gravity="center_vertical"
+
+                               android:text="Продукт"
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="0.83" />
+
+                           <TextView
+
+
+                               android:layout_marginLeft="2dp"
+                               android:textSize="16dp"
+                               android:textColor="@color/common_plus_signin_btn_text_dark_default"
+                               android:background="@color/colorPrimary"
+                               android:id="@+id/product_color"
+                               android:layout_gravity="center_vertical"
+                               android:gravity="center_vertical|center_horizontal"
+                               android:text="ккал."
+                               android:layout_width="0dp"
+                               android:layout_height="match_parent"
+                               android:layout_weight="0.17" />
+                       </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+                   <ListView
+                       android:id="@+id/list_product"
+                       android:layout_width="match_parent"
+                       android:layout_height="match_parent"
+
+                       android:divider="#FFCC00"
+                       android:dividerHeight="2dp"
+                       android:listSelector="@drawable/listitem_selector"/>
+
+
+
+
+
+
+               </LinearLayout>
+
+
+
+
+
+
+
+
+
+
                <LinearLayout
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
-                   android:layout_weight="0.07"
+                   android:layout_weight="0.08"
                    android:baselineAligned="false">
+
+
+
+
+
+
                    <ListView
                        android:id="@+id/list_abc_plan"
                        android:layout_width="0dp"
@@ -57,24 +136,25 @@
 
 
        <LinearLayout
+           android:layout_gravity="center_vertical"
+           android:gravity="center_vertical"
+
+           android:id="@+id/panel_buttons"
            android:minHeight="200dp"
            android:orientation="horizontal"
            android:layout_width="match_parent"
            android:layout_height="0dp"
            android:layout_weight="0.1">
-
-
-           <EditText
-               android:minHeight="300dp"
-               android:layout_gravity="center_vertical"
-               style="@style/editBase"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:id="@+id/editText"
-               android:layout_weight="1"
-               android:inputType="text" />
-
+           <ImageButton
+               android:id="@+id/open_keyBord"
+               android:src="@drawable/ic_search"
+               android:adjustViewBounds="true"
+               android:layout_width="30dp"
+               android:background="@null"
+               android:layout_height="50dp"
+               android:layout_weight="0.5"  />
            <Button
+
 
                style="@style/buttomHead"
                android:layout_width="0dp"
@@ -93,7 +173,7 @@
                android:layout_weight="1" />
 
            <Button
-
+               android:padding="20dp"
                android:visibility="gone"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
@@ -103,6 +183,7 @@
 
            <Button
 
+               android:padding="20dp"
                android:visibility="gone"
                android:layout_width="0dp"
                android:layout_height="wrap_content"
@@ -111,8 +192,26 @@
                android:layout_weight="1" />
 
        </LinearLayout>
-
-
    </LinearLayout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/relative_text"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:layout_gravity="bottom"
+        style="@style/editBase"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText"
+        android:inputType="text" />
+</LinearLayout>
+
+    </RelativeLayout>
 
 </FrameLayout>

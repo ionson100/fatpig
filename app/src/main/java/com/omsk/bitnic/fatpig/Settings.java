@@ -26,46 +26,46 @@ public class Settings implements Serializable {
 
     @SettingField(
 
-            defaultColor = 0x90C3D4,
+            defaultColor = Color.CYAN,
             index = 2,
             title = R.string.color_panel1,
             typeField = TypeField.Color)
-    public int colorPanel1= 0xdec0a8;
+    public int colorPanel1= Color.CYAN;
 
     @SettingField(
-            defaultColor = 0x7BED90,
+            defaultColor = Color.DKGRAY,
             index = 3,
             title = R.string.color_panel2,
             typeField = TypeField.Color)
-    public int colorPanel2= 0xaef599;
+    public int colorPanel2= Color.DKGRAY;
 
 
     @SettingField(
-            defaultColor = 0xD1ADF7,
+            defaultColor = Color.GREEN,
             index = 4,
             title = R.string.color_panel3,
             typeField = TypeField.Color)
-    public int colorPanel3= 0x46c9bc;
+    public int colorPanel3= Color.GREEN;
 
 
 
     @SettingField(
-            defaultColor = 0xF1F7AD,
+            defaultColor = Color.MAGENTA,
             index = 5,
             title = R.string.color_panel3,
             typeField = TypeField.Color)
-    public int colorPanel4= 0xf29951;
+    public int colorPanel4= Color.MAGENTA;
 
 
 
 
 
     @SettingField(
-            defaultColor = 0xC5C9C6,
+            defaultColor = Color.YELLOW,
             index = 6,
             title = R.string.color_panel_top,
             typeField = TypeField.Color)
-    public int colorTopPanel =0xFFFFFFFF;
+    public int colorTopPanel =Color.YELLOW;
 
 
 

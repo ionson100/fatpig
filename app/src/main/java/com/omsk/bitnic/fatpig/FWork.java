@@ -53,8 +53,7 @@ public class FWork extends Fragment {
     private RelativeLayout mRelativeLayout;
     private LinearLayout mLinearLayout;
     private EditText mEditText;
-
-
+    private boolean sort;
 
 
     @Override
@@ -210,6 +209,7 @@ public class FWork extends Fragment {
 
 
 
+        sort();
         return  mView;
     }
 
@@ -220,6 +220,8 @@ public class FWork extends Fragment {
         mSelectWork = null;
 
     }
+
+
     private void createListABC() {
         ListView listView = (ListView) mView.findViewById(R.id.list_abc_plan);
         String[] res= Utils.listABC;
@@ -240,6 +242,8 @@ public class FWork extends Fragment {
             }
         });
     }
+
+
     public void setListnerToRootView(View view, final IKeyboardVisibilityListener listener){
 
         final View parentView = view. findViewById(R.id.list11);
@@ -267,5 +271,46 @@ public class FWork extends Fragment {
             }
         });
     }
+
+
+    void sort(){
+
+        mView.findViewById(R.id.product_name).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Work> works=  mAdapterWork.workList;
+                Collections.sort(works, new Comparator<Work>() {
+                    @Override
+                    public int compare(Work lhs, Work rhs) {
+                        return lhs.name.compareTo(rhs.name);
+                    }
+                });
+                ActivateList(works);
+                sort=false;
+            }
+        });
+
+        mView.findViewById(R.id.product_color).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Work> works=  mAdapterWork.workList;
+                Collections.sort(works, new Comparator<Work>() {
+                    @Override
+                    public int compare(Work lhs, Work rhs) {
+                        return Double.compare(lhs.calorieses, rhs.calorieses);
+                    }
+                });
+                if (sort == false) {
+                    sort = true;
+                } else {
+                    sort = false;
+                    Collections.reverse(works);
+                }
+
+                ActivateList(works);
+            }
+        });
+    }
+
 
 }

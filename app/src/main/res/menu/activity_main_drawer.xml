@@ -26,6 +26,10 @@
             android:id="@+id/nav_work"
             android:icon="@drawable/ic_menu_manage"
             android:title="@string/work" />
+        <item
+            android:id="@+id/nav_treack"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="@string/tarck" />
 
         <item
             android:id="@+id/nav_map"

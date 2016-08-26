@@ -2,11 +2,9 @@ package com.omsk.bitnic.fatpig;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Configuration;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.renderscript.Script;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.ContextMenu;
@@ -14,13 +12,9 @@ import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewTreeObserver;
-import android.widget.Toast;
 
 import com.settings.ion.mylibrary.Reanimator;
 import com.settings.ion.mylibrary.iListenerСhanges;
@@ -30,14 +24,17 @@ import java.util.Comparator;
 import java.util.List;
 
 import Model.OneEat;
-import orm.Column;
 import orm.Configure;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static final String PARAM_LATITUDE = "latitude";
+    public static final String PARAM_LONGITUDE ="longitude" ;
+
     private static final int MENU_UPDATE_PECENT = 1;
     private static final int MENU_DELETE_UPDATE_LAST_EAT = 2;
+    public static final String BROADCAST_ACTION = "sasdjkdjasdjdikjausdu";
     Settings mSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +92,7 @@ public class MainActivity extends AppCompatActivity
                     mSettings.getSateSystem()==StateSystem.WORK||
                             mSettings.getSateSystem()==StateSystem.MAP||
                     mSettings.getSateSystem()==StateSystem.SETTINGS||
+                            mSettings.getSateSystem()==StateSystem.TRACK||
                     mSettings.getSateSystem()==StateSystem.PRODUCT||
                     mSettings.getSateSystem()==StateSystem.USER_SETTINGS
                     ){
@@ -145,6 +143,8 @@ public class MainActivity extends AppCompatActivity
             Settings.getSettings().setStateSystem(StateSystem.WORK,this);
         } else if (id == R.id.nav_map) {
             Settings.getSettings().setStateSystem(StateSystem.MAP,this);
+        } else if (id == R.id.nav_treack) {
+            Settings.getSettings().setStateSystem(StateSystem.TRACK,this);
         }
         else if (id == R.id.nav_settings_core) {
             Settings.getSettings().setStateSystem(StateSystem.SETTINGS,this);
@@ -188,9 +188,12 @@ public class MainActivity extends AppCompatActivity
                         return Integer.compare(lhs.id, rhs.id);
                     }
                 });
-                OneEat last=oneEatList.get(oneEatList.size()-1);
-                Configure.getSession().delete(last);
-                FillData.fill(this);
+                if(oneEatList.size()!= 0){
+                    OneEat last=oneEatList.get(oneEatList.size()-1);
+                    Configure.getSession().delete(last);
+                    FillData.fill(this);
+                }
+
                 break;
             }
         }

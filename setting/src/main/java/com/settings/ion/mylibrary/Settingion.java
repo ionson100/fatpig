@@ -8,6 +8,7 @@ import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
@@ -150,6 +151,27 @@ public class Settingion extends LinearLayout {
                             throw new RuntimeException("Reanimator:" + e.getMessage());
                         }
                         switch21.setChecked(val);
+                    }
+                });
+                final TableRow ee=row;
+                switch21.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Burbulus( ee);
+
+                        try {
+                            Field field = ob.getClass().getDeclaredField(ia.fieldName);
+                            field.setAccessible(true);
+                            field.set(ob, isChecked);
+                            if (Reanimator.mIListener != null) {
+                                Reanimator.notify(ob, field.getName(), null, isChecked);
+                            } else {
+                                Reanimator.save(aClass);
+                            }
+                        } catch (IllegalAccessException | NoSuchFieldException e) {
+                            throw new RuntimeException("Reanimator:" + e.getMessage());
+                        }
+                        switch21.setChecked(isChecked);
                     }
                 });
             } else {

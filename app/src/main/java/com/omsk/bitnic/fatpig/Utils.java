@@ -2,7 +2,9 @@ package com.omsk.bitnic.fatpig;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -76,5 +78,32 @@ public class Utils {
 
 
         return  Utils.round(res,2);
+    }
+    public static String getStringDecimal(int value) {
+        return String.format("%02d", value);
+    }
+
+    public static void messageBox(final String title, final String message, final Activity activity, final IAction iAction) {
+        if (activity == null) return;
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                if (iAction != null) {
+                                    iAction.Action(null);
+                                }
+                                dialog.dismiss();
+                            }
+
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
     }
 }

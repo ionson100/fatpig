@@ -18,7 +18,7 @@ import Model.Work;
  */
 public class ListAdapterWork extends ArrayAdapter<Work> {
 
-    private List<Work> workList;
+    public List<Work> workList;
     private int resource;
 
     public ListAdapterWork(Context context, int resource, List<Work> objects) {

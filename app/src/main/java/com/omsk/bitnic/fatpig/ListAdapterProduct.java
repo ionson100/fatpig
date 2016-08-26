@@ -16,7 +16,7 @@ import Model.Product;
 
 public class ListAdapterProduct extends ArrayAdapter<Product> {
 
-    private List<Product> productList;
+    public List<Product> productList;
     private int resource;
     public ListAdapterProduct(Context context, int resource, List<Product> objects) {
         super(context, resource, objects);

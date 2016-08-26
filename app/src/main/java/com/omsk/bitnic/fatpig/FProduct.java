@@ -47,6 +47,7 @@ public class FProduct extends Fragment {
     private RelativeLayout mRelativeLayout;
     private LinearLayout mLinearLayout;
     private EditText mEditText;
+    private boolean sort;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -184,6 +185,8 @@ public class FProduct extends Fragment {
             }
         });
 
+
+
         mView.findViewById(R.id.bt_select_product).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -217,7 +220,7 @@ public class FProduct extends Fragment {
             public void onClick(View v) {
                 mRelativeLayout.setVisibility(View.VISIBLE);
                 mLinearLayout.setVisibility(View.GONE);
-                Handler mHandler= new Handler();
+                Handler mHandler = new Handler();
                 mHandler.post(
                         new Runnable() {
                             public void run() {
@@ -229,7 +232,48 @@ public class FProduct extends Fragment {
             }
         });
 
+        sort();
+
         return mView;
+    }
+
+    void sort(){
+
+        mView.findViewById(R.id.product_name).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              List<Product> products=  mAdapterProduct.productList;
+                Collections.sort(products, new Comparator<Product>() {
+                    @Override
+                    public int compare(Product lhs, Product rhs) {
+                        return lhs.name.compareTo(rhs.name);
+                    }
+                });
+                ActivateList(products);
+                sort=false;
+            }
+        });
+
+        mView.findViewById(R.id.product_color).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Product> products=  mAdapterProduct.productList;
+                Collections.sort(products, new Comparator<Product>() {
+                    @Override
+                    public int compare(Product lhs, Product rhs) {
+                        return Double.compare(lhs.calorieses, rhs.calorieses);
+                    }
+                });
+                if(sort==false){
+                    sort=true;
+                }else {
+                    sort=false;
+                    Collections.reverse(products);
+                }
+
+                ActivateList(products);
+            }
+        });
     }
 
     public void ActivateList(List<Product> products){

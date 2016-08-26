@@ -81,4 +81,17 @@
 
     </style>
 
+    <style name="tab_host">
+        <item name="android:background">@drawable/button</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:textColor">#0e0e0e</item>
+
+
+    </style>
+
+    <style name="buttonRound"  >
+       <item name="android:background">@drawable/button_background_round</item>
+
+    </style>
+
 </resources>

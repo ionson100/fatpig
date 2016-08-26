@@ -36,37 +36,51 @@
 
 
                        <LinearLayout
+
                            android:orientation="horizontal"
                            android:layout_width="match_parent"
                            android:layout_height="wrap_content">
-                           <TextView
 
-                               android:textSize="16dp"
-                               android:textColor="@color/common_plus_signin_btn_text_dark_default"
-                               android:background="@color/colorPrimary"
-                               android:gravity="center_vertical|center_horizontal"
+                           <LinearLayout
+                               android:gravity="center_horizontal"
+                               android:clickable="true"
+                               android:background="@android:color/black"
+                               android:layout_weight="0.83"
                                android:id="@+id/product_name"
-                               android:layout_gravity="center_vertical"
-
-                               android:text="Продукт"
                                android:layout_width="0dp"
-                               android:layout_height="match_parent"
-                               android:layout_weight="0.83" />
+                               android:layout_height="30dp">
+                               <TextView
+                                   android:textSize="16dp"
+                                   android:textColor="@color/common_plus_signin_btn_text_dark_default"
+                                   android:gravity="center_vertical|center_horizontal"
+                                   android:layout_gravity="top|center_horizontal"
+                                   android:text="Продукт"
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                    />
 
-                           <TextView
+                           </LinearLayout>
 
+                           <LinearLayout
+                               android:gravity="center_horizontal"
+                               android:clickable="true"
+                               android:background="@android:color/black"
 
-                               android:layout_marginLeft="2dp"
-                               android:textSize="16dp"
-                               android:textColor="@color/common_plus_signin_btn_text_dark_default"
-                               android:background="@color/colorPrimary"
+                               android:layout_weight="0.17"
                                android:id="@+id/product_color"
-                               android:layout_gravity="center_vertical"
-                               android:gravity="center_vertical|center_horizontal"
-                               android:text="ккал."
                                android:layout_width="0dp"
-                               android:layout_height="match_parent"
-                               android:layout_weight="0.17" />
+                               android:layout_height="30dp">
+                               <TextView
+                                   android:textSize="16dp"
+                                   android:textColor="@color/common_plus_signin_btn_text_dark_default"
+                                   android:layout_gravity="top|center_horizontal"
+                                   android:gravity="center_vertical|center_horizontal"
+                                   android:text="ккал."
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   />
+                           </LinearLayout>
+
                        </LinearLayout>
 
 
@@ -121,7 +135,7 @@
                        android:layout_height="match_parent"
                        android:layout_weight="0.03"
                        android:background="@android:color/black"
-                       android:divider="@color/colorAccent"
+                       android:divider="@android:color/white"
                        android:dividerHeight="2dp"
                        android:listSelector="@drawable/listitem_selector">
 

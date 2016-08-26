@@ -9,6 +9,8 @@ import com.settings.ion.mylibrary.SettingField;
 import com.settings.ion.mylibrary.TypeField;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Settings implements Serializable {
@@ -68,6 +70,7 @@ public class Settings implements Serializable {
     public int colorTopPanel =Color.YELLOW;
 
 
+    public String startTab="t1";
 
     private static transient Settings settings;
 //,
@@ -82,6 +85,10 @@ public class Settings implements Serializable {
             settings= (Settings) Reanimator.get(Settings.class);
         }
         return settings;
+    }
+
+    public static void  Save(){
+        Reanimator.save(Settings.class);
     }
     public int getSateSystem(){
         return _stateSystem;
@@ -100,5 +107,12 @@ public class Settings implements Serializable {
         percent=value;
         Reanimator.save(Settings.class);
     }
+
+    public long timerStart;
+    public long timerStop;
+
+    public String statusTrack="0";
+
+    public List<timer> timerList=new ArrayList<>();
 
 }

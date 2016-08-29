@@ -11,14 +11,16 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
+import Model.GeoData;
 import Model.OneEat;
 import Model.User;
+import linq.Function;
+import linq.Linq;
 import orm.Configure;
 
-/**
- * Created by USER on 10.08.2016.
- */
+
 public class FillData {
 
     public static void fill(Activity activity){
@@ -45,6 +47,7 @@ public class FillData {
 
 
 
+       final int  del=280;
 
 
         TextView textView1= (TextView) activity.findViewById(R.id.panel_text1);
@@ -56,21 +59,27 @@ public class FillData {
         if(users.size()==0)return;
         User user=users.get(0);
         double total=Utils.getCalorisesCore(user);
-        textView1.setText(String.valueOf(total) + "    Общее количество  расчетных ккал для ващего тельца.".toUpperCase());
+        textView1.setText(String.valueOf(total) + " ккал.");
         {
-            textView2.setText(String.valueOf(Utils.round(total/100*pecent,1))+"    Требуется ккал для похудания вашего тельца.".toUpperCase());
+            textView2.setText(String.valueOf(Utils.round(total/100*pecent,1))+" ккал.");
             int i2= (width/100)*pecent;
             ViewGroup.LayoutParams params = panel2.getLayoutParams();
+            if(i2<del){
+                i2=del;
+            }
             params.width = i2;
             panel2.setLayoutParams(params);
         }
+        double d= total/100;
+        Calendar calendar=Calendar.getInstance();
+        int hover=calendar.get(Calendar.HOUR);
+        int min=calendar.get(Calendar.MINUTE);
+        int sec=calendar.get(Calendar.SECOND);
+        int ds=Utils.dateToInt(new Date())-hover*60*60 -min*60-sec;
+
         {
 
-            Calendar calendar=Calendar.getInstance();
-            int houer=calendar.get(Calendar.HOUR);
-            int min=calendar.get(Calendar.MINUTE);
-            int sec=calendar.get(Calendar.SECOND);
-            int ds=Utils.dateToInt(new Date())-houer*60*60 -min*60-sec;
+
 
 
             List<OneEat> oneEatList=Configure.getSession().getList(OneEat.class," date > "+String.valueOf(ds));
@@ -82,16 +91,47 @@ public class FillData {
                     accum=accum+(oneEat.amount*oneEat.cal);
                 }
             }
-            double d= total/100;
+
             double prcent=accum/d;
             ViewGroup.LayoutParams params = panel3.getLayoutParams();
             params.width = (int) ((width/100)*prcent);
+            if(params.width<del){
+                params.width=del;
+            }
             panel3.setLayoutParams(params);
-            textView3.setText(String.valueOf(Utils.round(accum,1)));
+            textView3.setText(String.valueOf(Utils.round(accum,1))+" ккал.");
 
+        }
+        {
+            List<GeoData> geoDatas=Configure.getSession().getList(GeoData.class," date > "+String.valueOf(ds));
+
+            Map<Integer, List<GeoData>> dataMap = Linq.toStream(geoDatas).groupBy(new Function<GeoData, Integer>() {
+                @Override
+                public Integer foo(GeoData t) {
+                    return t.trackName;
+                }
+            });
+
+            double cal=0;
+            for (Integer ss : dataMap.keySet()) {
+                cal=cal+ Calculation.getCalories(dataMap.get(ss),user);
+            }
+
+
+
+            double prcent=cal/d;
+            ViewGroup.LayoutParams params = panel4.getLayoutParams();
+            params.width = (int) ((width/100)*prcent);
+            if(params.width<del){
+                params.width=del;
+            }
+            panel3.setLayoutParams(params);
+            textView4.setText(String.valueOf(Utils.round(cal,1))+" ккал.");
         }
 
 
     }
+
+
 
 }

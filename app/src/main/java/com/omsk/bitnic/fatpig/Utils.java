@@ -1,6 +1,7 @@
 package com.omsk.bitnic.fatpig;
 
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import Model.Sex;
@@ -106,4 +108,14 @@ public class Utils {
             }
         });
     }
+
+    public static String simpleDateFormat(int date) {
+        if (date <= 0) {
+            return "нет данных";
+        }
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        return dateFormat.format(Utils.intToDate(date));
+    }
+
 }

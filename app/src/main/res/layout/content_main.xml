@@ -23,6 +23,7 @@
             style="@style/panelBase"
             android:layout_weight="0.25">
             <LinearLayout
+
                 android:orientation="horizontal"
                 android:layout_margin="1dp"
                 android:id="@+id/panel1"
@@ -37,12 +38,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+
+                    android:textSize="18dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
                     android:id="@+id/panel_text1"
                     android:paddingLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+
                 android:orientation="horizontal"
                 android:layout_margin="1dp"
                 android:id="@+id/panel2"
@@ -57,12 +63,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:textSize="18dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
                     android:id="@+id/panel_text2"
                     android:paddingLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+
                 android:orientation="horizontal"
                 android:id="@+id/panel3"
                 android:gravity="center_vertical"
@@ -76,12 +86,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:textSize="18dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
                     android:id="@+id/panel_text3"
                     android:paddingLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
             <LinearLayout
+
                 android:id="@+id/panel4"
                 android:gravity="center_vertical"
                 android:layout_margin="1dp"
@@ -95,6 +109,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <TextView
+                    android:textSize="18dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
                     android:id="@+id/panel_text4"
                     android:paddingLeft="10dp"
                     android:layout_width="wrap_content"

@@ -21,6 +21,9 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.Date;
+
+import Model.GeoData;
 import orm.Configure;
 
 
@@ -42,7 +45,8 @@ public class MyServiceGeo extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(),true);
+        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(),false);
+
 
         locationManager = (LocationManager) getSystemService(getBaseContext().LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this,
@@ -64,7 +68,7 @@ public class MyServiceGeo extends Service {
         }
 
 
-        return Service.START_NOT_STICKY;
+        return Service.START_STICKY;
     }
 
     @Override
@@ -90,21 +94,47 @@ public class MyServiceGeo extends Service {
 
     class MyLocationListener implements android.location.LocationListener {
 
+        double cur;
+        double cur1;
         int anInt = 0;
         @Override
         public synchronized void onLocationChanged(Location location) {
 
-            if(anInt++<10) return;
+
+
+
+            if(anInt++<2) return;
             anInt=0;
+
+            if(BuildConfig.DEBUG){
+
+            }else {
+                 if(cur==location.getLatitude()&&cur1==location.getLongitude())
+                    return;
+            }
+
+
+            cur=location.getLatitude();
+            cur1=location.getLongitude();
+
+            GeoData data=new GeoData();
+            data.date=new Date().getTime();
+            data.latitude=location.getLatitude();
+            data.longitude=location.getLongitude();
+            data.trackName= TrackSettings.getCore().trackName;
+
+            Configure.getSession().insert(data);
+
             Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
             intent.putExtra(MainActivity.PARAM_LATITUDE, location.getLatitude());
-            intent.putExtra(MainActivity.PARAM_LONGITUDE, MainActivity.PARAM_LONGITUDE);
-            sendBroadcast(intent);
-            sendBroadcast(intent);
-            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(1111));
-            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(11111111));
+            intent.putExtra(MainActivity.PARAM_LONGITUDE, location.getLongitude());
+            intent.putExtra(MainActivity.PARAM_DATE, data.date);
+            sendBroadcast(intent); sendBroadcast(intent);
+
 
         }
+
+
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -122,3 +152,4 @@ public class MyServiceGeo extends Service {
         }
     }
 }
+

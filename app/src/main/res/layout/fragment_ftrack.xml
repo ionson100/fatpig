@@ -14,34 +14,47 @@
             android:orientation="vertical"
             android:id="@+id/data_track"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="0dp"
+            android:layout_weight="0.7">
 
 
-            <TextView
-                android:fontFamily="sans-serif-thin"
-                android:textSize="35dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white"
-                android:text="Large Text"
-                android:id="@+id/timer_text" />
 
-            <Chronometer
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/chronometer"
-                android:layout_gravity="center_horizontal" />
+
+
+                <com.omsk.bitnic.fatpig.PausableChronometer
+                    android:textSize="35dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/chronometer"
+                    android:layout_gravity="center_horizontal" />
+                <com.omsk.bitnic.fatpig.Pupper
+                    android:id="@+id/diastace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+
+                <com.omsk.bitnic.fatpig.Pupper
+                    android:id="@+id/calories"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            <com.omsk.bitnic.fatpig.Pupper
+                android:id="@+id/speed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
 
         </LinearLayout>
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_height="0dp"
+            android:layout_weight="0.3">
             <ImageButton
 
                 android:tag="1"

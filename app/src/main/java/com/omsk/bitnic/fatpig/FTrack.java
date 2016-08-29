@@ -1,49 +1,58 @@
 package com.omsk.bitnic.fatpig;
 
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+import android.content.IntentFilter;
+
 import android.os.Bundle;
-import android.os.StrictMode;
+
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-import android.support.v4.util.TimeUtils;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import org.osmdroid.contributor.util.Util;
-
-import java.util.concurrent.TimeUnit;
+import android.widget.Toast;
 
 
-/**
- * A simple {@link Fragment} subclass.
- */
+import java.util.Date;
+import java.util.List;
+
+import Model.GeoData;
+import Model.User;
+import orm.Configure;
+
+
 public class FTrack extends Fragment implements View.OnClickListener{
+
+   Pupper distance,calories;
+   Pupper speed;
 
 
     ImageButton mBtRunn;
     ImageButton mBtPause;
     ImageButton mBtStop;
-    TextView mTimerText;
-    Chronometer chronometer;
+
+    List<GeoData> mGeoDatas;
+
+    PausableChronometer chronometer;
     View mView;
-    boolean isStart=true;
-    long currentTime=0;
-    BroadcastReceiver broadcastReceiver;
+    User user;
+
+
+    MyBroadcastReceiver broadcastReceiver;
+    private int anInt=0;
 
     public FTrack() {
         // Required empty public constructor
     }
+
 
 
     @Override
@@ -51,8 +60,11 @@ public class FTrack extends Fragment implements View.OnClickListener{
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_ftrack, container, false);
 
+        distance= (Pupper) mView.findViewById(R.id.diastace);
+        speed= (Pupper) mView.findViewById(R.id.speed);
+        calories= (Pupper) mView.findViewById(R.id.calories);
 
-        mTimerText= (TextView) mView.findViewById(R.id.timer_text);
+
         mBtRunn = (ImageButton) mView.findViewById(R.id.tarack_run);
         mBtPause = (ImageButton) mView.findViewById(R.id.tarack_pause);
         mBtStop = (ImageButton) mView.findViewById(R.id.tarack_stop);
@@ -60,135 +72,167 @@ public class FTrack extends Fragment implements View.OnClickListener{
         mBtPause.setOnClickListener(this);
         mBtStop.setOnClickListener(this);
 
-        final String tag=Settings.getSettings().statusTrack;
-        if(tag.equals("1")){
-            mBtRunn.setEnabled(false);
-            mBtPause.setEnabled(true);
-            mBtStop.setEnabled(true);
-        }else if(tag.equals("2")){
-            mBtRunn.setEnabled(true);
-            mBtPause.setEnabled(false);
-            mBtStop.setEnabled(true);
-        }else if(tag.equals("3")){
-            mBtRunn.setEnabled(true);
-            mBtPause.setEnabled(true);
-            mBtStop.setEnabled(false);
+
+        List<User> users=Configure.getSession().getList(User.class,null);
+        if(users.size()>0){
+            user=users.get(0);
+        }else{
+            user=null;
         }
 
 
 
 
+        final String tag= TrackSettings.getCore().statusTrack;
 
-       activateChrono();
+        mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
+        Toast.makeText(getActivity(),String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
 
-         broadcastReceiver = new BroadcastReceiver() {
 
 
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                int lototude = intent.getIntExtra(MainActivity.PARAM_LATITUDE, 0);
-                int langitude = intent.getIntExtra(MainActivity.PARAM_LONGITUDE, 0);
-                Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(lototude));
-                Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(langitude));
-            }
-        };
 
+
+
+
+        broadcastReceiver = new MyBroadcastReceiver();
+        getActivity().registerReceiver(broadcastReceiver,new IntentFilter(MainActivity.BROADCAST_ACTION));
+        if(TrackSettings.getCore().timeTimeDelta!=0){
+            long del=new Date().getTime()- TrackSettings.getCore().timeTimeDelta;
+            long dd= TrackSettings.getCore().timeWhenStopped;
+            long res= TrackSettings.getCore().timeWhenStopped-del;
+           // Log.d("ssssssssssssssss",String.valueOf(res));
+            TrackSettings.getCore().timeWhenStopped=res;
+            TrackSettings.getCore().timeTimeDelta=0;
+            TrackSettings.save();
+        }
+        activateChrono();
+        if(tag.equals("1")){
+            start();
+        }else if(tag.equals("2")){
+            pause();
+        }else if(tag.equals("3")){
+            stop();
+        }else{
+            mBtRunn.setEnabled(true);
+            mBtPause.setEnabled(false);
+            mBtStop.setEnabled(false);
+        }
+
+
+        calculate();
         return mView;
     }
     void activateChrono(){
-        chronometer = (Chronometer) mView.findViewById(R.id.chronometer);
+        chronometer = (PausableChronometer) mView.findViewById(R.id.chronometer);
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
-            public void onChronometerTick(final Chronometer chronometer) {
-                mTimerText.post(new Runnable() {
-                    @Override
-                    public void run() {
-
-                        currentTime=SystemClock.elapsedRealtime()-chronometer.getBase();
-
-                        if(isStart==false){
-                            Settings.getSettings().timerStart=currentTime;
-
-                            isStart=true;
-
-                        }
-                        if(Settings.getSettings().timerStart==0&&Settings.getSettings().timerList.size()!=0){
-                            Settings.getSettings().timerStart=currentTime;
-                            Settings.Save();
-                        }
-
-                        long res=0;
-                        for (timer timer : Settings.getSettings().timerList) {
-                            res=res+(timer.stop-timer.start);
-                        }
-                        res=res+(currentTime-Settings.getSettings().timerStart);
+            public void onChronometerTick(Chronometer chronometer) {
 
 
-                        int minutes = (int) TimeUnit.MILLISECONDS.toMinutes(res);
-                        int hour = (int) TimeUnit.MILLISECONDS.toHours(res);
-                        int dey = (int) TimeUnit.MILLISECONDS.toDays(res);
-                        int secd = (int) TimeUnit.MILLISECONDS.toSeconds(res);
-                        int secCore= (int) (secd-(minutes*60)-(hour*60*60)-(dey*24*60*60));
+                if(anInt++>20){
+                    anInt=0;
+                    FillData.fill(getActivity());
+                }
 
-                        mTimerText.setText(Utils.getStringDecimal(dey)+"."+Utils.getStringDecimal(hour)+"."+Utils.getStringDecimal(minutes)+"."+Utils.getStringDecimal(secCore));}
-
-
-                });
             }
         });
+        chronometer.setFormat("00:%s");
 
     }
 
     @Override
     public void onDestroy() {
-            super.onDestroy();
-       getActivity(). unregisterReceiver(broadcastReceiver);
+        super.onDestroy();
+        chronometer.destoryStop();
+        getActivity(). unregisterReceiver(broadcastReceiver);
     }
+
 
     @Override
     public void onClick(View v) {
         String tag= (String) v.getTag();
         if(tag.equals("1")){
-
-
-           // chronometer.destroyDrawingCache();
-            chronometer.stop();
-//            chronometer=null;
-//            activateChrono();
-            mBtRunn.setEnabled(false);
-            mBtPause.setEnabled(true);
-            mBtStop.setEnabled(true);
-            Settings.getSettings().statusTrack="1";
-            Settings.Save();
-            getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
+            start();
         }else if(tag.equals("2")){
-
-
-            isStart=true;
-            chronometer.stop();
-            mBtRunn.setEnabled(true);
-            mBtPause.setEnabled(false);
-            mBtStop.setEnabled(true);
-            Settings.getSettings().statusTrack="2";
-
-            timer timer = new timer(Settings.getSettings().timerStart,currentTime);
-            Settings.getSettings().timerList.add(timer);
-            Settings.getSettings().timerStart=0;
-            Settings.Save();
-            getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
+            pause();
         }else if(tag.equals("3")){
-            isStart=false;
-            isStart=true;
-            chronometer.stop();
-            mBtRunn.setEnabled(true);
-            mBtPause.setEnabled(true);
-            mBtStop.setEnabled(false);
-            Settings.getSettings().statusTrack="3";
-            Settings.getSettings().timerStart=0;
-            Settings.getSettings().timerStop=0;
-            Settings.getSettings().timerList.clear();
-            Settings.Save();
-            getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
+            stop();
+        }
+    }
+    void start(){
+       boolean first=TrackSettings.getCore().trackName==0;
+        chronometer.start();
+        mBtRunn.setEnabled(false);
+        mBtPause.setEnabled(true);
+        mBtStop.setEnabled(true);
+        getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
+        if(first){
+            mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
+            Toast.makeText(getActivity(),String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
+            calculate();
+        }
+        FillData.fill(getActivity());
+    }
+    void pause(){
+        chronometer.stop();
+        mBtRunn.setEnabled(true);
+        mBtPause.setEnabled(false);
+        mBtStop.setEnabled(true);
+        getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
+    }
+    void stop(){
+        chronometer.setBase(SystemClock.elapsedRealtime());
+        chronometer.reset();
+        mBtRunn.setEnabled(true);
+        mBtPause.setEnabled(false);
+        mBtStop.setEnabled(false);
+        getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
+    }
+
+    void calculate(){
+
+        double dis=  Utils.round(Calculation.getDistance(mGeoDatas),3);
+        distance.setPairString(getString(R.string.distance), String.valueOf(dis));
+        double a= Utils.round(Calculation.getSpeed(mGeoDatas),2);
+
+        if(a>0){
+            String ss=Double.toString(a);
+            speed.setPairString(getString(R.string.speed),ss);
+        }
+
+
+        double cal=Utils.round(Calculation.getCalories(mGeoDatas,user),2);
+        String df=String.valueOf(cal);
+
+        calories.setPairString(getString(R.string.calories),df);
+    }
+
+
+
+    public class MyBroadcastReceiver extends BroadcastReceiver {
+
+
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+
+            double langitude = intent.getDoubleExtra(MainActivity.PARAM_LATITUDE, 0);
+            double longitude = intent.getDoubleExtra(MainActivity.PARAM_LONGITUDE, 0);
+            long date = intent.getLongExtra(MainActivity.PARAM_DATE, 0);
+            GeoData geoData=new GeoData();
+            geoData.latitude=langitude;
+            geoData.longitude=longitude;
+            geoData.date=date;
+            mGeoDatas.add(geoData);
+            calculate();
+
+
+
+            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(longitude));
+            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(langitude));
         }
     }
 }
+
+

@@ -67,7 +67,7 @@ public class DialogAddOdEditProduct extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if(editTextCal.getText().toString().trim().length()==0||editTextName.getText().toString().trim().length()==0){
-                    Toast.makeText(getActivity(), "Поле название или калорий не заполено", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), getString(R.string.error1), Toast.LENGTH_SHORT).show();
 
                 }else{
                     if(product==null){

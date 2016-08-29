@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import Model.Product;
+import Transceiver.Transceiver;
 
 public class ListAdapterProduct extends ArrayAdapter<Product> {
 
@@ -51,3 +52,4 @@ public class ListAdapterProduct extends ArrayAdapter<Product> {
 
 
 }
+

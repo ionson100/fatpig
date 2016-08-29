@@ -40,9 +40,9 @@
     <item android:title="Communicate">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_treack_show"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="@string/track_chow" />
             <item
                 android:id="@+id/nav_send"
                 android:icon="@drawable/ic_menu_send"

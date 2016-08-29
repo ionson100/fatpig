@@ -2,11 +2,12 @@ package com.omsk.bitnic.fatpig;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -19,6 +20,7 @@ import android.view.MenuItem;
 import com.settings.ion.mylibrary.Reanimator;
 import com.settings.ion.mylibrary.iListenerСhanges;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -29,19 +31,22 @@ import orm.Configure;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public static List<Integer> LISTTRAFIC=new ArrayList<>();
+
     public static final String PARAM_LATITUDE = "latitude";
     public static final String PARAM_LONGITUDE ="longitude" ;
 
     private static final int MENU_UPDATE_PECENT = 1;
     private static final int MENU_DELETE_UPDATE_LAST_EAT = 2;
     public static final String BROADCAST_ACTION = "sasdjkdjasdjdikjausdu";
+    public static final String PARAM_DATE = "asjkdj";
     Settings mSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-       // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
         mSettings=Settings.getSettings();
 
@@ -55,10 +60,10 @@ public class MainActivity extends AppCompatActivity
         });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-       // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-       //         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-      //  drawer.setDrawerListener(toggle);
-       // toggle.syncState();
+        // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        //         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        //  drawer.setDrawerListener(toggle);
+        // toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -78,6 +83,8 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
+        startService(new Intent(this, MyServiceWach.class));
+
 
 
     }
@@ -88,18 +95,35 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            if(
-                    mSettings.getSateSystem()==StateSystem.WORK||
-                            mSettings.getSateSystem()==StateSystem.MAP||
-                    mSettings.getSateSystem()==StateSystem.SETTINGS||
-                            mSettings.getSateSystem()==StateSystem.TRACK||
-                    mSettings.getSateSystem()==StateSystem.PRODUCT||
-                    mSettings.getSateSystem()==StateSystem.USER_SETTINGS
-                    ){
-                    mSettings.setStateSystem(StateSystem.HOME,this
-                );
-            }else {
-                super.onBackPressed();
+//            if(
+//                    mSettings.getSateSystem()==StateSystem.WORK||
+//                            mSettings.getSateSystem()==StateSystem.MAP||
+//                            mSettings.getSateSystem()==StateSystem.SETTINGS||
+//                            mSettings.getSateSystem()==StateSystem.TRACK||
+//                            mSettings.getSateSystem()==StateSystem.TRACK_SHOW||
+//                            mSettings.getSateSystem()==StateSystem.PRODUCT||
+//                            mSettings.getSateSystem()==StateSystem.USER_SETTINGS
+//                    ){
+//                mSettings.setStateSystem(StateSystem.HOME,this
+//                );
+//            }else {
+//                super.onBackPressed();
+//            }
+            if(LISTTRAFIC.size()==0){
+                if(mSettings.getSateSystem()!=StateSystem.HOME){
+                    mSettings.setStateSystem(StateSystem.HOME,this);
+                }else{
+                    super.onBackPressed();
+                }
+
+            }else{
+                LISTTRAFIC.remove(LISTTRAFIC.size()-1);
+                if(LISTTRAFIC.size()==0){
+                    mSettings.setStateSystem(StateSystem.HOME,this);
+                }else{
+                    mSettings.setStateSystem(LISTTRAFIC.get(LISTTRAFIC.size()-1),this);
+                    LISTTRAFIC.remove(LISTTRAFIC.size()-1);
+                }
             }
 
         }
@@ -143,8 +167,10 @@ public class MainActivity extends AppCompatActivity
             Settings.getSettings().setStateSystem(StateSystem.WORK,this);
         } else if (id == R.id.nav_map) {
             Settings.getSettings().setStateSystem(StateSystem.MAP,this);
-        } else if (id == R.id.nav_treack) {
+        }else if (id == R.id.nav_treack) {
             Settings.getSettings().setStateSystem(StateSystem.TRACK,this);
+        } else if (id == R.id.nav_treack_show) {
+            Settings.getSettings().setStateSystem(StateSystem.TRACK_SHOW,this);
         }
         else if (id == R.id.nav_settings_core) {
             Settings.getSettings().setStateSystem(StateSystem.SETTINGS,this);
@@ -164,10 +190,10 @@ public class MainActivity extends AppCompatActivity
 
         switch (v.getId()) {
             case R.id.panel2:
-                menu.add(0, MENU_UPDATE_PECENT, 0, "Изменить процент уменьшения калорий");
+                menu.add(0, MENU_UPDATE_PECENT, 0, R.string.menu1);
                 break;
             case R.id.panel3:
-                menu.add(0,MENU_DELETE_UPDATE_LAST_EAT, 0, "Отрыгнуть последний кусок жратвы");
+                menu.add(0,MENU_DELETE_UPDATE_LAST_EAT, 0, R.string.menu2);
                 break;
         }
     }
@@ -200,5 +226,14 @@ public class MainActivity extends AppCompatActivity
         return super.onContextItemSelected(item);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Transceiver.send(FTrack.CHRONO,null);
+    }
 
+    @Override
+    public void onActionModeFinished(ActionMode mode) {
+        super.onActionModeFinished(mode);
+    }
 }

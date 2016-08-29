@@ -33,4 +33,14 @@
     <string name="map">Карты</string>
     <string name="title_activity_maps">Map</string>
     <string name="tarck">Треккинг</string>
+    <string name="distance">Расстояние (км.):</string>
+    <string name="speed">Cкорость (км./час.):</string>
+    <string name="calories">Калории (ккал.):</string>
+    <string name="error1">Поле название или калорий не заполено</string>
+    <string name="editor">Редактировать</string>
+    <string name="addnew">Добавить новое</string>
+    <string name="createButton">Создать кнопку</string>
+    <string name="menu1">Изменить процент уменьшения калорий</string>
+    <string name="menu2">Отрыгнуть последний кусок жратвы</string>
+    <string name="track_chow">Маршруты</string>
 </resources>

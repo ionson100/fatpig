@@ -60,7 +60,7 @@ public class FWork extends Fragment {
     public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final int position = aMenuInfo.position;
-        menu.add("Редактировать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        menu.add(R.string.editor).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 DialogAddOdEditWork addWork =new DialogAddOdEditWork();
@@ -76,7 +76,7 @@ public class FWork extends Fragment {
             }
         });
 
-        menu.add("Добавить новое").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        menu.add(R.string.addnew).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 DialogAddOdEditWork addWork =new DialogAddOdEditWork();
@@ -93,7 +93,7 @@ public class FWork extends Fragment {
             }
         });
 
-        menu.add("Создать кнопку").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+        menu.add(R.string.createButton).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 

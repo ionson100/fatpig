@@ -18,9 +18,24 @@ public class FactoryFragment {
          android.support.v4.app.FragmentManager mFragmentManager = activity.getSupportFragmentManager();
          FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
         removeFragment(mFragmentManager,mFragmentTransaction);
+
+        if(mSettings.getSateSystem()==StateSystem.HOME){
+            MainActivity.LISTTRAFIC.clear();
+        }else{
+            if(MainActivity.LISTTRAFIC.size()>0&&MainActivity.LISTTRAFIC.get(MainActivity.LISTTRAFIC.size()-1)!=mSettings.getSateSystem()){
+                MainActivity.LISTTRAFIC.add(mSettings.getSateSystem());
+            }
+            if(MainActivity.LISTTRAFIC.size()==0){
+                MainActivity.LISTTRAFIC.add(mSettings.getSateSystem());
+            }
+
+        }
+
+
         switch (mSettings.getSateSystem()) {
             case StateSystem.HOME: {
                 showHome(mFragmentTransaction);
+
                 break;
             }
             case StateSystem.USER_SETTINGS: {
@@ -48,9 +63,19 @@ public class FactoryFragment {
                 break;
             }
 
+            case StateSystem.TRACK_SHOW: {
+                showTrackShow(mFragmentTransaction);
+                break;
+            }
+
         }
 
 
+    }
+
+    private static void showTrackShow(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FTrackShow(), "trackshow");
+        mFragmentTransaction.commit();
     }
 
     private static void showTrack(FragmentTransaction mFragmentTransaction) {

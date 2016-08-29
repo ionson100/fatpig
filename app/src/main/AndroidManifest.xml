@@ -58,7 +58,11 @@
 
         <service
             android:name=".MyServiceGeo"
+            android:enabled="true" />
+        <service
+            android:name=".MyServiceWach"
             android:enabled="true"
+            android:stopWithTask="false"
             />
     </application>
 

@@ -7,12 +7,17 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
+import android.support.v4.app.FragmentActivity;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import javax.crypto.AEADBadTagException;
 
 import Model.Sex;
 import Model.User;
@@ -118,6 +123,15 @@ public class Utils {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
         return dateFormat.format(Utils.intToDate(date));
     }
+
+    public static String simpleDateFormatE(int date) {
+        if (date <= 0) {
+            return "нет данных";
+        }
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+        return dateFormat.format(Utils.intToDate(date));
+    }
     public static boolean isMyServiceRunning(Class<?> serviceClass,Activity activity) {
         ActivityManager manager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
@@ -128,4 +142,48 @@ public class Utils {
         return false;
     }
 
+    public static void messageBoxTrackData(final Track track, final FragmentActivity activity,User user) {
+        String string="Нет данных.";
+        if(track.list.size()>0){
+
+            long delta=track.list.get(track.list.size()-1).date-track.list.get(0).date;
+
+            double distance=Calculation.getDistance(track.list);
+
+            double dd=(((double)delta)/1000)/60/60;// час;
+            double speed=distance/dd; // км
+
+
+            int m = (int) ((delta/1000)/60);
+
+
+            string = "Время старта:                          "+Utils.simpleDateFormat(Utils.dateToInt(new Date(track.list.get(0).date))) +"\n"+
+                     "Время финиша:                       "+Utils.simpleDateFormat(Utils.dateToInt(new Date(track.list.get(track.list.size()-1).date))) +"\n"+
+                     "Расстояние (км.):                   "+ String.valueOf(Utils.round(distance,2))+"\n"+
+                     "Средняя скорость (км./ч.): "+ String.valueOf(Utils.round(speed,2))+"\n"+
+                     "Время в пути (мин.):              "+String.valueOf(m)+" \n"+
+                     "Расход калорий (ккал):         "+String.valueOf(Utils.round(Calculation.getCalories(track.list,user),2));
+        }
+
+
+        final String finalString = string;
+        activity.runOnUiThread(new Runnable() {
+            public void run() {
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder
+                        .setTitle(Utils.simpleDateFormat(track.trackName))
+                        .setMessage(finalString)
+                        .setIcon(android.R.drawable.ic_dialog_info)
+                        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
+
+    }
 }

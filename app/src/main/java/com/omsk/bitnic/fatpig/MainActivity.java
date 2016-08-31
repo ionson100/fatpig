@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 
 import com.settings.ion.mylibrary.Reanimator;
+import com.settings.ion.mylibrary.colorpicker.*;
 import com.settings.ion.mylibrary.iListenerСhanges;
 
 import java.util.ArrayList;
@@ -118,25 +119,13 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-//            if(
-//                    mSettings.getSateSystem()==StateSystem.WORK||
-//                            mSettings.getSateSystem()==StateSystem.MAP||
-//                            mSettings.getSateSystem()==StateSystem.SETTINGS||
-//                            mSettings.getSateSystem()==StateSystem.TRACK||
-//                            mSettings.getSateSystem()==StateSystem.TRACK_SHOW||
-//                            mSettings.getSateSystem()==StateSystem.PRODUCT||
-//                            mSettings.getSateSystem()==StateSystem.USER_SETTINGS
-//                    ){
-//                mSettings.setStateSystem(StateSystem.HOME,this
-//                );
-//            }else {
-//                super.onBackPressed();
-//            }
+
             if(LISTTRAFIC.size()==0){
                 if(mSettings.getSateSystem()!=StateSystem.HOME){
                     mSettings.setStateSystem(StateSystem.HOME,this);
                 }else{
-                    super.onBackPressed();
+                    //super.onBackPressed();
+                    finish();
                 }
 
             }else{
@@ -174,6 +163,16 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(TrackSettings.getCore().statusTrack.equals("1")){
+            if(!Utils.isMyServiceRunning(MyServiceGeo.class,this)){
+                startService(new Intent(this, MyServiceGeo.class));
+            }
+        }
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -197,8 +196,8 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_settings_core) {
             Settings.getSettings().setStateSystem(StateSystem.SETTINGS,this);
-        }else if (id == R.id.nav_send) {
-
+        }else if (id == R.id.nav_life) {
+            Settings.getSettings().setStateSystem(StateSystem.LIFE,this);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

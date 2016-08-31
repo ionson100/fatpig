@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <com.omsk.bitnic.fatpig.Pupper
+            android:id="@+id/life_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <com.omsk.bitnic.fatpig.Pupper
+            android:id="@+id/life_mass"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.omsk.bitnic.fatpig.Pupper
+            android:id="@+id/life_press"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.omsk.bitnic.fatpig.Pupper
+            android:id="@+id/life_calories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <com.omsk.bitnic.fatpig.Pupper
+            android:id="@+id/life_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

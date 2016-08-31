@@ -43,4 +43,5 @@
     <string name="menu1">Изменить процент уменьшения калорий</string>
     <string name="menu2">Отрыгнуть последний кусок жратвы</string>
     <string name="track_chow">Маршруты</string>
+    <string name="life">Дневник</string>
 </resources>

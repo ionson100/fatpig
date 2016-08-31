@@ -47,7 +47,7 @@ public class FillData {
 
 
 
-       final int  del=280;
+        final int  del=280;
 
 
         TextView textView1= (TextView) activity.findViewById(R.id.panel_text1);
@@ -71,18 +71,16 @@ public class FillData {
             panel2.setLayoutParams(params);
         }
         double d= total/100;
-        Calendar calendar=Calendar.getInstance();
-        int hover=calendar.get(Calendar.HOUR);
-        int min=calendar.get(Calendar.MINUTE);
-        int sec=calendar.get(Calendar.SECOND);
-        int ds=Utils.dateToInt(new Date())-hover*60*60 -min*60-sec;
+        GregorianCalendar now = new GregorianCalendar();
+        GregorianCalendar today = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        int idd=Utils.dateToInt(today.getTime());
 
         {
 
 
 
 
-            List<OneEat> oneEatList=Configure.getSession().getList(OneEat.class," date > "+String.valueOf(ds));
+            List<OneEat> oneEatList=Configure.getSession().getList(OneEat.class," date > "+String.valueOf(idd));
             double accum=0;
             for (OneEat oneEat : oneEatList) {
                 if(oneEat.isGramm){
@@ -103,8 +101,12 @@ public class FillData {
 
         }
         {
-            List<GeoData> geoDatas=Configure.getSession().getList(GeoData.class," date > "+String.valueOf(ds));
 
+
+
+
+
+            List<GeoData> geoDatas=Configure.getSession().getList(GeoData.class," track_name > "+String.valueOf(idd));//
             Map<Integer, List<GeoData>> dataMap = Linq.toStream(geoDatas).groupBy(new Function<GeoData, Integer>() {
                 @Override
                 public Integer foo(GeoData t) {
@@ -119,13 +121,14 @@ public class FillData {
 
 
 
+            width=width-(width/100)*10;// уменьшение из за того что вставил кнопку
             double prcent=cal/d;
             ViewGroup.LayoutParams params = panel4.getLayoutParams();
             params.width = (int) ((width/100)*prcent);
             if(params.width<del){
                 params.width=del;
             }
-            panel3.setLayoutParams(params);
+            panel4.setLayoutParams(params);
             textView4.setText(String.valueOf(Utils.round(cal,1))+" ккал.");
         }
 

@@ -28,6 +28,8 @@ public class ListAdapterTrack extends ArrayAdapter<Track> {
         final View mView  = LayoutInflater.from(getContext()).inflate(R.layout.item_track, null);
         TextView trackDate= (TextView) mView.findViewById(R.id.track_date);
         trackDate.setText(p.name());
+        TextView trackCount= (TextView) mView.findViewById(R.id.track_count);
+        trackCount.setText(String.valueOf(p.list.size()));
         mView.setTag(p);
         return mView;
     }

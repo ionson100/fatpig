@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import Model.GeoData;
+import Model.User;
 import linq.Function;
 import linq.Linq;
 import orm.Configure;
@@ -33,6 +34,7 @@ public class FTrackShow extends Fragment {
     private View mView;
     private ListView mListView;
     private List<Track> mListTracks=new ArrayList<>();
+    User user;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -53,6 +55,9 @@ public class FTrackShow extends Fragment {
         menu.add(1,1,1,"Показать данные").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
+                Utils.messageBoxTrackData(track.getTrack(position),getActivity(),user);
+
                 return true;
             }
         });
@@ -97,6 +102,10 @@ public class FTrackShow extends Fragment {
         mView=inflater.inflate(R.layout.fragment_ftrack_show, container, false);
         mListView= (ListView) mView.findViewById(R.id.list_track);
         mListView.setOnCreateContextMenuListener(this);
+        List<User> userList=Configure.getSession().getList(User.class,null);
+        if(userList.size()>0){
+            user=userList.get(0);
+        }
 
         List<GeoData> geoDatas= Configure.getSession().getList(GeoData.class,null);
 

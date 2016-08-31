@@ -71,10 +71,19 @@ public class FactoryFragment {
                 showMap(mFragmentTransaction);
                 break;
             }
+            case StateSystem.LIFE: {
+                showLife(mFragmentTransaction);
+                break;
+            }
 
         }
 
 
+    }
+
+    private static void showLife(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FMyLife(), "life");
+        mFragmentTransaction.commit();
     }
 
     private static void showTrackShow(FragmentTransaction mFragmentTransaction) {

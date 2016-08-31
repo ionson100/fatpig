@@ -57,8 +57,8 @@ public class Pupper extends LinearLayout {
     private void init() {
         LayoutInflater li = LayoutInflater.from(getContext());
         View view = li.inflate(R.layout.pupper, null, false);
-        textViewTitul = (TextView) view.findViewById(R.id.pupper_titul);
-        textViewValue = (TextView) view.findViewById(R.id.pupper_value);
+        this.textViewTitul = (TextView) view.findViewById(R.id.pupper_titul);
+        this.textViewValue = (TextView) view.findViewById(R.id.pupper_value);
         this.addView(view);
     }
 

@@ -67,6 +67,10 @@ public class FactoryFragment {
                 showTrackShow(mFragmentTransaction);
                 break;
             }
+            case StateSystem.MAP_TRACK: {
+                showMap(mFragmentTransaction);
+                break;
+            }
 
         }
 

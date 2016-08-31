@@ -5,9 +5,12 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -26,15 +29,66 @@ import orm.Configure;
  * A simple {@link Fragment} subclass.
  */
 public class FTrackShow extends Fragment {
-
+    private ListAdapterTrack track;
     private View mView;
     private ListView mListView;
     private List<Track> mListTracks=new ArrayList<>();
 
-    public FTrackShow() {
-        // Required empty public constructor
-    }
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
+        AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        final int position = aMenuInfo.position;
+
+        menu.add(1,1,1,"Показать на карте").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Settings.getSettings().trackshow= track.getTrack(position);
+                Settings.getSettings().setStateSystem(StateSystem.MAP_TRACK,getActivity());
+                return true;
+            }
+        });
+
+        menu.add(1,1,1,"Показать данные").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return true;
+            }
+        });
+
+
+        menu.add(1,1,1,"Удалить").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+
+                Configure.getSession().execSQL(" delete from track_data where track_name = "+ String.valueOf(track.getTrack(position).trackName));
+                List<GeoData> geoDatas= Configure.getSession().getList(GeoData.class,null);
+                Map<Integer, List<GeoData>> dataMap = Linq.toStream(geoDatas).groupBy(new Function<GeoData, Integer>() {
+                    @Override
+                    public Integer foo(GeoData t) {
+                        return t.trackName;
+                    }
+                });
+                mListTracks.clear();
+                for (Integer ss : dataMap.keySet()) {
+                    Track track = new Track();
+                    track.trackName =ss;
+                    track.list=dataMap.get(ss);
+                    mListTracks.add(track);
+                }
+                Collections.sort(mListTracks, new Comparator<Track>() {
+                    @TargetApi(Build.VERSION_CODES.KITKAT)
+                    @Override
+                    public int compare(Track lhs, Track rhs) {
+                        return Long.compare(lhs.trackName,rhs.trackName);
+                    }
+                });
+                activateList(mListTracks);
+                return true;
+            }
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,15 +96,16 @@ public class FTrackShow extends Fragment {
 
         mView=inflater.inflate(R.layout.fragment_ftrack_show, container, false);
         mListView= (ListView) mView.findViewById(R.id.list_track);
+        mListView.setOnCreateContextMenuListener(this);
 
         List<GeoData> geoDatas= Configure.getSession().getList(GeoData.class,null);
 
-       Map<Integer, List<GeoData>> dataMap = Linq.toStream(geoDatas).groupBy(new Function<GeoData, Integer>() {
-           @Override
-           public Integer foo(GeoData t) {
-               return t.trackName;
-           }
-       });
+        Map<Integer, List<GeoData>> dataMap = Linq.toStream(geoDatas).groupBy(new Function<GeoData, Integer>() {
+            @Override
+            public Integer foo(GeoData t) {
+                return t.trackName;
+            }
+        });
 
         for (Integer ss : dataMap.keySet()) {
             Track track = new Track();
@@ -72,7 +127,7 @@ public class FTrackShow extends Fragment {
 
     private void activateList(List<Track> tracks) {
 
-        ListAdapterTrack track=new ListAdapterTrack(getActivity(),0,tracks);
+        track=new ListAdapterTrack(getActivity(),0,tracks);
         mListView.setAdapter(track);
 
     }

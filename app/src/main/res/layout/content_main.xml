@@ -94,29 +94,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
-            <LinearLayout
 
-                android:id="@+id/panel4"
+            <LinearLayout
                 android:gravity="center_vertical"
-                android:layout_margin="1dp"
-                android:layout_width="120dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" >
+                android:layout_weight="1"
+                >
+
+                <LinearLayout
+                    android:layout_weight="0.9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <LinearLayout
+
+                        android:id="@+id/panel4"
+                        android:gravity="center_vertical"
+                        android:layout_margin="1dp"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content" >
+
+
+                        <ImageButton
+                            android:background="@null"
+                            android:src="@drawable/ic_runner2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                        <TextView
+                            android:textSize="18dp"
+                            android:fontFamily="sans-serif-thin"
+                            android:textColor="@android:color/white"
+                            android:id="@+id/panel_text4"
+                            android:paddingLeft="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+                    </LinearLayout>
+                </LinearLayout>
+
+
 
                 <ImageButton
+                    android:id="@+id/menu"
                     android:background="@null"
-                    android:src="@drawable/ic_runner2"
+                    android:src="@drawable/ic_menu2"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-                <TextView
-                    android:textSize="18dp"
-                    android:fontFamily="sans-serif-thin"
-                    android:textColor="@android:color/white"
-                    android:id="@+id/panel_text4"
-                    android:paddingLeft="10dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1" />
+
             </LinearLayout>
+
+
 
         </LinearLayout>
         <LinearLayout

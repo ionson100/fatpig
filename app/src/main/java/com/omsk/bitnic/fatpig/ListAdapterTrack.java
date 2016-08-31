@@ -18,7 +18,7 @@ public class ListAdapterTrack extends ArrayAdapter<Track> {
         this.trackList=objects;
         this.resource=resource;
     }
-    public Track getProduct(int i){
+    public Track getTrack(int i){
         return trackList.get(i);
     }
 

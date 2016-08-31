@@ -94,4 +94,9 @@
 
     </style>
 
+    <style name="buttonRoundDragDrop"  >
+        <item name="android:background">@drawable/button_background_round_drag_drop</item>
+
+    </style>
+
 </resources>

@@ -13,6 +13,7 @@ public class StateSystem {
     public static final int MAP=5;
     public static final int TRACK=6;
     public static final int TRACK_SHOW=7;
+    public static final int MAP_TRACK=8;
 
 
 }

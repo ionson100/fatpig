@@ -31,8 +31,8 @@ import orm.Configure;
 
 public class FTrack extends Fragment implements View.OnClickListener{
 
-   Pupper distance,calories;
-   Pupper speed;
+    Pupper distance,calories;
+    Pupper speed;
 
 
     ImageButton mBtRunn;
@@ -100,7 +100,7 @@ public class FTrack extends Fragment implements View.OnClickListener{
             long del=new Date().getTime()- TrackSettings.getCore().timeTimeDelta;
             long dd= TrackSettings.getCore().timeWhenStopped;
             long res= TrackSettings.getCore().timeWhenStopped-del;
-           // Log.d("ssssssssssssssss",String.valueOf(res));
+            // Log.d("ssssssssssssssss",String.valueOf(res));
             TrackSettings.getCore().timeWhenStopped=res;
             TrackSettings.getCore().timeTimeDelta=0;
             TrackSettings.save();
@@ -152,20 +152,48 @@ public class FTrack extends Fragment implements View.OnClickListener{
     public void onClick(View v) {
         String tag= (String) v.getTag();
         if(tag.equals("1")){
-            start();
+            DialogRequest request=new DialogRequest();
+            request.setOnAction(new DialogRequest.IAction() {
+                @Override
+                public void action() {
+                    start();
+                }
+            }).show(getActivity().getSupportFragmentManager(),"dd0");
+
         }else if(tag.equals("2")){
-            pause();
+
+            DialogRequest request=new DialogRequest();
+            request.setOnAction(new DialogRequest.IAction() {
+                @Override
+                public void action() {
+                    pause();
+                }
+            }).show(getActivity().getSupportFragmentManager(),"dd1");
+
+
+
         }else if(tag.equals("3")){
-            stop();
+
+            DialogRequest request=new DialogRequest();
+            request.setOnAction(new DialogRequest.IAction() {
+                @Override
+                public void action() {
+                    stop();
+                }
+            }).show(getActivity().getSupportFragmentManager(),"dd2");
+
         }
     }
     void start(){
-       boolean first=TrackSettings.getCore().trackName==0;
+        boolean first=TrackSettings.getCore().trackName==0;
         chronometer.start();
         mBtRunn.setEnabled(false);
         mBtPause.setEnabled(true);
         mBtStop.setEnabled(true);
-        getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
+        if(!Utils.isMyServiceRunning(MyServiceGeo.class,getActivity())){
+            getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
+        }
+
         if(first){
             mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
             Toast.makeText(getActivity(),String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
@@ -234,5 +262,7 @@ public class FTrack extends Fragment implements View.OnClickListener{
         }
     }
 }
+
+
 
 

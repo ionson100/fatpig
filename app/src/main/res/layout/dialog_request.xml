@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/base"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        tools:context="com.example.ion.myapplicationw.MainActivity">
+
+        <Button
+            android:text="OK"
+            android:textSize="50dp"
+            android:textColor="@android:color/holo_green_dark"
+            android:textStyle="bold"
+            style="@style/buttonRoundDragDrop"
+            android:id="@+id/ImgDrop"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            />
+        /
+        <ImageView
+
+            android:src="@drawable/sun"
+            android:id="@+id/img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            >
+        </ImageView>
+    </RelativeLayout>
+</LinearLayout>

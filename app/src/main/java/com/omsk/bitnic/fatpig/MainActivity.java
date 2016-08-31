@@ -7,15 +7,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
-import android.view.ActionMode;
-import android.view.ContextMenu;
-import android.view.View;
-import android.support.design.widget.NavigationView;
+
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.ActionMode;
+import android.view.ContextMenu;
+import android.view.Gravity;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+
+
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
 
 import com.settings.ion.mylibrary.Reanimator;
 import com.settings.ion.mylibrary.iListenerСhanges;
@@ -30,7 +35,7 @@ import orm.Configure;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
+    DrawerLayout drawer ;
     public static List<Integer> LISTTRAFIC=new ArrayList<>();
 
     public static final String PARAM_LATITUDE = "latitude";
@@ -59,15 +64,33 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+
+        //DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         // ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
         //         this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         //  drawer.setDrawerListener(toggle);
         // toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         ///////////////////////////////////////////////////////////////
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ImageButton buttonMenu= (ImageButton) findViewById(R.id.menu);
+        if (buttonMenu != null) {
+            buttonMenu.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    if (drawer.isDrawerOpen(GravityCompat.START)) {
+                        drawer.closeDrawer(GravityCompat.START);
+                    }else{
+                       drawer.openDrawer(GravityCompat.START);
+                    }
+                }
+            });
+        }
+        ///////////////////////////////////////////////////////////////////////
         FactoryFragment.Action(this);
 
         registerForContextMenu(findViewById(R.id.panel2));
@@ -91,7 +114,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

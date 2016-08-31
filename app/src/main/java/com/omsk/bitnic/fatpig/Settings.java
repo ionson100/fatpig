@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Settings implements Serializable {
 
 
@@ -73,11 +72,12 @@ public class Settings implements Serializable {
     public String startTab="t1";
 
     private static transient Settings settings;
-//,
+    //,
     private int _stateSystem;
     public double latitude=56.819847;
     public double longitude=60.640622;
     public float zoom=16;
+    public transient Track trackshow;
 
 
     public static Settings getSettings(){

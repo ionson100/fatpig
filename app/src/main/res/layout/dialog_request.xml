@@ -17,8 +17,8 @@
         tools:context="com.example.ion.myapplicationw.MainActivity">
 
         <Button
-            android:text="OK"
-            android:textSize="50dp"
+            android:text="Close"
+            android:textSize="30dp"
             android:textColor="@android:color/holo_green_dark"
             android:textStyle="bold"
             style="@style/buttonRoundDragDrop"
@@ -29,7 +29,7 @@
             android:layout_centerInParent="true"
             android:layout_marginTop="50dp"
             />
-        /
+
         <ImageView
 
             android:src="@drawable/sun"

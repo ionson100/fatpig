@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     private static final int MENU_DELETE_UPDATE_LAST_EAT = 2;
     public static final String BROADCAST_ACTION = "sasdjkdjasdjdikjausdu";
     public static final String PARAM_DATE = "asjkdj";
+    private FloatingActionButton fab;
     Settings mSettings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity
         //setSupportActionBar(toolbar);
         mSettings=Settings.getSettings();
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,6 +65,9 @@ public class MainActivity extends AppCompatActivity
                         .setAction("Action", null).show();
             }
         });
+
+
+
 
 
 
@@ -111,6 +115,14 @@ public class MainActivity extends AppCompatActivity
 
 
 
+    }
+
+    public void showHelp(){
+        if(Settings.getSettings().isShowHelp){
+            fab.setVisibility(View.VISIBLE);
+        }else{
+            fab.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -198,7 +210,10 @@ public class MainActivity extends AppCompatActivity
             Settings.getSettings().setStateSystem(StateSystem.SETTINGS,this);
         }else if (id == R.id.nav_life) {
             Settings.getSettings().setStateSystem(StateSystem.LIFE,this);
+        } else if (id == R.id.nav_settings_button) {
+            Settings.getSettings().setStateSystem(StateSystem.BUTTON_EAT,this);
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -14,11 +14,7 @@
             android:id="@+id/nav_settings_core"
             android:icon="@drawable/ic_settings"
             android:title="@string/nav_settings_core" />
-        <item
-            android:visible="false"
-            android:id="@+id/nav_settings_button"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/nav_settings_button" />
+
         <item
             android:id="@+id/nav_product"
             android:icon="@drawable/ic_eat2"
@@ -48,6 +44,10 @@
                 android:id="@+id/nav_life"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/life" />
+            <item
+                android:id="@+id/nav_settings_button"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/nav_settings_button" />
         </menu>
     </item>
 

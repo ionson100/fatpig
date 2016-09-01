@@ -50,8 +50,8 @@ public class DialogEat extends DialogFragment {
         View v = vi.inflate(R.layout.dialog_eat_product, null);
         builder.setView(v);
 
-        oneEat.product=product;
-        oneEat.product_id=product.id;
+//        oneEat.product=product;
+//        oneEat.product_id=product.id;
         oneEat.cal=product.calorieses;
         oneEat.isGramm=true;
         oneEat.date=Utils.dateToInt(new Date());

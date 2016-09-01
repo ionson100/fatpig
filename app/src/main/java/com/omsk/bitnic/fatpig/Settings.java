@@ -68,6 +68,13 @@ public class Settings implements Serializable {
             typeField = TypeField.Color)
     public int colorTopPanel =Color.YELLOW;
 
+    @SettingField(
+
+            index = 7,
+            title = R.string.showhelp,
+            typeField = TypeField.BooleanSwitch)
+    public boolean isShowHelp;
+
 
     public String startTab="t1";
 

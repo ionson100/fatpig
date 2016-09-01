@@ -6,13 +6,13 @@ import orm.Table;
 
 @Table("one_eat")
 public class OneEat {
-    public transient Product product;
+   // public transient Product product;
 
     @PrimaryKey("id")
     public int id;
 
-    @Column("product_id")
-    public int product_id;
+//    @Column("product_id")
+//    public int product_id;
 
     @Column("calorises")
     public double cal;

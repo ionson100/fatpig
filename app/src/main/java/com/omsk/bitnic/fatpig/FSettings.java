@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.settings.ion.mylibrary.Reanimator;
 import com.settings.ion.mylibrary.Settingion;
+import com.settings.ion.mylibrary.iListenerСhanges;
 
 
 public class FSettings extends Fragment {
@@ -27,9 +28,20 @@ public class FSettings extends Fragment {
 
         Settingion mSettingsEngine = (Settingion) mView.findViewById(R.id.setting_panel);
         mSettingsEngine.setModelClass(Settings.class, getActivity());
+        Reanimator.onSetListenerСhanges(new iListenerСhanges() {
+            @Override
+            public void OnCallListen(Class aClass, String fieldName, Object oldValue, Object newValue) {
+                ((MainActivity)getActivity()).showHelp();
+            }
+        });
 
 
         return mView;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Reanimator.unOnSetListenerchanges();
+    }
 }

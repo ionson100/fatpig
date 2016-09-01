@@ -6,6 +6,11 @@
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
+
+
+
+        android:id="@+id/panelBase"
+        android:background="@android:color/black"
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -32,28 +37,29 @@
                     android:id="@android:id/tabcontent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <TextView
 
-                        android:textColor="@android:color/black"
+                    <LinearLayout
+                        android:background="@android:color/black"
                         android:id="@+id/tvTab1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="oodifoi1">
-                    </TextView>
-                    <TextView
-                        android:textColor="@android:color/black"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <include
+                            layout="@layout/tab1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:background="@android:color/black"
                         android:id="@+id/tvTab2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="222222222222">
-                    </TextView>
-                    <TextView
-                        android:textColor="@android:color/black"
-                        android:id="@+id/tvTab3"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="3333333333333333">
-                    </TextView>
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <include
+                            layout="@layout/tab2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+                    </LinearLayout>
                 </FrameLayout>
             </LinearLayout>
         </TabHost>

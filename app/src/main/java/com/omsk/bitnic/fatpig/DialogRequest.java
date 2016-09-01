@@ -2,6 +2,7 @@ package com.omsk.bitnic.fatpig;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -23,10 +24,27 @@ import android.widget.RelativeLayout;
         }
         private IAction iAction;
 
+        private View mView;
+
+        public DialogRequest setView(View  mView){
+            this.mView=mView;
+            return this;
+        }
+
         public DialogRequest setOnAction(IAction onAction){
             this.iAction=onAction;
             return  this;
         }
+
+        @Override
+        public void onDismiss(DialogInterface dialog) {
+            super.onDismiss(dialog);
+            if(mView!=null){
+                mView.setVisibility(View.VISIBLE);
+            }
+        }
+
+
 
         private View selected_item = null;
         private int offset_x = 0;
@@ -51,6 +69,13 @@ import android.widget.RelativeLayout;
 
             View root = v.findViewById(R.id.base).getRootView();
             viewHost = (Button) v.findViewById(R.id.ImgDrop);
+
+            viewHost.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dismiss();
+                }
+            });
             imageSatelit = (ImageView) v.findViewById(R.id.img);
 
             imageSatelit.setOnTouchListener(this);
@@ -82,8 +107,10 @@ import android.widget.RelativeLayout;
                                     viewHost.setEnabled(false);
                                     selected_item.bringToFront();
                                     isDrop = true;
+                                    viewHost.setText(getString(R.string.ok));
                                 } else {
                                     viewHost.setEnabled(true);
+                                    viewHost.setText(R.string.close);
                                 }
                                 selected_item.setLayoutParams(lp);
                                 break;
@@ -98,7 +125,6 @@ import android.widget.RelativeLayout;
                                     if(iAction!=null){
                                         iAction.action();
                                     }
-
                                 }
                                 dismiss();
                                 break;

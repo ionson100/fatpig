@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import java.util.Date;
 import java.util.List;
@@ -40,58 +41,17 @@ public class ListAdapterLife extends ArrayAdapter<Life> {
         String f="sans-serif";
         final Life p = getItem(position);
         final View mView  = LayoutInflater.from(getContext()).inflate(resource, null);
-        Pupper date= (Pupper) mView.findViewById(R.id.life_date);
-        Pupper mass= (Pupper) mView.findViewById(R.id.life_mass);
-        Pupper pressure= (Pupper) mView.findViewById(R.id.life_press);
-        Pupper calories= (Pupper) mView.findViewById(R.id.life_calories);
-        Pupper comment= (Pupper) mView.findViewById(R.id.life_comment);
+        TextView date= (TextView) mView.findViewById(R.id.life_date);
+        TextView mass= (TextView) mView.findViewById(R.id.life_mass);
+        TextView pressure= (TextView) mView.findViewById(R.id.life_press);
+        TextView calories= (TextView) mView.findViewById(R.id.life_calories);
+        TextView comment= (TextView) mView.findViewById(R.id.life_comment);
 
-        date.setPairString("Дата:",Utils.simpleDateFormatE(Utils.dateToInt(new Date(p.date))));
-        date.getTitul().setTextColor(Color.BLACK);
-        date.getValue().setTextColor(Color.BLACK);
-        date.getTitul().setTextSize(d);
-        date.getValue().setTextSize(d);
-        date.getTitul().setTypeface(Typeface.create(f, Typeface.NORMAL));
-        date.getValue().setTypeface(Typeface.create(f, Typeface.NORMAL));
-        date.getTitul().setWidth(100);
-
-
-
-        mass.setPairString("Вес:",String.valueOf(p.mass));
-        mass.getTitul().setTextColor(Color.BLACK);
-        mass.getValue().setTextColor(Color.BLACK);
-        mass.getTitul().setTextSize(d);
-        mass.getValue().setTextSize(d);
-        mass.getTitul().setTypeface(Typeface.create(f, Typeface.NORMAL));
-        mass.getValue().setTypeface(Typeface.create(f, Typeface.NORMAL));
-
-
-        pressure.setPairString("Давление:",p.pressure);
-        pressure.getTitul().setTextColor(Color.BLACK);
-        pressure.getValue().setTextColor(Color.BLACK);
-        pressure.getTitul().setTextSize(d);
-        pressure.getValue().setTextSize(d);
-        pressure.getTitul().setTypeface(Typeface.create(f, Typeface.NORMAL));
-        pressure.getValue().setTypeface(Typeface.create(f, Typeface.NORMAL));
-
-
-        calories.setPairString("Калории:",String.valueOf(p.calories));
-        calories.getTitul().setTextColor(Color.BLACK);
-        calories.getValue().setTextColor(Color.BLACK);
-        calories.getTitul().setTextSize(d);
-        calories.getValue().setTextSize(d);
-        calories.getTitul().setTypeface(Typeface.create(f, Typeface.NORMAL));
-        calories.getValue().setTypeface(Typeface.create(f, Typeface.NORMAL));
-
-
-        comment.setPairString("Комментарии:",p.commentary);
-        comment.getTitul().setTextColor(Color.BLACK);
-        comment.getValue().setTextColor(Color.BLACK);
-        comment.getTitul().setTextSize(d);
-        comment.getValue().setTextSize(d);
-        comment.getTitul().setTypeface(Typeface.create(f, Typeface.NORMAL));
-        comment.getValue().setTypeface(Typeface.create(f, Typeface.NORMAL));
-
+        date.setText(Utils.simpleDateFormatE(Utils.dateToInt(new Date(p.date))));
+        mass.setText(String.valueOf(p.mass));
+        pressure.setText(p.pressure);
+        calories.setText(String.valueOf(p.calories));
+        comment.setText(p.commentary);
 
         mView.setTag(p);
         return mView;

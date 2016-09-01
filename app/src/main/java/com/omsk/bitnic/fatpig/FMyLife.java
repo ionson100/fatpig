@@ -39,6 +39,14 @@ public class FMyLife extends Fragment {
         menu.add("Редактировать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+
+                DialogEditLife editLife=new DialogEditLife();
+                editLife.setLife(mAdapterLife.getLife(position)).setActivate(new DialogEditLife.IActivate() {
+                    @Override
+                    public void activate(Life life) {
+                        activateList();
+                    }
+                }).show(getActivity().getSupportFragmentManager(),"sdds");
                 return true;
             }
         });

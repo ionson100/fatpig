@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 
 import java.util.List;
 
+import Model.FButtonEat;
+
 public class FactoryFragment {
 
     public static void Action( AppCompatActivity activity) {
@@ -76,9 +78,23 @@ public class FactoryFragment {
                 break;
             }
 
+            case StateSystem.BUTTON_EAT: {
+                showButton(mFragmentTransaction);
+                break;
+            }
+            case StateSystem.BUTTON_WORK: {
+                showButton(mFragmentTransaction);
+                break;
+            }
+
         }
 
 
+    }
+
+    private static void showButton(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FButtonEat(), "dd");
+        mFragmentTransaction.commit();
     }
 
     private static void showLife(FragmentTransaction mFragmentTransaction) {

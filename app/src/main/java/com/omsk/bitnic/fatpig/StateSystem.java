@@ -16,5 +16,8 @@ public class StateSystem {
     public static final int MAP_TRACK=8;
     public static final int LIFE=9;
 
+    public static final int BUTTON_EAT=10;
+    public static final int BUTTON_WORK=11;
+
 
 }

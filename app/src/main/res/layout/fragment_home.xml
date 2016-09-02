@@ -10,7 +10,7 @@
 
 
         android:id="@+id/panelBase"
-        android:background="@android:color/black"
+
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -27,7 +27,7 @@
                 android:orientation="vertical">
                 <TabWidget
 
-                    android:background="@android:color/black"
+
 
                     android:id="@android:id/tabs"
                     android:layout_width="match_parent"
@@ -39,7 +39,8 @@
                     android:layout_height="match_parent">
 
                     <LinearLayout
-                        android:background="@android:color/black"
+
+
                         android:id="@+id/tvTab1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -50,7 +51,7 @@
                             android:layout_height="match_parent" />
                     </LinearLayout>
                     <LinearLayout
-                        android:background="@android:color/black"
+
                         android:id="@+id/tvTab2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"

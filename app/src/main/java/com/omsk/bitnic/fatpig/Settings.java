@@ -25,48 +25,48 @@ public class Settings implements Serializable {
     private int percent=80;
 
 
-    @SettingField(
-
-            defaultColor = Color.CYAN,
-            index = 2,
-            title = R.string.color_panel1,
-            typeField = TypeField.Color)
-    public int colorPanel1= Color.CYAN;
-
-    @SettingField(
-            defaultColor = Color.DKGRAY,
-            index = 3,
-            title = R.string.color_panel2,
-            typeField = TypeField.Color)
-    public int colorPanel2= Color.DKGRAY;
-
-
-    @SettingField(
-            defaultColor = Color.GREEN,
-            index = 4,
-            title = R.string.color_panel3,
-            typeField = TypeField.Color)
-    public int colorPanel3= Color.GREEN;
-
-
-
-    @SettingField(
-            defaultColor = Color.MAGENTA,
-            index = 5,
-            title = R.string.color_panel3,
-            typeField = TypeField.Color)
-    public int colorPanel4= Color.MAGENTA;
-
-
-
-
-
-    @SettingField(
-            defaultColor = Color.YELLOW,
-            index = 6,
-            title = R.string.color_panel_top,
-            typeField = TypeField.Color)
-    public int colorTopPanel =Color.YELLOW;
+//    @SettingField(
+//
+//            defaultColor = Color.CYAN,
+//            index = 2,
+//            title = R.string.color_panel1,
+//            typeField = TypeField.Color)
+//    public int colorPanel1= Color.CYAN;
+//
+//    @SettingField(
+//            defaultColor = Color.DKGRAY,
+//            index = 3,
+//            title = R.string.color_panel2,
+//            typeField = TypeField.Color)
+//    public int colorPanel2= Color.DKGRAY;
+//
+//
+//    @SettingField(
+//            defaultColor = Color.GREEN,
+//            index = 4,
+//            title = R.string.color_panel3,
+//            typeField = TypeField.Color)
+//    public int colorPanel3= Color.GREEN;
+//
+//
+//
+//    @SettingField(
+//            defaultColor = Color.MAGENTA,
+//            index = 5,
+//            title = R.string.color_panel3,
+//            typeField = TypeField.Color)
+//    public int colorPanel4= Color.MAGENTA;
+//
+//
+//
+//
+//
+//    @SettingField(
+//            defaultColor = Color.YELLOW,
+//            index = 6,
+//            title = R.string.color_panel_top,
+//            typeField = TypeField.Color)
+//    public int colorTopPanel =Color.YELLOW;
 
     @SettingField(
 

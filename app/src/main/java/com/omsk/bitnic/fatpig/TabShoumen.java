@@ -31,6 +31,14 @@ public class TabShoumen {
             Toast.makeText(activity, "не соответствие кнопок", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        mView.findViewById(R.id.menu1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.BUTTON_EAT,activity);
+            }
+        });
+
         b1.setTag(eatList.get(0));
         b2.setTag(eatList.get(1));
         b3.setTag(eatList.get(2));
@@ -108,6 +116,12 @@ public class TabShoumen {
             Toast.makeText(activity, "не соответствие кнопок", Toast.LENGTH_SHORT).show();
             return;
         }
+        mView.findViewById(R.id.menu2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.BUTTON_WORK,activity);
+            }
+        });
         b1.setTag(eatList.get(0));
         b2.setTag(eatList.get(1));
         b3.setTag(eatList.get(2));

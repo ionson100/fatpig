@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateAlwaysHidden">
-        <uses-library android:name="com.google.android.maps" />
+        <!--<uses-library android:name="com.google.android.maps" />-->
 
         <activity
             android:name=".MainActivity"

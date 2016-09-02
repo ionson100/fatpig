@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+   android:background="@drawable/basescene"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.omsk.bitnic.fatpig.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
-            android:padding="1dp"
+
             android:orientation="vertical"
             android:id="@+id/panel_top"
             android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
                 <ImageButton
+                    android:layout_marginLeft="5dp"
                     android:background="@null"
                     android:src="@drawable/ic_pig"
                     android:layout_width="wrap_content"
@@ -58,6 +59,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" >
                 <ImageButton
+                    android:layout_marginLeft="5dp"
                     android:background="@null"
                     android:src="@drawable/ic_calculation"
                     android:layout_width="wrap_content"
@@ -81,6 +83,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <ImageButton
+                    android:layout_marginLeft="5dp"
                     android:background="@null"
                     android:src="@drawable/ic_eat"
                     android:layout_width="wrap_content"
@@ -117,6 +120,7 @@
 
 
                         <ImageButton
+                            android:layout_marginLeft="5dp"
                             android:background="@null"
                             android:src="@drawable/ic_runner2"
                             android:layout_width="wrap_content"
@@ -135,6 +139,7 @@
 
 
                 <ImageButton
+                    android:layout_marginRight="5dp"
                     android:id="@+id/menu"
                     android:background="@null"
                     android:src="@drawable/ic_menu2"

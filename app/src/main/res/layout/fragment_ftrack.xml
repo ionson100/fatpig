@@ -2,10 +2,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/black"
+
     tools:context="com.omsk.bitnic.fatpig.FTrack">
 
     <LinearLayout
+        android:id="@id/panel_base"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -17,34 +18,96 @@
             android:layout_height="0dp"
             android:layout_weight="0.7">
 
-
-
-
-
-                <com.omsk.bitnic.fatpig.PausableChronometer
-                    android:textSize="35dp"
-                    android:fontFamily="sans-serif-thin"
-                    android:textColor="@android:color/white"
+            <com.omsk.bitnic.fatpig.PausableChronometer
+            android:textSize="35dp"
+            android:fontFamily="sans-serif-thin"
+            android:textColor="@android:color/white"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/chronometer"
+            android:layout_gravity="center_horizontal" />
+            <LinearLayout
+                android:gravity="right|center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageButton
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/menu_map"
+                    android:background="@null"
+                    android:src="@drawable/ic_menu_map"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/chronometer"
-                    android:layout_gravity="center_horizontal" />
-                <com.omsk.bitnic.fatpig.Pupper
-                    android:id="@+id/diastace"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    />
+            </LinearLayout>
 
-
-
-                <com.omsk.bitnic.fatpig.Pupper
-                    android:id="@+id/calories"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            <com.omsk.bitnic.fatpig.Pupper
-                android:id="@+id/speed"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:text="@string/distance"
+                   android:textSize="25dp"
+                   android:fontFamily="sans-serif-thin"
+                   android:textColor="@android:color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7" />
+                <TextView
+                    android:id="@+id/diastace"
+                    android:textSize="25dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:textSize="25dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="@string/calories"
+                    android:textColor="@android:color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7" />
+                <TextView
+                    android:id="@+id/calories"
+                    android:textSize="25dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:paddingLeft="5dp"
+                    android:text="@string/speed"
+                    android:textSize="25dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.7" />
+                <TextView
+                    android:text="0.0"
+                    android:id="@+id/speed"
+                    android:textSize="25dp"
+                    android:fontFamily="sans-serif-thin"
+                    android:textColor="@android:color/white"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.3" />
+
+            </LinearLayout>
 
 
 

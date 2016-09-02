@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
 
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -31,8 +32,9 @@ import orm.Configure;
 
 public class FTrack extends Fragment implements View.OnClickListener{
 
-    Pupper distance,calories;
-    Pupper speed;
+    TextView distance,calories,speed;
+
+    View parentView;
 
 
     ImageButton mBtRunn;
@@ -59,22 +61,24 @@ public class FTrack extends Fragment implements View.OnClickListener{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_ftrack, container, false);
+        parentView =mView.findViewById(R.id.panel_base);
 
-        distance= (Pupper) mView.findViewById(R.id.diastace);
+        distance= (TextView) mView.findViewById(R.id.diastace);
 
-        distance.getTitul().setTextSize(25f);
-        distance.getValue().setPadding(20,0,40,0);
+        mView.findViewById(R.id.menu_map).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.MAP,getActivity());
+            }
+        });
 
 
-        speed= (Pupper) mView.findViewById(R.id.speed);
+        speed= (TextView) mView.findViewById(R.id.speed);
 
-        speed.getTitul().setTextSize(25f);
-        speed.getValue().setPadding(20,0,0,0);
 
-        calories= (Pupper) mView.findViewById(R.id.calories);
 
-        calories.getTitul().setTextSize(25f);
-        calories.getValue().setPadding(20,0,0,0);
+        calories= (TextView) mView.findViewById(R.id.calories);
+
 
 
         mBtRunn = (ImageButton) mView.findViewById(R.id.tarack_run);
@@ -163,12 +167,18 @@ public class FTrack extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         String tag= (String) v.getTag();
+        parentView.setVisibility(View.INVISIBLE);
         if(tag.equals("1")){
             DialogRequest request=new DialogRequest();
             request.setOnAction(new DialogRequest.IAction() {
                 @Override
                 public void action() {
                     start();
+                }
+            }).setOnActionDismiss(new DialogRequest.IAction() {
+                @Override
+                public void action() {
+                    parentView.setVisibility(View.VISIBLE);
                 }
             }).show(getActivity().getSupportFragmentManager(),"dd0");
 
@@ -179,6 +189,11 @@ public class FTrack extends Fragment implements View.OnClickListener{
                 @Override
                 public void action() {
                     pause();
+                }
+            }).setOnActionDismiss(new DialogRequest.IAction() {
+                @Override
+                public void action() {
+                    parentView.setVisibility(View.VISIBLE);
                 }
             }).show(getActivity().getSupportFragmentManager(),"dd1");
 
@@ -191,6 +206,11 @@ public class FTrack extends Fragment implements View.OnClickListener{
                 @Override
                 public void action() {
                     stop();
+                }
+            }).setOnActionDismiss(new DialogRequest.IAction() {
+                @Override
+                public void action() {
+                    parentView.setVisibility(View.VISIBLE);
                 }
             }).show(getActivity().getSupportFragmentManager(),"dd2");
 
@@ -232,19 +252,19 @@ public class FTrack extends Fragment implements View.OnClickListener{
     void calculate(){
 
         double dis=  Utils.round(Calculation.getDistance(mGeoDatas),3);
-        distance.setPairString(getString(R.string.distance), String.valueOf(dis));
+        distance.setText(String.valueOf(dis));
         double a= Utils.round(Calculation.getSpeed(mGeoDatas),2);
 
         if(a>0){
             String ss=Double.toString(a);
-            speed.setPairString(getString(R.string.speed),ss);
+            speed.setText(ss);
         }
 
 
         double cal=Utils.round(Calculation.getCalories(mGeoDatas,user),2);
         String df=String.valueOf(cal);
 
-        calories.setPairString(getString(R.string.calories),df);
+        calories.setText(df);
     }
 
 

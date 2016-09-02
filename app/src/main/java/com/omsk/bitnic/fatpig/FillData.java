@@ -35,17 +35,17 @@ public class FillData {
         int pecent=Settings.getSettings().getPercent();
         LinearLayout linearLayoutTop= (LinearLayout) activity.findViewById(R.id.panel_top);
 
-        linearLayoutTop.setBackgroundColor(Settings.getSettings().colorTopPanel);
+        //linearLayoutTop.setBackgroundColor(Settings.getSettings().colorTopPanel);
 
         LinearLayout panel1= (LinearLayout) activity.findViewById(R.id.panel1);
         LinearLayout panel2= (LinearLayout) activity.findViewById(R.id.panel2);
         LinearLayout panel3= (LinearLayout) activity.findViewById(R.id.panel3);
         LinearLayout panel4= (LinearLayout) activity.findViewById(R.id.panel4);
 
-        panel1.setBackgroundColor(Settings.getSettings().colorPanel1);
-        panel2.setBackgroundColor(Settings.getSettings().colorPanel2);
-        panel3.setBackgroundColor(Settings.getSettings().colorPanel3);
-        panel4.setBackgroundColor(Settings.getSettings().colorPanel4);
+//        panel1.setBackgroundColor(Settings.getSettings().colorPanel1);
+//        panel2.setBackgroundColor(Settings.getSettings().colorPanel2);
+//        panel3.setBackgroundColor(Settings.getSettings().colorPanel3);
+//        panel4.setBackgroundColor(Settings.getSettings().colorPanel4);
 
 
 

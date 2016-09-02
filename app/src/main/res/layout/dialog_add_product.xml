@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
+    android:background="@drawable/panel_base"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
     <EditText
         android:selectAllOnFocus="true"
-        android:layout_marginTop="20dp"
+
         android:id="@+id/dialog_add_name"
         style="@style/editBase"
-        android:paddingLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Название продукта:"
@@ -18,23 +18,21 @@
 
     <EditText
         android:selectAllOnFocus="true"
-        android:layout_marginTop="20dp"
         android:id="@+id/dialog_add_calor"
         style="@style/editBase"
-        android:paddingLeft="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Калории:"
         android:inputType="number"/>
     <CheckBox
+        style="@style/editBase"
         android:text="@string/select"
         android:id="@+id/checkBox_pref"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <LinearLayout
-        android:paddingTop="20dp"
+        android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button

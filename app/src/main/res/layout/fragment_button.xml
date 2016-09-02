@@ -5,11 +5,14 @@
     tools:context="Model.FButtonEat">
 
     <LinearLayout
+        android:id="@+id/panel_base2"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
         <ListView
+
+            android:background="@android:color/white"
             android:id="@+id/list_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

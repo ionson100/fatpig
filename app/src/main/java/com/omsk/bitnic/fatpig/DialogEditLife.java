@@ -2,6 +2,7 @@ package com.omsk.bitnic.fatpig;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -22,6 +23,7 @@ public class DialogEditLife extends DialogFragment {
 
     private Life life;
     private IActivate iActivate;
+    private IActivate iActivateDismiss;
 
     public DialogEditLife setLife(Life life){
         this.life=life;
@@ -31,6 +33,19 @@ public class DialogEditLife extends DialogFragment {
     public DialogEditLife setActivate(IActivate activate){
         this.iActivate=activate;
         return this;
+    }
+
+    public DialogEditLife setActivateDissmiss(IActivate activate){
+        this.iActivateDismiss=activate;
+        return this;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if(iActivateDismiss!=null){
+            iActivateDismiss.activate(null);
+        }
     }
 
     @NonNull
@@ -46,9 +61,15 @@ public class DialogEditLife extends DialogFragment {
         EditText calories= (EditText) v.findViewById(R.id.edit_calories);
         EditText comment= (EditText) v.findViewById(R.id.edit_comment);
 
-        mass.setText(String.valueOf(life.mass));
+        if(life.mass!=0d){
+            mass.setText(String.valueOf(life.mass));
+        }
+        if(life.calories!=0d){
+            calories.setText(String.valueOf(life.calories));
+        }
+
         pressure.setText(life.pressure);
-        calories.setText(String.valueOf(life.calories));
+
         comment.setText(life.commentary);
 
         mass.addTextChangedListener(new TextWatcher() {
@@ -123,7 +144,6 @@ public class DialogEditLife extends DialogFragment {
             public void onClick(View v) {
                 if(iActivate!=null){
                     iActivate.activate(life);
-                    Configure.getSession().update(life);
                 }
                 dismiss();
             }

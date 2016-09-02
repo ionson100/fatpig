@@ -46,6 +46,7 @@ public class FWork extends Fragment {
     private List<Work> mWorkList;
     private View mView;
     private ListView mListView;
+    View  parentView;
 
 
 
@@ -60,17 +61,33 @@ public class FWork extends Fragment {
     public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) menuInfo;
         final int position = aMenuInfo.position;
+        final Work coreWork=mWorkList.get(position);
         menu.add(R.string.editor).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                parentView.setVisibility(View.INVISIBLE);
                 DialogAddOdEditWork addWork =new DialogAddOdEditWork();
                 addWork.addIAction(new IAction() {
                     @Override
-                    public void Action(Object o) {
+                    public void Action(final Object o) {
+
+                      Work ss=  Linq.toStream(mWorkList).firstOrDefault(new Predicate<Work>() {
+                            @Override
+                            public boolean apply(Work t) {
+                                return t.id==((Work)o).id;
+                            }
+                        });
+                        ss.unclone((Work)o);
                         ActivateList(mWorkList);
-                        Configure.getSession().update(o);
+                        Configure.getSession().update(ss);
                     }
-                }).addWork(mAdapterWork.getWork(position));
+                }).addWork(coreWork.cloneE()).addIActionDiasmiss(new IAction() {
+                    @Override
+                    public void Action(Object o) {
+                        parentView.setVisibility(View.VISIBLE);
+                        ActivateList(mWorkList);
+                    }
+                });
                 addWork.show(getActivity().getSupportFragmentManager(), "234");
                 return true;
             }
@@ -79,33 +96,23 @@ public class FWork extends Fragment {
         menu.add(R.string.addnew).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                parentView.setVisibility(View.INVISIBLE);
                 DialogAddOdEditWork addWork =new DialogAddOdEditWork();
                 addWork.addIAction(new IAction() {
                     @Override
                     public void Action(Object o) {
 
                         mWorkList.add( (Work) o);
+                        Configure.getSession().insert(o);
                         ActivateList(mWorkList);
                     }
-                });
-                addWork.show(getActivity().getSupportFragmentManager(), "ader34df");
-                return true;
-            }
-        });
-
-        menu.add(R.string.createButton).setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-
-                DialogCreateButton eat=new DialogCreateButton();
-                eat.addWork(mAdapterWork.getWork(position)).addIAction(new IAction() {
+                }).addIActionDiasmiss(new IAction() {
                     @Override
                     public void Action(Object o) {
-                        Configure.getSession().insert(o);
-                        FillData.fill(getActivity());
+                        parentView.setVisibility(View.VISIBLE);
                     }
-                });
-                eat.show(getActivity().getSupportFragmentManager(),"srdsd");
+                }).addWork(new Work());
+                addWork.show(getActivity().getSupportFragmentManager(), "ader34df");
                 return true;
             }
         });
@@ -122,6 +129,7 @@ public class FWork extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_product, container, false);
+        parentView = mView. findViewById(R.id.list11);
 
         mRelativeLayout= (RelativeLayout) mView.findViewById(R.id.relative_text);
         mLinearLayout= (LinearLayout) mView.findViewById(R.id.panel_buttons);

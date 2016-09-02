@@ -24,12 +24,13 @@ import orm.Configure;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FMyLife extends Fragment {
+public class FLife extends Fragment {
 
     private ListAdapterLife mAdapterLife;
     private ListView mListView;
     private List<Life> mLifeList;
     private View mView;
+    private View parentView;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -40,11 +41,27 @@ public class FMyLife extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
+                parentView.setVisibility(View.INVISIBLE);
                 DialogEditLife editLife=new DialogEditLife();
-                editLife.setLife(mAdapterLife.getLife(position)).setActivate(new DialogEditLife.IActivate() {
+                editLife.setLife(mAdapterLife.getLife(position).cloneE()).setActivate(new DialogEditLife.IActivate() {
+                    @Override
+                    public void activate(final Life life) {
+
+                        Life life1=Linq.toStream(mLifeList).firstOrDefault(new Predicate<Life>() {
+                            @Override
+                            public boolean apply(Life t) {
+                                return t.id==life.id;
+                            }
+                        });
+
+                        life1.unclone(life);
+                        activateList();
+                        Configure.getSession().update(life1);
+                    }
+                }).setActivateDissmiss(new DialogEditLife.IActivate() {
                     @Override
                     public void activate(Life life) {
-                        activateList();
+                        parentView.setVisibility(View.VISIBLE);
                     }
                 }).show(getActivity().getSupportFragmentManager(),"sdds");
                 return true;
@@ -56,6 +73,7 @@ public class FMyLife extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
        mView=inflater.inflate(R.layout.fragment_fmylife, container, false);
+        parentView =mView.findViewById(R.id.panelBase1);
 
         mListView= (ListView) mView.findViewById(R.id.list_life);
         mLifeList= Configure.getSession().getList(Life.class,null);
@@ -74,6 +92,7 @@ public class FMyLife extends Fragment {
             Life l=new Life();
             l.date=idd;
             mLifeList.add(l);
+            Configure.getSession().insert(l);
         }
 
 

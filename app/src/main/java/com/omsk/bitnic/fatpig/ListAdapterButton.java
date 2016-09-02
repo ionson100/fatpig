@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import Model.Work;
+import Model.ButtonBase;
 
 
 public class ListAdapterButton  extends ArrayAdapter<ButtonBase> {

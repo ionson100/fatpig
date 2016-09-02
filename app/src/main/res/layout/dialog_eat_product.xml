@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/panel_base"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:textColor="@android:color/white"
         android:id="@+id/dialog_eat_name"
         android:paddingLeft="10dp"
         android:layout_marginTop="10dp"
@@ -11,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <EditText
+
         android:selectAllOnFocus="true"
         android:id="@+id/dialog_eat_amount"
         android:layout_marginTop="10dp"
@@ -41,6 +44,7 @@
     </RadioGroup>
 
     <TextView
+        android:textColor="@android:color/white"
         android:id="@+id/dialog_eat_cal_total"
         android:paddingLeft="10dp"
         android:layout_marginTop="10dp"

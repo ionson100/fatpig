@@ -10,6 +10,7 @@
     tools:showIn="@layout/app_bar_main">
 
     <LinearLayout
+
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -19,7 +20,7 @@
             android:id="@+id/panel_top"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            style="@style/panelBase"
+
             android:layout_weight="0.25">
             <LinearLayout
 
@@ -152,8 +153,8 @@
             android:id="@+id/panel_base"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.75"
-            style="@style/panelBase">
+            android:layout_weight="0.75">
+
 
         </LinearLayout>
     </LinearLayout>

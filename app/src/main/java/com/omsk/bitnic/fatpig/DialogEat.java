@@ -2,6 +2,7 @@ package com.omsk.bitnic.fatpig;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
@@ -32,6 +33,12 @@ public class DialogEat extends DialogFragment {
     private Product product;
     OneEat oneEat=new OneEat();
 
+    private IAction iActionDismiss;
+
+    public DialogEat addIActionDismiss(IAction iAction){
+        this.iActionDismiss=iAction;
+        return  this;
+    }
     public DialogEat addIAction(IAction iAction){
         this.iAction=iAction;
         return  this;
@@ -39,6 +46,14 @@ public class DialogEat extends DialogFragment {
     public DialogEat addProduct(Product product){
         this.product=product;
         return  this;
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
+        if(iActionDismiss!=null){
+            iActionDismiss.Action(null);
+        }
     }
 
     @NonNull

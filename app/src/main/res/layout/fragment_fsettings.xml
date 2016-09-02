@@ -5,6 +5,7 @@
     tools:context="com.omsk.bitnic.fatpig.FSettings">
 
     <com.settings.ion.mylibrary.Settingion
+        android:background="@android:color/white"
         android:id="@+id/setting_panel"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

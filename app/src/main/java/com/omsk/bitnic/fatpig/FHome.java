@@ -14,7 +14,11 @@ import android.widget.Toast;
 
 import com.omsk.bitnic.fatpig.R;
 
+import java.util.List;
 import java.util.Set;
+
+import Model.OneWork;
+import orm.Configure;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +28,7 @@ public class FHome extends Fragment {
 
     private View mView;
     private TabHost mTabHost;
+    private List<OneWork> oneWorks;
 
 
 
@@ -31,6 +36,12 @@ public class FHome extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        oneWorks = Configure.getSession().getList(OneWork.class," 1=1 ORDER BY id DESC LIMIT 1; ");
+        if(oneWorks.size()==1&&oneWorks.get(0).date_finish==0d){
+            Settings.getSettings().startTab="t1";
+            Settings.Save();
+        }
 
         mView=inflater.inflate(R.layout.fragment_home, container, false);
 
@@ -75,6 +86,14 @@ public class FHome extends Fragment {
         // обработчик переключения вкладок
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             public void onTabChanged(String tabId) {
+
+
+
+                if(oneWorks.size()==1&&oneWorks.get(0).date_finish==0d&&tabId.equals("t2")){
+                    Settings.getSettings().setStateSystem(StateSystem.TIMER_WORK,getActivity());
+                }
+
+
                 if(tabId.equals("t1")){
                     TabShoumen.showTab1(mView, getActivity());
                 }

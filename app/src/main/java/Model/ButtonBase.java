@@ -1,4 +1,4 @@
-package com.omsk.bitnic.fatpig;
+package Model;
 
 import orm.Column;
 import orm.PrimaryKey;
@@ -6,7 +6,7 @@ import orm.PrimaryKey;
 /**
  * Created by USER on 01.09.2016.
  */
-public class ButtonBase {
+public abstract class ButtonBase implements IClone<ButtonBase> {
 
     @PrimaryKey("id")
     public int id;

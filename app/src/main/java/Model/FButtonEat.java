@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.omsk.bitnic.fatpig.ButtonBase;
-import com.omsk.bitnic.fatpig.ButtonEat;
 import com.omsk.bitnic.fatpig.DialigEditButton;
 import com.omsk.bitnic.fatpig.IAction;
 import com.omsk.bitnic.fatpig.ListAdapterButton;
@@ -22,6 +20,8 @@ import com.omsk.bitnic.fatpig.StateSystem;
 import java.util.ArrayList;
 import java.util.List;
 
+import linq.Linq;
+import linq.Predicate;
 import orm.Configure;
 
 
@@ -31,6 +31,7 @@ public class FButtonEat extends Fragment {
     private ListView mListView;
     private View mView;
     private ListAdapterButton mAdapterButton;
+    private View parentPanel;
 
 
     @Override
@@ -42,11 +43,25 @@ public class FButtonEat extends Fragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
+                parentPanel.setVisibility(View.INVISIBLE);
                 DialigEditButton dialigEditButton=new DialigEditButton();
-                dialigEditButton.setButton(mButtonList.get(position)).addIAction(new IAction() {
+                dialigEditButton.setButton(mButtonList.get(position).cloneE()).addIAction(new IAction() {
+                    @Override
+                    public void Action(final Object o) {
+                        ButtonBase buttonBase = Linq.toStream(mButtonList).firstOrDefault(new Predicate<ButtonBase>() {
+                            @Override
+                            public boolean apply(ButtonBase t) {
+                                return t.id==((ButtonBase)o).id;
+                            }
+                        });
+                        buttonBase.unclone((ButtonBase) o);
+                        Configure.getSession().update(buttonBase);
+                        activateList();
+                    }
+                }).addIActionDismiss(new IAction() {
                     @Override
                     public void Action(Object o) {
-                        activateList();
+                        parentPanel.setVisibility(View.VISIBLE);
                     }
                 }).show(getActivity().getSupportFragmentManager(),"sd");
                 return true;
@@ -58,6 +73,7 @@ public class FButtonEat extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mView=inflater.inflate(R.layout.fragment_button, container, false);
+        parentPanel=mView.findViewById(R.id.panel_base2);
         mListView = (ListView) mView.findViewById(R.id.list_button);
         mListView.setOnCreateContextMenuListener(this);
 

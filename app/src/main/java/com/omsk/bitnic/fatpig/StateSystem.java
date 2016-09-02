@@ -18,6 +18,7 @@ public class StateSystem {
 
     public static final int BUTTON_EAT=10;
     public static final int BUTTON_WORK=11;
+    public static final int TIMER_WORK=12;
 
 
 }

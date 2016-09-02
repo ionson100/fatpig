@@ -45,9 +45,13 @@
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/life" />
             <item
-                android:id="@+id/nav_settings_button"
+                android:id="@+id/nav_settings_button_eat"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/nav_settings_button" />
+            <item
+                android:id="@+id/nav_settings_button_work"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/nav_settings_button_work" />
         </menu>
     </item>
 

@@ -1,6 +1,9 @@
 package Model;
 
+import java.util.List;
+
 import orm.Column;
+import orm.Configure;
 import orm.PrimaryKey;
 import orm.Table;
 
@@ -45,4 +48,13 @@ public class User {
     }
 
 
+    public static User getUser() {
+        List<User> users= Configure.getSession().getList(User.class,null);
+        if(users.size()==0){
+            return null;
+        }else{
+            return users.get(0);
+        }
+
+    }
 }

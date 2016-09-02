@@ -16,36 +16,36 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import Model.Product;
-import Model.Work;
 
 /**
- * Created by USER on 11.08.2016.
+ * Created by USER on 10.08.2016.
  */
-public class DialogAddOdEditWork extends DialogFragment {
+public class DialogAddOrEditProduct extends DialogFragment {
+
 
     private IAction iAction;
-    private Work work;
+    private Product product;
     private IAction iActionDismiss;
     private EditText editTextName;
     private EditText editTextCal;
 
-    public DialogAddOdEditWork addIActionDiasmiss(IAction iAction){
+    public DialogAddOrEditProduct addIActionDiasmiss(IAction iAction){
         this.iActionDismiss=iAction;
         return  this;
     }
 
-    public DialogAddOdEditWork addIAction(IAction iAction){
+    public DialogAddOrEditProduct addIAction(IAction iAction){
         this.iAction=iAction;
         return  this;
     }
-    public DialogAddOdEditWork addWork(Work work){
-        this.work=work;
+    public DialogAddOrEditProduct addProduct(Product product){
+        this.product=product;
         return  this;
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
+            super.onDismiss(dialog);
         if(iActionDismiss!=null){
             iActionDismiss.Action(null);
         }
@@ -61,20 +61,16 @@ public class DialogAddOdEditWork extends DialogFragment {
         builder.setView(v);
         editTextName= (EditText) v.findViewById(R.id.dialog_add_name);
         editTextCal= (EditText) v.findViewById(R.id.dialog_add_calor);
-        editTextCal.setHint("Калории на еденицу веса (кг) в час:");
         Button buttonCancel= (Button) v.findViewById(R.id.bt_dialog_add_canell);
         Button buttonOk= (Button) v.findViewById(R.id.bt_dialog_add_ok);
         final CheckBox checkBox= (CheckBox) v.findViewById(R.id.checkBox_pref);
-        checkBox.setVisibility(View.GONE);
 
-
-        if(work.calorieses==0d){
-            editTextCal.setText("");
-        }else{
-            editTextCal.setText(String.valueOf(work.calorieses));
+        if(product.calorieses!=0d){
+            editTextCal.setText(String.valueOf(product.calorieses));
         }
-        editTextName.setText(work.name);
 
+        editTextName.setText(product.name);
+        checkBox.setChecked(product.preferences);
 
         editTextName.addTextChangedListener(new TextWatcher() {
             @Override
@@ -84,7 +80,7 @@ public class DialogAddOdEditWork extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-               work.name=s.toString();
+                product.name=s.toString();
             }
 
             @Override
@@ -101,11 +97,12 @@ public class DialogAddOdEditWork extends DialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                 try{
-                     work.calorieses=Double.parseDouble(s.toString());
-                 }catch (Exception e){
-                     work.calorieses=0d;
-                 }
+                try{
+                    product.calorieses=Double.parseDouble(s.toString());
+                }catch (Exception  e){
+                    product.calorieses=0;
+                }
+
             }
 
             @Override
@@ -113,7 +110,6 @@ public class DialogAddOdEditWork extends DialogFragment {
 
             }
         });
-
 
 
 
@@ -128,31 +124,26 @@ public class DialogAddOdEditWork extends DialogFragment {
             @Override
             public void onClick(View v) {
                 if(validate()){
-
                     if(iAction!=null){
-                        iAction.Action(work);
+                        iAction.Action(product);
                     }
                     dismiss();
                 }
             }
-
-
         });
 
         return builder.create();
     }
 
     private boolean validate() {
-        if(work.name==null||work.name.trim().length()==0){
-            editTextName.setError("Поле не заполнено");
+        if(product.name==null||product.name.trim().length()==0){
+            editTextName.setError("Поле не заполено");
             return false;
         }
-        if(work.calorieses==0d){
+        if(product.calorieses==0){
             editTextCal.setError("Поле не заполнено");
             return false;
         }
-            return true;
+        return true;
     }
-
-
 }

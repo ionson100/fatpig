@@ -24,23 +24,25 @@ import android.widget.RelativeLayout;
         }
         private IAction iAction;
 
-        private View mView;
+        private IAction iActionDismiss;
 
-        public DialogRequest setView(View  mView){
-            this.mView=mView;
-            return this;
-        }
+
 
         public DialogRequest setOnAction(IAction onAction){
             this.iAction=onAction;
             return  this;
         }
 
+        public DialogRequest setOnActionDismiss(IAction onAction){
+            this.iActionDismiss=onAction;
+            return  this;
+        }
+
         @Override
         public void onDismiss(DialogInterface dialog) {
             super.onDismiss(dialog);
-            if(mView!=null){
-                mView.setVisibility(View.VISIBLE);
+            if(iActionDismiss!=null){
+                iActionDismiss.action();
             }
         }
 

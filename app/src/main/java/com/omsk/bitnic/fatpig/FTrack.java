@@ -61,8 +61,20 @@ public class FTrack extends Fragment implements View.OnClickListener{
         mView=inflater.inflate(R.layout.fragment_ftrack, container, false);
 
         distance= (Pupper) mView.findViewById(R.id.diastace);
+
+        distance.getTitul().setTextSize(25f);
+        distance.getValue().setPadding(20,0,40,0);
+
+
         speed= (Pupper) mView.findViewById(R.id.speed);
+
+        speed.getTitul().setTextSize(25f);
+        speed.getValue().setPadding(20,0,0,0);
+
         calories= (Pupper) mView.findViewById(R.id.calories);
+
+        calories.getTitul().setTextSize(25f);
+        calories.getValue().setPadding(20,0,0,0);
 
 
         mBtRunn = (ImageButton) mView.findViewById(R.id.tarack_run);

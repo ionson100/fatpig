@@ -1,12 +1,15 @@
 package Model;
 
+import Model.ButtonBase;
 import orm.Table;
 
-@Table("button_work")
-public class ButtonWork extends ButtonBase {
+@Table("button_eat")
+public class ButtonEat extends ButtonBase {
+
+
     @Override
     public ButtonBase cloneE() {
-        ButtonWork p=new ButtonWork();
+        ButtonEat p=new ButtonEat();
         p.id=id;
         p.name=name;
         p.calories=calories;
@@ -16,7 +19,6 @@ public class ButtonWork extends ButtonBase {
 
     @Override
     public void unclone(ButtonBase p) {
-
         id=p.id;
         name=p.name;
         calories=p.calories;

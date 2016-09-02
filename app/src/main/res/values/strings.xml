@@ -47,4 +47,5 @@
     <string name="ok">ok</string>
     <string name="close">Close</string>
     <string name="showhelp">Показывать панель помощи.</string>
+    <string name="nav_settings_button_work">Настройка кнопок затрат</string>
 </resources>

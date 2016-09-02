@@ -86,10 +86,19 @@ public class FactoryFragment {
                 showButton(mFragmentTransaction);
                 break;
             }
+            case StateSystem.TIMER_WORK: {
+                showTimerWork(mFragmentTransaction);
+                break;
+            }
 
         }
 
 
+    }
+
+    private static void showTimerWork(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FTimerWork(), "timerw");
+        mFragmentTransaction.commit();
     }
 
     private static void showButton(FragmentTransaction mFragmentTransaction) {
@@ -98,7 +107,7 @@ public class FactoryFragment {
     }
 
     private static void showLife(FragmentTransaction mFragmentTransaction) {
-        mFragmentTransaction.add(R.id.panel_base, new FMyLife(), "life");
+        mFragmentTransaction.add(R.id.panel_base, new FLife(), "life");
         mFragmentTransaction.commit();
     }
 

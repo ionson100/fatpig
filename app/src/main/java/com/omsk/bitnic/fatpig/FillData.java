@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import Model.GeoData;
 import Model.OneEat;
+import Model.OneWork;
 import Model.User;
 import linq.Function;
 import linq.Linq;
@@ -73,6 +75,7 @@ public class FillData {
         double d= total/100;
         GregorianCalendar now = new GregorianCalendar();
         GregorianCalendar today = new GregorianCalendar(now.get(Calendar.YEAR), now.get(Calendar.MONTH), now.get(Calendar.DAY_OF_MONTH));
+        long logdel=today.getTime().getTime();
         int idd=Utils.dateToInt(today.getTime());
 
         {
@@ -118,6 +121,14 @@ public class FillData {
             for (Integer ss : dataMap.keySet()) {
                 cal=cal+ Calculation.getCalories(dataMap.get(ss),user);
             }
+
+            List<OneWork> oneWorks= Configure.getSession().getList(OneWork.class, "date_start >= "+String.valueOf(logdel));
+
+            for (OneWork oneWork : oneWorks) {
+                cal=cal+oneWork.getCalories(user);
+            }
+
+
 
 
 

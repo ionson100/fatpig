@@ -13,7 +13,7 @@
           android:textSize="20dp"
           android:fontFamily="sans-serif-thin"
           android:textColor="@android:color/white"
-          android:layout_width="match_parent"
+          android:layout_width="250dp"
           android:layout_height="wrap_content"
           android:textAppearance="?android:attr/textAppearanceMedium"
           android:id="@+id/pupper_titul" />

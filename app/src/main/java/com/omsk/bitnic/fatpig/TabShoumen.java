@@ -9,12 +9,14 @@ import android.widget.Toast;
 import java.util.Date;
 import java.util.List;
 
+import Model.ButtonBase;
+import Model.ButtonEat;
+import Model.ButtonWork;
 import Model.OneEat;
+import Model.OneWork;
 import orm.Configure;
 
-/**
- * Created by USER on 01.09.2016.
- */
+
 public class TabShoumen {
     public static void showTab1(View mView, final FragmentActivity activity) {
 
@@ -62,8 +64,13 @@ public class TabShoumen {
             @Override
             public void onClick(final View v) {
                 DialogRequest d=new DialogRequest();
-                d.setView(linearLayout);
-                d.setOnAction(new DialogRequest.IAction() {
+                linearLayout.setVisibility(View.INVISIBLE);
+                d.setOnActionDismiss(new DialogRequest.IAction() {
+                    @Override
+                    public void action() {
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
+                }) .setOnAction(new DialogRequest.IAction() {
                     @Override
                     public void action() {
                         OneEat oneEat=new OneEat();
@@ -76,9 +83,7 @@ public class TabShoumen {
                         FillData.fill(activity);
 
                     }
-                });
-                linearLayout.setVisibility(View.INVISIBLE);
-                d.show(activity.getSupportFragmentManager(),"sd");
+                }).show(activity.getSupportFragmentManager(),"sd");
             }
         };
         b1.setOnClickListener(click1);
@@ -94,11 +99,11 @@ public class TabShoumen {
     public static void showTab2(View mView, final FragmentActivity activity) {
 
         final LinearLayout linearLayout= (LinearLayout) mView.findViewById(R.id.tab1_panel1);
-        Button b1= (Button) mView.findViewById(R.id.t1bt1);
-        Button b2= (Button) mView.findViewById(R.id.t1bt2);
-        Button b3= (Button) mView.findViewById(R.id.t1bt3);
-        Button b4= (Button) mView.findViewById(R.id.t1bt4);
-        List<ButtonEat> eatList= Configure.getSession().getList(ButtonEat.class,null);
+        Button b1= (Button) mView.findViewById(R.id.t2bt1);
+        Button b2= (Button) mView.findViewById(R.id.t2bt2);
+        Button b3= (Button) mView.findViewById(R.id.t2bt3);
+        Button b4= (Button) mView.findViewById(R.id.t2bt4);
+        List<ButtonWork> eatList= Configure.getSession().getList(ButtonWork.class,null);
         if(eatList.size()!=4){
             Toast.makeText(activity, "не соответствие кнопок", Toast.LENGTH_SHORT).show();
             return;
@@ -136,16 +141,27 @@ public class TabShoumen {
             @Override
             public void onClick(final View v) {
                 DialogRequest d=new DialogRequest();
-                d.setView(linearLayout);
-                d.setOnAction(new DialogRequest.IAction() {
+                linearLayout.setVisibility(View.INVISIBLE);
+                d.setOnActionDismiss(new DialogRequest.IAction() {
+                    @Override
+                    public void action() {
+                        linearLayout.setVisibility(View.VISIBLE);
+                    }
+                }) .setOnAction(new DialogRequest.IAction() {
                     @Override
                     public void action() {
 
+                        OneWork work = new OneWork();
+                        ButtonBase buttonBase= (ButtonBase) v.getTag();
+                        work.calories=buttonBase.calories;
+                        work.date_start=new Date().getTime();
+                        Configure.getSession().insert(work);
+                        FillData.fill(activity);
+                        ChronometerWork.getCore().state=0;
+                        Settings.getSettings().setStateSystem(StateSystem.TIMER_WORK,activity);
 
                     }
-                });
-                linearLayout.setVisibility(View.INVISIBLE);
-                d.show(activity.getSupportFragmentManager(),"sd");
+                }).show(activity.getSupportFragmentManager(),"sd");
             }
         };
         b1.setOnClickListener(click1);

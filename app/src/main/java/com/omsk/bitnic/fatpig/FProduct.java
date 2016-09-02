@@ -1,7 +1,5 @@
 package com.omsk.bitnic.fatpig;
 
-import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,8 +7,6 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.AttributeSet;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -25,7 +21,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -48,6 +43,7 @@ public class FProduct extends Fragment {
     private LinearLayout mLinearLayout;
     private EditText mEditText;
     private boolean sort;
+    private View parentView;
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, final View v, ContextMenu.ContextMenuInfo menuInfo) {
@@ -56,15 +52,33 @@ public class FProduct extends Fragment {
         menu.add("Редактировать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                DialogAddOdEditProduct addProduct = new DialogAddOdEditProduct();
+                parentView.setVisibility(View.INVISIBLE);
+                DialogAddOrEditProduct addProduct = new DialogAddOrEditProduct();
                 addProduct.addIAction(new IAction() {
                     @Override
-                    public void Action(Object o) {
+                    public void Action(final Object o) {
+
+                     Product product =   Linq.toStream(mProductList).firstOrDefault(new Predicate<Product>() {
+                            @Override
+                            public boolean apply(Product t) {
+                                return t.id==((Product)o).id;
+                            }
+                        });
+
+                        product.unclone((Product) o);
+
+
                         ActivateList(mProductList);
-                        Configure.getSession().update(o);
+                        Configure.getSession().update(product);
                     }
-                }).addProduct(mAdapterProduct.getProduct(position));
-                addProduct.show(getActivity().getSupportFragmentManager(), "adsfyusdfsdf");
+                }).addProduct(mAdapterProduct.getProduct(position).cloneE()).addIActionDiasmiss(new IAction() {
+                    @Override
+                    public void Action(Object o) {
+                        parentView.setVisibility(View.VISIBLE);
+                    }
+                }).show(getActivity().getSupportFragmentManager(), "adsfyusdfsdf");
+
+
                 return true;
             }
         });
@@ -72,24 +86,30 @@ public class FProduct extends Fragment {
         menu.add("Добавить новое").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                DialogAddOdEditProduct addProduct = new DialogAddOdEditProduct();
+                parentView.setVisibility(View.INVISIBLE);
+                DialogAddOrEditProduct addProduct = new DialogAddOrEditProduct();
                 addProduct.addIAction(new IAction() {
                     @Override
                     public void Action(Object o) {
-
-                        mProductList.add(0, (Product) o);
+                        Configure.getSession().insert(o);
+                        mProductList.add((Product) o);
                         ActivateList(mProductList);
                     }
-                });
-                addProduct.show(getActivity().getSupportFragmentManager(), "ad34df");
+                }).addProduct(new Product()).addIActionDiasmiss(new IAction() {
+                    @Override
+                    public void Action(Object o) {
+                        parentView.setVisibility(View.VISIBLE);
+                    }
+                }).show(getActivity().getSupportFragmentManager(), "adsfyusdfsdf");
                 return true;
+
             }
         });
 
         menu.add("Сожрать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-
+                parentView.setVisibility(View.INVISIBLE);
                 DialogEat eat = new DialogEat();
                 eat.addProduct(mAdapterProduct.getProduct(position)).addIAction(new IAction() {
                     @Override
@@ -97,8 +117,13 @@ public class FProduct extends Fragment {
                         Configure.getSession().insert(o);
                         FillData.fill(getActivity());
                     }
-                });
-                eat.show(getActivity().getSupportFragmentManager(), "sdsd");
+                }).addIActionDismiss(new IAction() {
+                    @Override
+                    public void Action(Object o) {
+                        parentView.setVisibility(View.VISIBLE);
+                    }
+                }).show(getActivity().getSupportFragmentManager(), "sdsd");
+
                 return true;
             }
         });
@@ -113,6 +138,7 @@ public class FProduct extends Fragment {
         mRelativeLayout= (RelativeLayout) mView.findViewById(R.id.relative_text);
         mLinearLayout= (LinearLayout) mView.findViewById(R.id.panel_buttons);
         mEditText= (EditText) mView.findViewById(R.id.editText);
+        parentView = mView. findViewById(R.id.list11);
 
         mProductList = Configure.getSession().getList(Product.class, null);
         mListView = (ListView) mView.findViewById(R.id.list_product);
@@ -308,7 +334,7 @@ public class FProduct extends Fragment {
 
     public void setListnerToRootView(View view, final IKeyboardVisibilityListener listener){
 
-        final View parentView = view. findViewById(R.id.list11);
+
         parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 
             private boolean alreadyOpen;

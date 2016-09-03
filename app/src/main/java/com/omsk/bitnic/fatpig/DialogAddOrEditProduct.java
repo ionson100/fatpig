@@ -12,10 +12,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import Model.Product;
+import Model.ProductBase;
 
 /**
  * Created by USER on 10.08.2016.
@@ -24,7 +26,7 @@ public class DialogAddOrEditProduct extends DialogFragment {
 
 
     private IAction iAction;
-    private Product product;
+    private ProductBase product;
     private IAction iActionDismiss;
     private EditText editTextName;
     private EditText editTextCal;
@@ -38,7 +40,7 @@ public class DialogAddOrEditProduct extends DialogFragment {
         this.iAction=iAction;
         return  this;
     }
-    public DialogAddOrEditProduct addProduct(Product product){
+    public DialogAddOrEditProduct addProduct(ProductBase product){
         this.product=product;
         return  this;
     }
@@ -108,6 +110,13 @@ public class DialogAddOrEditProduct extends DialogFragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                product.preferences=isChecked;
             }
         });
 

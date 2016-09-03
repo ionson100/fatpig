@@ -13,25 +13,26 @@ import android.widget.TextView;
 import java.util.List;
 
 import Model.Product;
+import Model.ProductBase;
 import Transceiver.Transceiver;
 
-public class ListAdapterProduct extends ArrayAdapter<Product> {
+public class ListAdapterProduct extends ArrayAdapter<ProductBase> {
 
-    public List<Product> productList;
+    public List<ProductBase> productList;
     private int resource;
-    public ListAdapterProduct(Context context, int resource, List<Product> objects) {
+    public ListAdapterProduct(Context context, int resource, List<ProductBase> objects) {
         super(context, resource, objects);
         this.productList=objects;
         this.resource=resource;
     }
-    public Product getProduct(int i){
+    public ProductBase getProduct(int i){
         return productList.get(i);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        final Product p = getItem(position);
+        final ProductBase p = getItem(position);
 
         final View mView  = LayoutInflater.from(getContext()).inflate(resource, null);
         TextView productName= (TextView) mView.findViewById(R.id.product_name);

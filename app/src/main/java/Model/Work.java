@@ -5,32 +5,26 @@ import orm.PrimaryKey;
 import orm.Table;
 
 @Table("work")
-public class Work implements IClone<Work> {
+public class Work extends ProductBase  {
 
-    @PrimaryKey("id")
-    public int id;
-
-
-    @Column("name")
-    public String name;
-
-
-
-    @Column("calorieses")
-    public double calorieses;
 
     public Work cloneE() {
         Work work=new Work();
         work.name=name;
         work.calorieses=calorieses;
         work.id=id;
+        work.preferences=preferences;
         return work;
     }
 
-    public void unclone(Work o) {
+    @Override
+    public void unclone(ProductBase o) {
         this.id=o.id;
         this.name=o.name;
         this.calorieses=o.calorieses;
+        this.preferences=o.preferences;
     }
+
+
 }
 

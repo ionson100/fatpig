@@ -17,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.7">
-
+            <!---->
             <com.omsk.bitnic.fatpig.PausableChronometer
-            android:textSize="35dp"
-            android:fontFamily="sans-serif-thin"
+            android:textSize="55dp"
+                android:fontFamily="sans-serif-light"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                 <TextView
                     android:id="@+id/diastace"
                     android:textSize="25dp"
-                    android:fontFamily="sans-serif-thin"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="@android:color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -78,7 +78,7 @@
                 <TextView
                     android:id="@+id/calories"
                     android:textSize="25dp"
-                    android:fontFamily="sans-serif-thin"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="@android:color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -101,7 +101,7 @@
                     android:text="0.0"
                     android:id="@+id/speed"
                     android:textSize="25dp"
-                    android:fontFamily="sans-serif-thin"
+                    android:fontFamily="sans-serif-light"
                     android:textColor="@android:color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <Button
-                android:fontFamily="sans-serif-thin"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
                 android:id="@+id/t1bt1"
                 style="@style/buttonRound"
@@ -45,7 +45,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <Button
-                android:fontFamily="sans-serif-thin"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
                 android:id="@+id/t1bt2"
                 style="@style/buttonRound"
@@ -68,7 +68,7 @@
             android:layout_weight="1">
             <Button
 
-                android:fontFamily="sans-serif-thin"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
                 android:id="@+id/t1bt3"
                 style="@style/buttonRound"
@@ -83,7 +83,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <Button
-                android:fontFamily="sans-serif-thin"
+                android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
                 android:id="@+id/t1bt4"
                 style="@style/buttonRound"

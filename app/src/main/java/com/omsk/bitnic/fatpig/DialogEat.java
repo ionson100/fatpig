@@ -22,6 +22,7 @@ import java.util.Date;
 
 import Model.OneEat;
 import Model.Product;
+import Model.ProductBase;
 
 /**
  * Created by USER on 10.08.2016.
@@ -30,7 +31,7 @@ public class DialogEat extends DialogFragment {
 
     private static  String pref="Итого калорий: ";
     private IAction iAction;
-    private Product product;
+    private ProductBase product;
     OneEat oneEat=new OneEat();
 
     private IAction iActionDismiss;
@@ -43,7 +44,7 @@ public class DialogEat extends DialogFragment {
         this.iAction=iAction;
         return  this;
     }
-    public DialogEat addProduct(Product product){
+    public DialogEat addProduct(ProductBase product){
         this.product=product;
         return  this;
     }

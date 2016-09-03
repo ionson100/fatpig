@@ -49,7 +49,7 @@ public class FactoryFragment {
                 break;
             }
             case StateSystem.WORK: {
-                showWork(mFragmentTransaction);
+                showProduct(mFragmentTransaction);
                 break;
             }
             case StateSystem.SETTINGS: {
@@ -132,10 +132,7 @@ public class FactoryFragment {
         mFragmentTransaction.commit();
     }
 
-    private static void showWork(FragmentTransaction mFragmentTransaction) {
-        mFragmentTransaction.add(R.id.panel_base, new FWork(), "work");
-        mFragmentTransaction.commit();
-    }
+
 
     private static void showProduct(FragmentTransaction mFragmentTransaction) {
         mFragmentTransaction.add(R.id.panel_base, new FProduct(), "product");

@@ -22,11 +22,14 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 import Model.Product;
+import Model.ProductBase;
+import Model.Work;
 import linq.Linq;
 import linq.Predicate;
 import orm.Configure;
@@ -34,9 +37,9 @@ import orm.Configure;
 
 public class FProduct extends Fragment {
 
-    private Product mSelectProduct;
+
     private ListAdapterProduct mAdapterProduct;
-    private List<Product> mProductList;
+    private List<ProductBase> mProductList;
     private View mView;
     private ListView  mListView;
     private RelativeLayout mRelativeLayout;
@@ -58,9 +61,9 @@ public class FProduct extends Fragment {
                     @Override
                     public void Action(final Object o) {
 
-                     Product product =   Linq.toStream(mProductList).firstOrDefault(new Predicate<Product>() {
+                     ProductBase product =   Linq.toStream(mProductList).firstOrDefault(new Predicate<ProductBase>() {
                             @Override
-                            public boolean apply(Product t) {
+                            public boolean apply(ProductBase t) {
                                 return t.id==((Product)o).id;
                             }
                         });
@@ -106,27 +109,30 @@ public class FProduct extends Fragment {
             }
         });
 
-        menu.add("Сожрать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                parentView.setVisibility(View.INVISIBLE);
-                DialogEat eat = new DialogEat();
-                eat.addProduct(mAdapterProduct.getProduct(position)).addIAction(new IAction() {
-                    @Override
-                    public void Action(Object o) {
-                        Configure.getSession().insert(o);
-                        FillData.fill(getActivity());
-                    }
-                }).addIActionDismiss(new IAction() {
-                    @Override
-                    public void Action(Object o) {
-                        parentView.setVisibility(View.VISIBLE);
-                    }
-                }).show(getActivity().getSupportFragmentManager(), "sdsd");
+        if(Settings.getSettings().getSateSystem()==StateSystem.PRODUCT){
+            menu.add("Сожрать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem item) {
+                    parentView.setVisibility(View.INVISIBLE);
+                    DialogEat eat = new DialogEat();
+                    eat.addProduct(mAdapterProduct.getProduct(position)).addIAction(new IAction() {
+                        @Override
+                        public void Action(Object o) {
+                            Configure.getSession().insert(o);
+                            FillData.fill(getActivity());
+                        }
+                    }).addIActionDismiss(new IAction() {
+                        @Override
+                        public void Action(Object o) {
+                            parentView.setVisibility(View.VISIBLE);
+                        }
+                    }).show(getActivity().getSupportFragmentManager(), "sdsd");
 
-                return true;
-            }
-        });
+                    return true;
+                }
+            });
+        }
+
     }
 
 
@@ -140,23 +146,21 @@ public class FProduct extends Fragment {
         mEditText= (EditText) mView.findViewById(R.id.editText);
         parentView = mView. findViewById(R.id.list11);
 
-        mProductList = Configure.getSession().getList(Product.class, null);
+        if(Settings.getSettings().getSateSystem()==StateSystem.PRODUCT){
+            mProductList =new ArrayList<ProductBase>(Configure.getSession().getList(Product.class, null)) ;
+        }else{
+            mProductList =new ArrayList<ProductBase>(Configure.getSession().getList(Work.class, null)) ;
+        }
         mListView = (ListView) mView.findViewById(R.id.list_product);
 
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                mSelectProduct = (Product) view.getTag();
-            }
-        });
 
         mListView.setOnCreateContextMenuListener(this);
 
-        Collections.sort(mProductList, new Comparator<Product>() {
+        Collections.sort(mProductList, new Comparator<ProductBase>() {
             @Override
-            public int compare(Product lhs, Product rhs) {
+            public int compare(ProductBase lhs, ProductBase rhs) {
                 return lhs.name.compareTo(rhs.name);
             }
         });
@@ -175,9 +179,9 @@ public class FProduct extends Fragment {
         mView.findViewById(R.id.bt_select_product).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Product> list = linq.Linq.toStream(mProductList).where(new Predicate<Product>() {
+                List<ProductBase> list = linq.Linq.toStream(mProductList).where(new Predicate<ProductBase>() {
                     @Override
-                    public boolean apply(Product t) {
+                    public boolean apply(ProductBase t) {
                         return t.preferences;
                     }
                 }).toList();
@@ -195,9 +199,9 @@ public class FProduct extends Fragment {
                 if (s == null || s.toString().equals("")) {
                     ActivateList(mProductList);
                 } else {
-                    List<Product> list = linq.Linq.toStream(mProductList).where(new Predicate<Product>() {
+                    List<ProductBase> list = linq.Linq.toStream(mProductList).where(new Predicate<ProductBase>() {
                         @Override
-                        public boolean apply(Product t) {
+                        public boolean apply(ProductBase t) {
                             return t.name.toUpperCase().contains(s.toString().toUpperCase());
                         }
                     }).toList();
@@ -216,9 +220,9 @@ public class FProduct extends Fragment {
         mView.findViewById(R.id.bt_select_product).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Product> list = Linq.toStream(mProductList).where(new Predicate<Product>() {
+                List<ProductBase> list = Linq.toStream(mProductList).where(new Predicate<ProductBase>() {
                     @Override
-                    public boolean apply(Product t) {
+                    public boolean apply(ProductBase t) {
                         return t.preferences;
                     }
                 }).toList();
@@ -268,10 +272,10 @@ public class FProduct extends Fragment {
         mView.findViewById(R.id.product_name).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              List<Product> products=  mAdapterProduct.productList;
-                Collections.sort(products, new Comparator<Product>() {
+              List<ProductBase> products=  mAdapterProduct.productList;
+                Collections.sort(products, new Comparator<ProductBase>() {
                     @Override
-                    public int compare(Product lhs, Product rhs) {
+                    public int compare(ProductBase lhs, ProductBase rhs) {
                         return lhs.name.compareTo(rhs.name);
                     }
                 });
@@ -283,10 +287,10 @@ public class FProduct extends Fragment {
         mView.findViewById(R.id.product_color).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<Product> products=  mAdapterProduct.productList;
-                Collections.sort(products, new Comparator<Product>() {
+                List<ProductBase> products=  mAdapterProduct.productList;
+                Collections.sort(products, new Comparator<ProductBase>() {
                     @Override
-                    public int compare(Product lhs, Product rhs) {
+                    public int compare(ProductBase lhs, ProductBase rhs) {
                         return Double.compare(lhs.calorieses, rhs.calorieses);
                     }
                 });
@@ -302,10 +306,10 @@ public class FProduct extends Fragment {
         });
     }
 
-    public void ActivateList(List<Product> products){
+    public void ActivateList(List<ProductBase> products){
         mAdapterProduct =new ListAdapterProduct(getActivity(),R.layout.item_list_product,products);
         mListView.setAdapter(mAdapterProduct);
-        mSelectProduct = null;
+
 
     }
 
@@ -319,9 +323,9 @@ public class FProduct extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 TextView sd = (TextView) view;
                 final String chars = sd.getText().toString();
-                List<Product> tempPlans = Linq.toStream(mProductList).where(new linq.Predicate<Product>() {
+                List<ProductBase> tempPlans = Linq.toStream(mProductList).where(new linq.Predicate<ProductBase>() {
                     @Override
-                    public boolean apply(Product t) {
+                    public boolean apply(ProductBase t) {
                         return t.name != null && t.name.startsWith(chars);
                     }
                 }).toList();

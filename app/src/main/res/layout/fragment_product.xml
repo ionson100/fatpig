@@ -52,7 +52,7 @@
                                android:layout_height="30dp">
                                <TextView
 
-                                   android:fontFamily="sans-serif-thin"
+                                   android:fontFamily="sans-serif-light"
                                    android:textColor="@android:color/white"
                                    android:textSize="16dp"
 
@@ -75,7 +75,7 @@
                                android:layout_width="0dp"
                                android:layout_height="30dp">
                                <TextView
-                                   android:fontFamily="sans-serif-thin"
+                                   android:fontFamily="sans-serif-light"
                                    android:textColor="@android:color/white"
                                    android:textSize="16dp"
                                    android:layout_gravity="top|center_horizontal"

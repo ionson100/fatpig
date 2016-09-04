@@ -11,7 +11,7 @@
       <TextView
 
           android:textSize="20dp"
-          android:fontFamily="sans-serif-thin"
+          style="@style/labelBase"
           android:textColor="@android:color/white"
           android:layout_width="250dp"
           android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
 
         <TextView
             android:textSize="25dp"
-            android:fontFamily="sans-serif-light"
+            style="@style/labelBase"
             android:textColor="@android:color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

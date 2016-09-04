@@ -52,6 +52,10 @@
                 android:id="@+id/nav_settings_button_work"
                 android:icon="@drawable/ic_menu_gallery"
                 android:title="@string/nav_settings_button_work" />
+            <item
+                android:id="@+id/nav_calculator"
+                android:icon="@drawable/ic_menu_gallery"
+                android:title="@string/nav_calculator" />
         </menu>
     </item>
 

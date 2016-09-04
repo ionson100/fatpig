@@ -99,7 +99,7 @@ public class FMap extends Fragment {
 
 
         if(Settings.getSettings().getSateSystem()==StateSystem.MAP){
-            if(TrackSettings.getCore().statusTrack.equals("1")){
+            if(TrackSettings.getCore().getStatusTrack().equals("1")){
                 mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
                 List<GeoPoint> pointList=new ArrayList<>(mGeoDatas.size());
                 for (GeoData gd : mGeoDatas) {
@@ -188,7 +188,7 @@ public class FMap extends Fragment {
 
     private void initBrodcast() {
 
-        if(TrackSettings.getCore().statusTrack.equals("1")&&Settings.getSettings().getSateSystem()==StateSystem.MAP){
+        if(TrackSettings.getCore().getStatusTrack().equals("1")&&Settings.getSettings().getSateSystem()==StateSystem.MAP){
             if(!Utils.isMyServiceRunning(MyServiceGeo.class,getActivity())){
                 getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
             }

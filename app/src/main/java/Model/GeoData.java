@@ -22,4 +22,10 @@ public class GeoData {
 
     @Column("date")
     public long date;
+
+    @Column("speed")
+    public float speed;
+
+    @Column("altitude")
+    public double altitude;
 }

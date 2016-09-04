@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.omsk.bitnic.fatpig.FUserSettings">
     <LinearLayout
+        android:padding="10dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -37,17 +38,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
+
+                    style="@style/labelBase"
                     android:id="@+id/sex_man"
                     android:layout_marginTop="10dp"
-                    android:textColor="@android:color/black"
                     android:text="Муж."
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <RadioButton
                     android:id="@+id/sex_woman"
                     android:layout_marginTop="10dp"
-
-                    android:textColor="@android:color/black"
+                    style="@style/labelBase"
                     android:text="Жен."
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -102,51 +103,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RadioButton
-
+                    style="@style/labelBase"
                     android:tag="1.2"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text="минимум или отсутствие физической нагрузки"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
+                    style="@style/labelBase"
                     android:tag="1.375"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text="занятия фитнесом 3 раза в неделю"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
+                    style="@style/labelBase"
                     android:tag="1.4625"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text="занятия фитнесом 5 раз в неделю"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
+                    style="@style/labelBase"
                     android:tag="1.550"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text="интенсивная физическая нагрузка 5 раз в неделю"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
+                    style="@style/labelBase"
                     android:tag="1.6375"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text="занятия фитнесом каждый день"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
+                    style="@style/labelBase"
                     android:tag="1.725"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text="каждый день интенсивно или по два раза в день"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
                 <RadioButton
+                    style="@style/labelBase"
                     android:tag="1.9"
-                    android:textColor="@android:color/black"
                     android:paddingTop="10dp"
                     android:text=" ежедневная физическая нагрузка плюс физическая работа"
                     android:layout_width="match_parent"
@@ -155,7 +155,7 @@
 
             </RadioGroup>
                 <Button
-                android:layout_marginTop="20dp"
+                android:layout_margin="20dp"
                 android:layout_gravity="center_vertical"
                 android:id="@+id/bt_user_save"
                 style="@style/buttomHead"

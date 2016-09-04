@@ -16,10 +16,6 @@ public class FSettings extends Fragment {
 
     View mView;
 
-    public FSettings() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -32,6 +28,7 @@ public class FSettings extends Fragment {
             @Override
             public void OnCallListen(Class aClass, String fieldName, Object oldValue, Object newValue) {
                 ((MainActivity)getActivity()).showHelp();
+                FillData.fill(getActivity());
             }
         });
 

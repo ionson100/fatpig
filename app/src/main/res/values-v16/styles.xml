@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="labelBase">
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">#ffffffff</item>
+    </style>
+
+    <style name="ButtonCalc">
+
+        <item name="android:textSize">25dp</item>
+        <item name="android:background">@drawable/button_background_round</item>
+        <item name="android:textColor">#FFFFFF</item>
+
+        <item name="android:fontFamily">sans-serif-light</item>
+    </style>
+</resources>

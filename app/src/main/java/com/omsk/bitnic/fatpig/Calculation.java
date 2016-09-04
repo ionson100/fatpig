@@ -2,6 +2,7 @@ package com.omsk.bitnic.fatpig;
 
 import android.location.Location;
 
+import java.util.Date;
 import java.util.List;
 
 import Model.GeoData;
@@ -62,7 +63,16 @@ public class Calculation {
          double dis=ff/1000; // км
 
          return dis/dd;
+        // return d2.speed/1000f/60f;
      }
+
+    public double speedCole(double distancion,long startTime){
+        long time=new Date().getTime()-startTime;
+        double dd=(((double)time)/1000)/60/60;// час;
+        double dis=distancion/1000; // км
+
+        return dis/dd;
+    }
 
     public static double getCalories(List<GeoData> geoDatas, User user){
 

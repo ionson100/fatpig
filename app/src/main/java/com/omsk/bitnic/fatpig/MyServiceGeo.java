@@ -118,10 +118,12 @@ public class MyServiceGeo extends Service {
             cur1=location.getLongitude();
 
             GeoData data=new GeoData();
-            data.date=new Date().getTime();
+            data.date= location.getTime();
             data.latitude=location.getLatitude();
             data.longitude=location.getLongitude();
             data.trackName= TrackSettings.getCore().trackName;
+            data.speed=location.getSpeed();
+            data.altitude=location.getAltitude();
 
             Configure.getSession().insert(data);
 

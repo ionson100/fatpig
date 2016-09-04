@@ -48,4 +48,6 @@
     <string name="close">Close</string>
     <string name="showhelp">Показывать панель помощи.</string>
     <string name="nav_settings_button_work">Настройка кнопок затрат</string>
+    <string name="nav_calculator">Калькулятор</string>
+    <string name="speedCore">Скорость средняя:</string>
 </resources>

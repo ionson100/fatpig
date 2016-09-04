@@ -47,6 +47,7 @@ public class FTimerWork extends Fragment {
 
         mView= inflater.inflate(R.layout.fragment_ftimer_work, container, false);
         chronometer= (PausableChronometerWork) mView.findViewById(R.id.chronometer);
+        chronometer.setFormat("00:%s");
         calories= (Pupper) mView.findViewById(R.id.calories);
 
         calories.getTitul().setTextSize(25f);

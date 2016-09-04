@@ -36,7 +36,7 @@ public class PausableChronometer extends Chronometer {
         }
 
         TrackSettings.getCore().timeTimeDelta=0;
-        TrackSettings.getCore().statusTrack="1";
+        TrackSettings.getCore().setStatusTrack("1");
         TrackSettings.save();
     }
 
@@ -45,13 +45,14 @@ public class PausableChronometer extends Chronometer {
         super.stop();
         TrackSettings.getCore().timeWhenStopped = getBase() - SystemClock.elapsedRealtime();
         //Log.d("ssssssssssssssss_STOP",String.valueOf(TrackSettings.getCore().timeWhenStopped ));
-        TrackSettings.getCore().statusTrack="2";
+        TrackSettings.getCore().setStatusTrack("2");
         TrackSettings.save();
+        TrackSettings ss=TrackSettings.getCore();
     }
 
     public void destoryStop(){
         TrackSettings dd=TrackSettings.getCore();
-        if(TrackSettings.getCore().statusTrack.equals("1")){
+        if(TrackSettings.getCore().getStatusTrack().equals("1")){
 
             TrackSettings.getCore().timeWhenStopped = getBase() - SystemClock.elapsedRealtime();
             TrackSettings.getCore().timeTimeDelta = new Date().getTime();
@@ -65,7 +66,7 @@ public class PausableChronometer extends Chronometer {
         setBase(SystemClock.elapsedRealtime());
         TrackSettings.getCore().trackName=0;
         TrackSettings.getCore().timeWhenStopped = 0;
-        TrackSettings.getCore().statusTrack="3";
+        TrackSettings.getCore().setStatusTrack("3");
         TrackSettings.save();
     }
 

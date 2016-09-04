@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 
 import android.os.Bundle;
 
+import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 
@@ -32,7 +33,7 @@ import orm.Configure;
 
 public class FTrack extends Fragment implements View.OnClickListener{
 
-    TextView distance,calories,speed;
+    TextView distance,calories,speed,speedCore,pointCount;
 
     View parentView;
 
@@ -75,10 +76,13 @@ public class FTrack extends Fragment implements View.OnClickListener{
 
         speed= (TextView) mView.findViewById(R.id.speed);
 
+        speedCore= (TextView) mView.findViewById(R.id.speed_core);
+
 
 
         calories= (TextView) mView.findViewById(R.id.calories);
 
+        pointCount= (TextView) mView.findViewById(R.id.point_count);
 
 
         mBtRunn = (ImageButton) mView.findViewById(R.id.tarack_run);
@@ -89,17 +93,12 @@ public class FTrack extends Fragment implements View.OnClickListener{
         mBtStop.setOnClickListener(this);
 
 
-        List<User> users=Configure.getSession().getList(User.class,null);
-        if(users.size()>0){
-            user=users.get(0);
-        }else{
-            user=null;
-        }
+        user=User.getUser();
 
 
 
 
-        final String tag= TrackSettings.getCore().statusTrack;
+
 
         mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
         Toast.makeText(getActivity(),String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
@@ -122,11 +121,12 @@ public class FTrack extends Fragment implements View.OnClickListener{
             TrackSettings.save();
         }
         activateChrono();
-        if(tag.equals("1")){
+        TrackSettings tt=TrackSettings.getCore();
+        if(tt.getStatusTrack().equals("1")){
             start();
-        }else if(tag.equals("2")){
+        }else if(tt.getStatusTrack().equals("2")){
             pause();
-        }else if(tag.equals("3")){
+        }else if(tt.getStatusTrack().equals("3")){
             stop();
         }else{
             mBtRunn.setEnabled(true);
@@ -251,7 +251,21 @@ public class FTrack extends Fragment implements View.OnClickListener{
 
     void calculate(){
 
-        double dis=  Utils.round(Calculation.getDistance(mGeoDatas),3);
+        double disbleack=Calculation.getDistance(mGeoDatas);
+        double dis=  Utils.round(disbleack,3);
+
+        Track.getTrackLive();
+
+
+
+        long dd=Utils.dateToInt(new Date())-TrackSettings.getCore().trackName;
+        double time=((double)dd)/60d/60d;
+        double speedcores=disbleack/time;
+
+        speedCore.setText(String.valueOf(Utils.round(speedcores,2)));
+
+
+
         distance.setText(String.valueOf(dis));
         double a= Utils.round(Calculation.getSpeed(mGeoDatas),2);
 
@@ -265,6 +279,7 @@ public class FTrack extends Fragment implements View.OnClickListener{
         String df=String.valueOf(cal);
 
         calories.setText(df);
+        pointCount.setText(String.valueOf(mGeoDatas.size()));
     }
 
 
@@ -280,17 +295,21 @@ public class FTrack extends Fragment implements View.OnClickListener{
             double langitude = intent.getDoubleExtra(MainActivity.PARAM_LATITUDE, 0);
             double longitude = intent.getDoubleExtra(MainActivity.PARAM_LONGITUDE, 0);
             long date = intent.getLongExtra(MainActivity.PARAM_DATE, 0);
+            float speed = intent.getFloatExtra(MainActivity.PARAM_SPEED, 0);
+            float altitude = intent.getFloatExtra(MainActivity.PARAM_ALTITUDE, 0);
             GeoData geoData=new GeoData();
             geoData.latitude=langitude;
             geoData.longitude=longitude;
             geoData.date=date;
+            geoData.speed=speed;
+            geoData.altitude=altitude;
             mGeoDatas.add(geoData);
             calculate();
-
-
-
-            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(longitude));
-            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(langitude));
+//
+//
+//
+//            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(longitude));
+//            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(langitude));
         }
     }
 }

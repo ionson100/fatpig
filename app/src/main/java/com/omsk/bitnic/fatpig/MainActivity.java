@@ -10,6 +10,7 @@ import android.support.design.widget.Snackbar;
 
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.view.menu.ActionMenuItemView;
 import android.view.ActionMode;
 import android.view.ContextMenu;
 import android.view.View;
@@ -44,6 +45,8 @@ public class MainActivity extends AppCompatActivity
     private static final int MENU_DELETE_UPDATE_LAST_EAT = 2;
     public static final String BROADCAST_ACTION = "sasdjkdjasdjdikjausdu";
     public static final String PARAM_DATE = "asjkdj";
+    public static final String PARAM_SPEED = "asjfgkdj";
+    public static final String PARAM_ALTITUDE = "asj232fgkdj";
     private FloatingActionButton fab;
     Settings mSettings;
     @Override
@@ -65,6 +68,36 @@ public class MainActivity extends AppCompatActivity
         });
 
 
+
+        ////////////////////////////////////////////////////////////////////
+        findViewById(R.id.image1).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.USER_SETTINGS,MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.image2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.CALCULATOR,MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.image3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.PRODUCT,MainActivity.this);
+            }
+        });
+
+        findViewById(R.id.image4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Settings.getSettings().setStateSystem(StateSystem.TRACK,MainActivity.this);
+            }
+        });
+        ////////////////////////////////////////////////////////////////////////
 
 
 
@@ -177,7 +210,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        if(TrackSettings.getCore().statusTrack.equals("1")){
+        if(TrackSettings.getCore().getStatusTrack().equals("1")){
             if(!Utils.isMyServiceRunning(MyServiceGeo.class,this)){
                 startService(new Intent(this, MyServiceGeo.class));
             }
@@ -214,6 +247,9 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_settings_button_work) {
             Settings.getSettings().setStateSystem(StateSystem.BUTTON_WORK,this);
+        }
+        else if (id == R.id.nav_calculator) {
+            Settings.getSettings().setStateSystem(StateSystem.CALCULATOR,this);
         }
 
 

@@ -3,9 +3,11 @@ package com.omsk.bitnic.fatpig;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -69,7 +71,7 @@ import android.widget.RelativeLayout;
             View v = vi.inflate(R.layout.dialog_request, null);
             builder.setView(v);
 
-            View root = v.findViewById(R.id.base).getRootView();
+            View root = v.findViewById(R.id.base);
             viewHost = (Button) v.findViewById(R.id.ImgDrop);
 
             viewHost.setOnClickListener(new View.OnClickListener() {
@@ -137,8 +139,20 @@ import android.widget.RelativeLayout;
                     return true;
                 }
             });
+
             return builder.create();
         }
+
+//        @Override
+//        public void onResume() {
+//            super.onResume();
+//            Display display = getActivity().getWindowManager().getDefaultDisplay();
+//            Point size = new Point();
+//            display.getSize(size);
+//            int width = size.x;
+//            int height = size.y;
+//            getDialog().getWindow().setLayout(width, height);
+//        }
 
         @Override
         public boolean onTouch(View v, MotionEvent event) {

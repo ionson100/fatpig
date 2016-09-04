@@ -57,9 +57,9 @@ public class FillData {
         TextView textView3= (TextView) activity.findViewById(R.id.panel_text3);
         TextView textView4= (TextView) activity.findViewById(R.id.panel_text4);
 
-        List<User> users= Configure.getSession().getList(User.class,null);
-        if(users.size()==0)return;
-        User user=users.get(0);
+
+        User user=User.getUser();
+        if(user==null) return;
         double total=Utils.getCalorisesCore(user);
         textView1.setText(String.valueOf(total) + " ккал.");
         {

@@ -90,10 +90,19 @@ public class FactoryFragment {
                 showTimerWork(mFragmentTransaction);
                 break;
             }
+            case StateSystem.CALCULATOR: {
+                showCalculator(mFragmentTransaction);
+                break;
+            }
 
         }
 
 
+    }
+
+    private static void showCalculator(FragmentTransaction mFragmentTransaction) {
+        mFragmentTransaction.add(R.id.panel_base, new FCalculator(), "calculator");
+        mFragmentTransaction.commit();
     }
 
     private static void showTimerWork(FragmentTransaction mFragmentTransaction) {

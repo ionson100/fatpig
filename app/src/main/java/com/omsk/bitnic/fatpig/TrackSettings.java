@@ -13,7 +13,7 @@ public class TrackSettings {
 
     public long timeTimeDelta;
 
-    public String statusTrack="0";
+    private String statusTrack="0";
 
     public static TrackSettings getCore(){
         if(tracksettings==null){
@@ -27,6 +27,11 @@ public class TrackSettings {
     }
 
 
+    public String getStatusTrack() {
+        return statusTrack;
+    }
 
-
+    public void setStatusTrack(String statusTrack) {
+        this.statusTrack = statusTrack;
+    }
 }

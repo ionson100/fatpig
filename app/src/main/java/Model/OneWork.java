@@ -30,6 +30,12 @@ public class OneWork {
         if(user==null)
             return 0d;
         long delta;
+
+        if(date_start!=0d&&date_finish!=0d&&date_start==date_finish){
+            return calories;
+        }
+
+
         if(date_finish==0d){
             delta=new Date().getTime()-date_start;
         }else{

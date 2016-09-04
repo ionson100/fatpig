@@ -81,6 +81,7 @@ public class FUserSettings extends Fragment {
                 if(isChecked){
                     user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
                 }
+                FillData.fill(getActivity());
             }
         });
         sexWoman.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -94,6 +95,7 @@ public class FUserSettings extends Fragment {
                 if(isChecked){
                     user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
                 }
+                FillData.fill(getActivity());
             }
         });
 
@@ -112,7 +114,7 @@ public class FUserSettings extends Fragment {
                 } else {
                     user.name = s.toString();
                 }
-
+                FillData.fill(getActivity());
             }
 
             @Override
@@ -135,6 +137,7 @@ public class FUserSettings extends Fragment {
                 }
 
                 user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
+                FillData.fill(getActivity());
             }
 
             @Override
@@ -156,6 +159,7 @@ public class FUserSettings extends Fragment {
                     user.weight=Integer.parseInt(s.toString());
                 }
                 user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
+                FillData.fill(getActivity());
             }
 
             @Override
@@ -179,6 +183,7 @@ public class FUserSettings extends Fragment {
                 }
 
                 user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
+                FillData.fill(getActivity());
             }
 
             @Override
@@ -209,6 +214,7 @@ public class FUserSettings extends Fragment {
                     if(isChecked){
                         user.delta=Double.parseDouble(button.getTag().toString());
                         user_default_calorises.setText(String.valueOf(Utils.getCalorises(user,getActivity())));
+                        FillData.fill(getActivity());
                     }
                 }
             });

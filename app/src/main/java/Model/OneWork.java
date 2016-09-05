@@ -27,22 +27,22 @@ public class OneWork {
     public double calories;
 
     public double getCalories(User user) {
-        if(user==null)
+        if (user == null)
             return 0d;
         long delta;
 
-        if(date_start!=0d&&date_finish!=0d&&date_start==date_finish){
+        if (date_start != 0d && date_finish != 0d && date_start == date_finish) {
             return calories;
         }
 
 
-        if(date_finish==0d){
-            delta=new Date().getTime()-date_start;
-        }else{
-            delta=date_finish-date_start;
+        if (date_finish == 0d) {
+            delta = new Date().getTime() - date_start;
+        } else {
+            delta = date_finish - date_start;
         }
-        double houer=delta/1000d/60d/60d;
-        double res=houer*calories*user.weight;
-        return Utils.round(res,2);
+        double houer = delta / 1000d / 60d / 60d;
+        double res = houer * calories * user.weight;
+        return Utils.round(res, 2);
     }
 }

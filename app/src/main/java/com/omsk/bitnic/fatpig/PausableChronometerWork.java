@@ -6,7 +6,6 @@ import android.util.AttributeSet;
 import android.widget.Chronometer;
 
 
-
 public class PausableChronometerWork extends Chronometer {
 
     private long timeWhenStopped = 0;
@@ -25,7 +24,7 @@ public class PausableChronometerWork extends Chronometer {
 
     @Override
     public void start() {
-        setBase(SystemClock.elapsedRealtime()+timeWhenStopped);
+        setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
         super.start();
     }
 
@@ -33,7 +32,7 @@ public class PausableChronometerWork extends Chronometer {
     public void stop() {
         super.stop();
         timeWhenStopped = getBase() - SystemClock.elapsedRealtime();
-        ChronometerWork.getCore().timeWhenStopped=timeWhenStopped;
+        ChronometerWork.getCore().timeWhenStopped = timeWhenStopped;
         ChronometerWork.Save();
 
     }
@@ -42,17 +41,17 @@ public class PausableChronometerWork extends Chronometer {
         stop();
         setBase(SystemClock.elapsedRealtime());
         timeWhenStopped = 0;
-        ChronometerWork.getCore().timeWhenStopped=timeWhenStopped;
+        ChronometerWork.getCore().timeWhenStopped = timeWhenStopped;
         ChronometerWork.Save();
     }
 
     public long getCurrentTime() {
-       // return timeWhenStopped;
-        return   getBase() - SystemClock.elapsedRealtime();
+        // return timeWhenStopped;
+        return getBase() - SystemClock.elapsedRealtime();
     }
 
     public void setCurrentTime(long time) {
         timeWhenStopped = time;
-        setBase(SystemClock.elapsedRealtime()+timeWhenStopped);
+        setBase(SystemClock.elapsedRealtime() + timeWhenStopped);
     }
 }

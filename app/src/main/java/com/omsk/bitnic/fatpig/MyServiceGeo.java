@@ -1,6 +1,5 @@
 package com.omsk.bitnic.fatpig;
 
-import android.*;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -9,19 +8,7 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.util.Log;
-
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.Date;
 
 import Model.GeoData;
 import orm.Configure;
@@ -45,7 +32,7 @@ public class MyServiceGeo extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
 
 
-        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(),false);
+        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(), false);
 
 
         locationManager = (LocationManager) getSystemService(getBaseContext().LOCATION_SERVICE);
@@ -97,33 +84,32 @@ public class MyServiceGeo extends Service {
         double cur;
         double cur1;
         int anInt = 0;
+
         @Override
         public synchronized void onLocationChanged(Location location) {
 
 
+            if (anInt++ < 2) return;
+            anInt = 0;
 
+            if (BuildConfig.DEBUG) {
 
-            if(anInt++<2) return;
-            anInt=0;
-
-            if(BuildConfig.DEBUG){
-
-            }else {
-                 if(cur==location.getLatitude()&&cur1==location.getLongitude())
+            } else {
+                if (cur == location.getLatitude() && cur1 == location.getLongitude())
                     return;
             }
 
 
-            cur=location.getLatitude();
-            cur1=location.getLongitude();
+            cur = location.getLatitude();
+            cur1 = location.getLongitude();
 
-            GeoData data=new GeoData();
-            data.date= location.getTime();
-            data.latitude=location.getLatitude();
-            data.longitude=location.getLongitude();
-            data.trackName= TrackSettings.getCore().trackName;
-            data.speed=location.getSpeed();
-            data.altitude=location.getAltitude();
+            GeoData data = new GeoData();
+            data.date = location.getTime();
+            data.latitude = location.getLatitude();
+            data.longitude = location.getLongitude();
+            data.trackName = TrackSettings.getCore().trackName;
+            data.speed = location.getSpeed();
+            data.altitude = location.getAltitude();
 
             Configure.getSession().insert(data);
 
@@ -131,11 +117,11 @@ public class MyServiceGeo extends Service {
             intent.putExtra(MainActivity.PARAM_LATITUDE, location.getLatitude());
             intent.putExtra(MainActivity.PARAM_LONGITUDE, location.getLongitude());
             intent.putExtra(MainActivity.PARAM_DATE, data.date);
-            sendBroadcast(intent); sendBroadcast(intent);
+            sendBroadcast(intent);
+            sendBroadcast(intent);
 
 
         }
-
 
 
         @Override

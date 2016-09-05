@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <TextView
         android:textColor="@android:color/white"
         android:id="@+id/dialog_eat_name"
@@ -12,6 +13,7 @@
         android:text="xkjfhdfidasygusfg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <EditText
 
         android:selectAllOnFocus="true"
@@ -22,10 +24,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number" />
+
     <RadioGroup
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <RadioButton
             android:text="грамм"
             android:id="@+id/radio_button_gram"
@@ -33,6 +37,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <RadioButton
             android:text="единица"
             android:id="@+id/radio_button_one"
@@ -51,11 +56,13 @@
         android:text="xkjfhdfidasygusfg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <LinearLayout
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             style="@style/buttomHead"
             android:id="@+id/dialog_eat_cancal"
@@ -63,6 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
         <Button
             style="@style/buttomHead"
             android:id="@+id/dialog_eat_ok"
@@ -72,7 +80,6 @@
             android:layout_weight="1" />
 
     </LinearLayout>
-
 
 
 </LinearLayout>

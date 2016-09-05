@@ -20,14 +20,14 @@ public class FSettings extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_fsettings, container, false);
+        mView = inflater.inflate(R.layout.fragment_fsettings, container, false);
 
         Settingion mSettingsEngine = (Settingion) mView.findViewById(R.id.setting_panel);
         mSettingsEngine.setModelClass(Settings.class, getActivity());
         Reanimator.onSetListenerСhanges(new iListenerСhanges() {
             @Override
             public void OnCallListen(Class aClass, String fieldName, Object oldValue, Object newValue) {
-                ((MainActivity)getActivity()).showHelp();
+                ((MainActivity) getActivity()).showHelp();
                 FillData.fill(getActivity());
             }
         });

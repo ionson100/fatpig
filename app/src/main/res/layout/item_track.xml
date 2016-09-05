@@ -3,17 +3,21 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        I<ImageView
-        android:background="@android:color/black"
-        android:layout_gravity="left|center_vertical"
-        android:src="@drawable/ic_runner2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.1" />
+        I
+
+        <ImageView
+            android:background="@android:color/black"
+            android:layout_gravity="left|center_vertical"
+            android:src="@drawable/ic_runner2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1" />
+
         <TextView
             android:textColor="@android:color/black"
             android:text="sdidiusd"

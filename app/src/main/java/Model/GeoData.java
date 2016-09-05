@@ -12,7 +12,7 @@ public class GeoData {
     public int id;
 
     @Column("track_name")
-    public int trackName;
+    public long trackName;
 
     @Column("latitude")
     public double latitude;

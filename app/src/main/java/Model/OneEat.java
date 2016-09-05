@@ -6,7 +6,7 @@ import orm.Table;
 
 @Table("one_eat")
 public class OneEat {
-   // public transient Product product;
+    // public transient Product product;
 
     @PrimaryKey("id")
     public int id;
@@ -21,7 +21,7 @@ public class OneEat {
     public double amount;
 
     @Column("date")
-    public int date;
+    public long date;
 
     @Column("isgramm")
     public boolean isGramm;

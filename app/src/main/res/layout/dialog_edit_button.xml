@@ -5,6 +5,7 @@
     android:padding="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
 
         android:orientation="vertical"
@@ -19,6 +20,7 @@
             android:hint="Название кнопки:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <EditText
             android:selectAllOnFocus="true"
             android:inputType="numberDecimal"
@@ -27,6 +29,7 @@
             android:hint="Калории"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
         <CheckBox
 
             android:id="@+id/button_check_isshow"
@@ -45,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1">
+
         <Button
             android:id="@+id/bt_cancel1"
             style="@style/buttomHead"

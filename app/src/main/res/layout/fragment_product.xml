@@ -6,211 +6,199 @@
     tools:context="com.omsk.bitnic.fatpig.FProduct">
 
 
-   <LinearLayout
-       android:id="@+id/list11"
-       android:orientation="vertical"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <LinearLayout
+    <LinearLayout
+        android:id="@+id/list11"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="0.9">
-           <LinearLayout
-               android:orientation="horizontal"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:baselineAligned="false">
+        <LinearLayout
 
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.9">
 
-
-
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:baselineAligned="false">
 
 
+                <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.92">
 
 
-               <LinearLayout
-                   android:orientation="vertical"
-                   android:layout_width="0dp"
-                   android:layout_height="match_parent"
-                   android:layout_weight="0.92">
+                    <LinearLayout
+
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:gravity="center_horizontal"
+                            android:clickable="true"
+
+                            android:layout_weight="0.83"
+                            android:id="@+id/product_name"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp">
+
+                            <TextView
+
+                                android:fontFamily="sans-serif-light"
+                                android:textColor="@android:color/white"
+                                android:textSize="16dp"
+
+                                android:gravity="center_vertical|center_horizontal"
+                                android:layout_gravity="top|center_horizontal"
+                                android:text="Продукт"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:gravity="center_horizontal"
+                            android:clickable="true"
 
 
-                       <LinearLayout
+                            android:layout_weight="0.17"
+                            android:id="@+id/product_color"
+                            android:layout_width="0dp"
+                            android:layout_height="30dp">
 
-                           android:orientation="horizontal"
-                           android:layout_width="match_parent"
-                           android:layout_height="wrap_content">
+                            <TextView
+                                android:fontFamily="sans-serif-light"
+                                android:textColor="@android:color/white"
+                                android:textSize="16dp"
+                                android:layout_gravity="top|center_horizontal"
+                                android:gravity="center_vertical|center_horizontal"
+                                android:text="ккал."
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
 
-                           <LinearLayout
-                               android:gravity="center_horizontal"
-                               android:clickable="true"
-
-                               android:layout_weight="0.83"
-                               android:id="@+id/product_name"
-                               android:layout_width="0dp"
-                               android:layout_height="30dp">
-                               <TextView
-
-                                   android:fontFamily="sans-serif-light"
-                                   android:textColor="@android:color/white"
-                                   android:textSize="16dp"
-
-                                   android:gravity="center_vertical|center_horizontal"
-                                   android:layout_gravity="top|center_horizontal"
-                                   android:text="Продукт"
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                    />
-
-                           </LinearLayout>
-
-                           <LinearLayout
-                               android:gravity="center_horizontal"
-                               android:clickable="true"
+                    </LinearLayout>
 
 
-                               android:layout_weight="0.17"
-                               android:id="@+id/product_color"
-                               android:layout_width="0dp"
-                               android:layout_height="30dp">
-                               <TextView
-                                   android:fontFamily="sans-serif-light"
-                                   android:textColor="@android:color/white"
-                                   android:textSize="16dp"
-                                   android:layout_gravity="top|center_horizontal"
-                                   android:gravity="center_vertical|center_horizontal"
-                                   android:text="ккал."
-                                   android:layout_width="wrap_content"
-                                   android:layout_height="wrap_content"
-                                   />
-                           </LinearLayout>
+                    <ListView
+                        android:background="@android:color/white"
+                        android:id="@+id/list_product"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
 
-                       </LinearLayout>
+                        android:divider="#FFCC00"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/listitem_selector" />
 
+                </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.08"
+                    android:baselineAligned="false">
 
+                    <ListView
+                        android:id="@+id/list_abc_plan"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.03"
 
+                        android:divider="@android:color/white"
+                        android:dividerHeight="1dp"
+                        android:listSelector="@drawable/listitem_selector">
 
+                    </ListView>
 
+                </LinearLayout>
+            </LinearLayout>
 
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
 
+            android:id="@+id/panel_buttons"
+            android:minHeight="200dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.1">
 
+            <ImageButton
+                android:id="@+id/open_keyBord"
+                android:src="@drawable/select_search"
+                android:adjustViewBounds="true"
+                android:layout_width="30dp"
+                android:background="@null"
+                android:layout_height="50dp"
+                android:layout_weight="0.5" />
 
-                   <ListView
-                       android:background="@android:color/white"
-                       android:id="@+id/list_product"
-                       android:layout_width="match_parent"
-                       android:layout_height="match_parent"
+            <ImageButton
+                android:src="@drawable/select_select"
+                android:adjustViewBounds="true"
+                android:layout_width="30dp"
+                android:background="@null"
+                android:layout_height="50dp"
+                android:id="@+id/bt_select_product"
+                android:layout_weight="1" />
 
-                       android:divider="#FFCC00"
-                       android:dividerHeight="1dp"
-                       android:listSelector="@drawable/listitem_selector"/>
+            <ImageButton
+                android:src="@drawable/select_all"
+                android:adjustViewBounds="true"
+                android:layout_width="30dp"
+                android:background="@null"
+                android:layout_height="50dp"
+                android:id="@+id/bt_show_all_product"
+                android:layout_weight="1" />
 
-               </LinearLayout>
+            <Button
+                android:padding="20dp"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/add"
+                android:id="@+id/bt_add_product"
+                android:layout_weight="1" />
 
-               <LinearLayout
-                   android:layout_width="0dp"
-                   android:layout_height="match_parent"
-                   android:layout_weight="0.08"
-                   android:baselineAligned="false">
+            <Button
 
-                   <ListView
-                       android:id="@+id/list_abc_plan"
-                       android:layout_width="0dp"
-                       android:layout_height="match_parent"
-                       android:layout_weight="0.03"
+                android:padding="20dp"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/edit"
+                android:id="@+id/bt_edit_product"
+                android:layout_weight="1" />
 
-                       android:divider="@android:color/white"
-                       android:dividerHeight="1dp"
-                       android:listSelector="@drawable/listitem_selector">
+        </LinearLayout>
+    </LinearLayout>
 
-                   </ListView>
-
-               </LinearLayout>
-           </LinearLayout>
-
-       </LinearLayout>
-
-       <LinearLayout
-           android:layout_gravity="center_vertical"
-           android:gravity="center_vertical"
-
-           android:id="@+id/panel_buttons"
-           android:minHeight="200dp"
-           android:orientation="horizontal"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="0.1">
-           <ImageButton
-               android:id="@+id/open_keyBord"
-               android:src="@drawable/ic_search"
-               android:adjustViewBounds="true"
-               android:layout_width="30dp"
-               android:background="@null"
-               android:layout_height="50dp"
-               android:layout_weight="0.5"  />
-           <ImageButton
-
-
-               android:src="@drawable/ic_select"
-               android:adjustViewBounds="true"
-               android:layout_width="30dp"
-               android:background="@null"
-               android:layout_height="50dp"
-               android:id="@+id/bt_select_product"
-               android:layout_weight="1" />
-
-           <ImageButton
-               android:src="@drawable/ic_all"
-               android:adjustViewBounds="true"
-               android:layout_width="30dp"
-               android:background="@null"
-               android:layout_height="50dp"
-               android:id="@+id/bt_show_all_product"
-               android:layout_weight="1" />
-
-           <Button
-               android:padding="20dp"
-               android:visibility="gone"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:text="@string/add"
-               android:id="@+id/bt_add_product"
-               android:layout_weight="1" />
-
-           <Button
-
-               android:padding="20dp"
-               android:visibility="gone"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:text="@string/edit"
-               android:id="@+id/bt_edit_product"
-               android:layout_weight="1" />
-
-       </LinearLayout>
-   </LinearLayout>
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/relative_text"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <EditText
-        android:selectAllOnFocus="true"
-        android:layout_gravity="bottom"
-        style="@style/editBase"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/editText"
-        android:inputType="text" />
-</LinearLayout>
+            <EditText
+                android:selectAllOnFocus="true"
+                android:layout_gravity="bottom"
+                style="@style/editBase"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText"
+                android:inputType="text" />
+        </LinearLayout>
 
     </RelativeLayout>
 

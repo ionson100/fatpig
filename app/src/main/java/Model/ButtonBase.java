@@ -18,5 +18,5 @@ public abstract class ButtonBase implements IClone<ButtonBase> {
     public double calories;
 
     @Column("isshow")
-    public  boolean ishow;
+    public boolean ishow;
 }

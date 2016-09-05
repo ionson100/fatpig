@@ -8,10 +8,10 @@ import Model.GeoData;
  * Created by USER on 29.08.2016.
  */
 public class Track {
-    public int trackName;
+    public long trackName;
     public List<GeoData> list;
 
-    public String name(){
+    public String name() {
         return Utils.simpleDateFormat(trackName);
     }
 

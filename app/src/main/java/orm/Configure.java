@@ -86,7 +86,7 @@ public class Configure implements ISession {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            throw new RuntimeException(" orm create base :" + e.getMessage());
+            throw new RuntimeException(" orm create stoper :" + e.getMessage());
         }
     }
 
@@ -167,7 +167,7 @@ public class Configure implements ISession {
             key = field.get(item);
         } catch (Exception e) {
             Loger.LogE(e.getMessage());
-            throw  new RuntimeException("Config Update:"+e.getMessage());
+            throw new RuntimeException("Config Update:" + e.getMessage());
         }
         assert key != null;
         if (d.isIAction()) {
@@ -355,7 +355,7 @@ public class Configure implements ISession {
     }
 
     @Override
-    public  SQLiteDatabase getSqLiteDatabase(){
+    public SQLiteDatabase getSqLiteDatabase() {
         return sqLiteDatabaseForReadable;
     }
 

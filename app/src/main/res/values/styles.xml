@@ -22,10 +22,12 @@
     <style name="myCustomMenuTextApearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
         <item name="android:textColor">@android:color/primary_text_dark</item>
     </style>
+
     <style name="SpinnerItem.DropDownItem" parent="@android:style/Widget.DropDownItem.Spinner">
         <item name="android:textColor">#faf9f9</item>
         <item name="android:textSize">20dp</item>
     </style>
+
     <style name="SpinnerItem" parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:paddingLeft">10dp</item>
         <item name="android:textSize">10dp</item>
@@ -52,12 +54,12 @@
 
     </style>
 
-    <style name="buttonRound"  >
-       <item name="android:background">@drawable/button_background_round</item>
+    <style name="buttonRound">
+        <item name="android:background">@drawable/button_background_round</item>
 
     </style>
 
-    <style name="buttonRoundDragDrop"  >
+    <style name="buttonRoundDragDrop">
         <item name="android:background">@drawable/button_background_round_drag_drop</item>
 
     </style>

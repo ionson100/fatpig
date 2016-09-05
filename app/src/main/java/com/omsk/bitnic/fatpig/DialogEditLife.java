@@ -11,13 +11,13 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+
 import Model.Life;
-import orm.Configure;
 
 
 public class DialogEditLife extends DialogFragment {
 
-    public interface  IActivate{
+    public interface IActivate {
         void activate(Life life);
     }
 
@@ -25,25 +25,25 @@ public class DialogEditLife extends DialogFragment {
     private IActivate iActivate;
     private IActivate iActivateDismiss;
 
-    public DialogEditLife setLife(Life life){
-        this.life=life;
+    public DialogEditLife setLife(Life life) {
+        this.life = life;
         return this;
     }
 
-    public DialogEditLife setActivate(IActivate activate){
-        this.iActivate=activate;
+    public DialogEditLife setActivate(IActivate activate) {
+        this.iActivate = activate;
         return this;
     }
 
-    public DialogEditLife setActivateDissmiss(IActivate activate){
-        this.iActivateDismiss=activate;
+    public DialogEditLife setActivateDissmiss(IActivate activate) {
+        this.iActivateDismiss = activate;
         return this;
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if(iActivateDismiss!=null){
+        if (iActivateDismiss != null) {
             iActivateDismiss.activate(null);
         }
     }
@@ -56,15 +56,15 @@ public class DialogEditLife extends DialogFragment {
         vi = LayoutInflater.from(getActivity());
         View v = vi.inflate(R.layout.dialog_edit_life, null);
         builder.setView(v);
-        EditText mass= (EditText) v.findViewById(R.id.edit_mas);
-        EditText pressure= (EditText) v.findViewById(R.id.edit_pressure);
-        EditText calories= (EditText) v.findViewById(R.id.edit_calories);
-        EditText comment= (EditText) v.findViewById(R.id.edit_comment);
+        EditText mass = (EditText) v.findViewById(R.id.edit_mas);
+        EditText pressure = (EditText) v.findViewById(R.id.edit_pressure);
+        EditText calories = (EditText) v.findViewById(R.id.edit_calories);
+        EditText comment = (EditText) v.findViewById(R.id.edit_comment);
 
-        if(life.mass!=0d){
+        if (life.mass != 0d) {
             mass.setText(String.valueOf(life.mass));
         }
-        if(life.calories!=0d){
+        if (life.calories != 0d) {
             calories.setText(String.valueOf(life.calories));
         }
 
@@ -74,63 +74,71 @@ public class DialogEditLife extends DialogFragment {
 
         mass.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 try {
-                    life.mass=Double.parseDouble(s.toString());
-                }catch (Exception e){
-                    life.mass=0d;
+                    life.mass = Double.parseDouble(s.toString());
+                } catch (Exception e) {
+                    life.mass = 0d;
                 }
 
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         pressure.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-              life.pressure=s.toString();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                life.pressure = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         calories.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-             try{
-                 life.calories=Double.parseDouble(s.toString());
-             }catch (Exception e){
-                 life.calories=0d;
-             }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                try {
+                    life.calories = Double.parseDouble(s.toString());
+                } catch (Exception e) {
+                    life.calories = 0d;
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         comment.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-             life.commentary=s.toString();
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                life.commentary = s.toString();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         v.findViewById(R.id.bt_cancel).setOnClickListener(new View.OnClickListener() {
@@ -142,7 +150,7 @@ public class DialogEditLife extends DialogFragment {
         v.findViewById(R.id.bt_save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(iActivate!=null){
+                if (iActivate != null) {
                     iActivate.activate(life);
                 }
                 dismiss();
@@ -150,7 +158,6 @@ public class DialogEditLife extends DialogFragment {
         });
         return builder.create();
     }
-
 
 
 }

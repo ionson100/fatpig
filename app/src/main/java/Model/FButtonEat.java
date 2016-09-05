@@ -44,14 +44,14 @@ public class FButtonEat extends Fragment {
             public boolean onMenuItemClick(MenuItem item) {
 
                 parentPanel.setVisibility(View.INVISIBLE);
-                DialigEditButton dialigEditButton=new DialigEditButton();
+                DialigEditButton dialigEditButton = new DialigEditButton();
                 dialigEditButton.setButton(mButtonList.get(position).cloneE()).addIAction(new IAction() {
                     @Override
                     public void Action(final Object o) {
                         ButtonBase buttonBase = Linq.toStream(mButtonList).firstOrDefault(new Predicate<ButtonBase>() {
                             @Override
                             public boolean apply(ButtonBase t) {
-                                return t.id==((ButtonBase)o).id;
+                                return t.id == ((ButtonBase) o).id;
                             }
                         });
                         buttonBase.unclone((ButtonBase) o);
@@ -63,7 +63,7 @@ public class FButtonEat extends Fragment {
                     public void Action(Object o) {
                         parentPanel.setVisibility(View.VISIBLE);
                     }
-                }).show(getActivity().getSupportFragmentManager(),"sd");
+                }).show(getActivity().getSupportFragmentManager(), "sd");
                 return true;
             }
         });
@@ -72,21 +72,21 @@ public class FButtonEat extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_button, container, false);
-        parentPanel=mView.findViewById(R.id.panel_base2);
+        mView = inflater.inflate(R.layout.fragment_button, container, false);
+        parentPanel = mView.findViewById(R.id.panel_base2);
         mListView = (ListView) mView.findViewById(R.id.list_button);
         mListView.setOnCreateContextMenuListener(this);
 
-        if(Settings.getSettings().getSateSystem()== StateSystem.BUTTON_EAT){
+        if (Settings.getSettings().getSateSystem() == StateSystem.BUTTON_EAT) {
 
-            List<ButtonEat> buttonEats= Configure.getSession().getList(ButtonEat.class,null);
-            mButtonList=new ArrayList<ButtonBase>(buttonEats);
+            List<ButtonEat> buttonEats = Configure.getSession().getList(ButtonEat.class, null);
+            mButtonList = new ArrayList<ButtonBase>(buttonEats);
         }
 
-        if(Settings.getSettings().getSateSystem()==StateSystem.BUTTON_WORK){
+        if (Settings.getSettings().getSateSystem() == StateSystem.BUTTON_WORK) {
 
-            List<ButtonWork> buttonwork= Configure.getSession().getList(ButtonWork.class,null);
-            mButtonList=new ArrayList<ButtonBase>(buttonwork);
+            List<ButtonWork> buttonwork = Configure.getSession().getList(ButtonWork.class, null);
+            mButtonList = new ArrayList<ButtonBase>(buttonwork);
         }
         activateList();
 
@@ -94,7 +94,7 @@ public class FButtonEat extends Fragment {
     }
 
     private void activateList() {
-         mAdapterButton =new ListAdapterButton(getActivity(),R.layout.item_list_button,mButtonList);
+        mAdapterButton = new ListAdapterButton(getActivity(), R.layout.item_list_button, mButtonList);
         mListView.setAdapter(mAdapterButton);
     }
 

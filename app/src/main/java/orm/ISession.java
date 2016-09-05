@@ -7,6 +7,7 @@ import java.util.List;
 public interface ISession {
 
     SQLiteDatabase getSqLiteDatabase();
+
     <T> int update(T item);
 
     <T> int insert(T item);

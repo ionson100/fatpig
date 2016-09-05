@@ -21,9 +21,9 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Reanimator extends ContextWrapper {
 
-    private final   static  boolean USAGEBASE=true;
+    private final static boolean USAGEBASE = true;
     private static final Map<Class, Object> map = new HashMap<>();
-   // public static Context context;
+    // public static Context context;
     protected static iListenerСhanges mIListener;
     public static String filePath = Environment.getExternalStorageDirectory().toString() + "/fatpig";
     private static ReadWriteLock rwlock = new ReentrantReadWriteLock();
@@ -33,11 +33,13 @@ public class Reanimator extends ContextWrapper {
     }
 
     private static Reanimator reanimator;
-    public static void intContext(Context context){
-        reanimator=new Reanimator(context);
+
+    public static void intContext(Context context) {
+        reanimator = new Reanimator(context);
     }
-    public static Context getContext(){
-      return   reanimator.getApplicationContext();
+
+    public static Context getContext() {
+        return reanimator.getApplicationContext();
     }
 
 
@@ -102,20 +104,18 @@ public class Reanimator extends ContextWrapper {
     public static synchronized Object get(Class aClass) {
 
 
-
-
-            if (map.containsKey(aClass)) {
-                return map.get(aClass);
+        if (map.containsKey(aClass)) {
+            return map.get(aClass);
+        } else {
+            if (USAGEBASE) {
+                Object dd = SqliteStorage.getObject(aClass);
+                map.put(aClass, dd);
+                return dd;
             } else {
-                if(USAGEBASE){
-                    Object dd=  SqliteStorage.getObject(aClass);
-                    map.put(aClass,dd);
-                    return dd;
-                }else{
-                    return getObject(aClass);
-                }
-
+                return getObject(aClass);
             }
+
+        }
 
 
     }
@@ -156,7 +156,7 @@ public class Reanimator extends ContextWrapper {
                 try {
                     fileIn = new FileInputStream(filePath + "/" + aClass.getName() + ".txt");
                 } catch (FileNotFoundException e1) {
-                    throw  new RuntimeException("Setting FileNotFoundException:"+e1.getMessage());
+                    throw new RuntimeException("Setting FileNotFoundException:" + e1.getMessage());
                 }
                 in = new ObjectInputStream(fileIn);
                 e = in.readObject();
@@ -201,7 +201,7 @@ public class Reanimator extends ContextWrapper {
             out = new ObjectOutputStream(fileOut);
             out.writeObject(ob);
         } catch (IOException e) {
-           throw  new RuntimeException("reanimator:"+e.getMessage());
+            throw new RuntimeException("reanimator:" + e.getMessage());
         } finally {
             if (fileOut != null) {
                 try {
@@ -221,8 +221,6 @@ public class Reanimator extends ContextWrapper {
     }
 
     /**
-     *
-     *
      * @param aClass
      */
     public static synchronized void save(Class aClass) {
@@ -230,9 +228,9 @@ public class Reanimator extends ContextWrapper {
 
         Object o = map.get(aClass);
 
-        if(USAGEBASE){
+        if (USAGEBASE) {
             SqliteStorage.saveObject(o, aClass);
-        }else{
+        } else {
             if (o == null) {
                 new RuntimeException("save reanimator settings: object not exists  from map");
             }

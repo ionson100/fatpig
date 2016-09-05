@@ -1,11 +1,5 @@
 package com.settings.ion.mylibrary;
 
-import android.app.Activity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
-import java.lang.reflect.Field;
-
 //class SubMenuActivity extends Activity {
 //
 ////    public static InnerAttribute innerAttribute;

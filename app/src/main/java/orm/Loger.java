@@ -4,7 +4,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
 
-
 import com.omsk.bitnic.fatpig.BuildConfig;
 
 import java.lang.reflect.Field;

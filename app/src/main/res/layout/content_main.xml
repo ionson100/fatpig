@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:background="@drawable/basescene"
+    android:background="@drawable/basescene"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.omsk.bitnic.fatpig.MainActivity"
     tools:showIn="@layout/app_bar_main">
@@ -14,6 +14,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
 
             android:orientation="vertical"
@@ -22,6 +23,7 @@
             android:layout_height="0dp"
 
             android:layout_weight="0.25">
+
             <LinearLayout
 
                 android:orientation="horizontal"
@@ -31,14 +33,16 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" >
+                android:layout_weight="1">
+
                 <ImageButton
                     android:id="@+id/image1"
                     android:layout_marginLeft="5dp"
                     android:background="@null"
-                    android:src="@drawable/ic_pig"
+                    android:src="@drawable/select_panel1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
 
                     android:textSize="18dp"
@@ -49,6 +53,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
 
                 android:orientation="horizontal"
@@ -58,14 +63,16 @@
 
                 android:layout_width="70dp"
                 android:layout_height="0dp"
-                android:layout_weight="1" >
+                android:layout_weight="1">
+
                 <ImageButton
                     android:id="@+id/image2"
                     android:layout_marginLeft="5dp"
                     android:background="@null"
-                    android:src="@drawable/ic_calculation"
+                    android:src="@drawable/select_calculation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:textSize="18dp"
                     style="@style/labelBase"
@@ -75,6 +82,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
 
                 android:orientation="horizontal"
@@ -84,13 +92,15 @@
                 android:layout_width="220dp"
                 android:layout_height="0dp"
                 android:layout_weight="1">
+
                 <ImageButton
                     android:id="@+id/image3"
                     android:layout_marginLeft="5dp"
                     android:background="@null"
-                    android:src="@drawable/ic_eat"
+                    android:src="@drawable/select_eat"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
+
                 <TextView
                     android:textSize="18dp"
                     style="@style/labelBase"
@@ -106,29 +116,30 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                >
+                android:layout_weight="1">
 
                 <LinearLayout
                     android:layout_weight="0.9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <LinearLayout
 
                         android:id="@+id/panel4"
                         android:gravity="center_vertical"
                         android:layout_margin="1dp"
                         android:layout_width="120dp"
-                        android:layout_height="wrap_content" >
+                        android:layout_height="wrap_content">
 
 
                         <ImageButton
                             android:id="@+id/image4"
                             android:layout_marginLeft="5dp"
                             android:background="@null"
-                            android:src="@drawable/ic_runner2"
+                            android:src="@drawable/select_runner2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content" />
+
                         <TextView
                             android:textSize="18dp"
                             style="@style/labelBase"
@@ -141,12 +152,11 @@
                 </LinearLayout>
 
 
-
                 <ImageButton
                     android:layout_marginRight="5dp"
                     android:id="@+id/menu"
                     android:background="@null"
-                    android:src="@drawable/ic_menu2"
+                    android:src="@drawable/select_menu2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1" />
@@ -154,8 +164,8 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
+
         <LinearLayout
             android:padding="0dp"
             android:orientation="vertical"

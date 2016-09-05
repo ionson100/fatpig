@@ -1,7 +1,6 @@
 package com.omsk.bitnic.fatpig;
 
 import android.app.Activity;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 
 import com.settings.ion.mylibrary.Reanimator;
@@ -15,14 +14,13 @@ import java.util.List;
 public class Settings implements Serializable {
 
 
-
     @SettingField(
 
             descriptions = R.string.settings_percent,
             index = -1,
             title = R.string.settings_percent_title,
             typeField = TypeField.Integer)
-    private int percent=80;
+    private int percent = 80;
 
 
 //    @SettingField(
@@ -76,50 +74,53 @@ public class Settings implements Serializable {
     public boolean isShowHelp;
 
 
-    public String startTab="t1";
+    public String startTab = "t1";
 
     private static transient Settings settings;
     //,
     private int _stateSystem;
-    public double latitude=56.819847;
-    public double longitude=60.640622;
-    public float zoom=16;
+    public double latitude = 56.819847;
+    public double longitude = 60.640622;
+    public float zoom = 16;
     public transient Track trackshow;
 
 
-    public static Settings getSettings(){
-        if(settings==null){
-            settings= (Settings) Reanimator.get(Settings.class);
+    public static Settings getSettings() {
+        if (settings == null) {
+            settings = (Settings) Reanimator.get(Settings.class);
         }
         return settings;
     }
 
-    public static void  Save(){
+    public static void Save() {
         Reanimator.save(Settings.class);
     }
-    public int getSateSystem(){
+
+    public int getSateSystem() {
         return _stateSystem;
     }
-    public void setStateSystem(int stateSystem,Activity activity){
-        _stateSystem=stateSystem;
+
+    public void setStateSystem(int stateSystem, Activity activity) {
+        _stateSystem = stateSystem;
         Reanimator.save(Settings.class);
         FactoryFragment.Action((AppCompatActivity) activity);
     }
 
 
-    public int getPercent(){
+    public int getPercent() {
         return percent;
     }
-    public void setPercent(int value){
-        percent=value;
+
+    public void setPercent(int value) {
+        percent = value;
         Reanimator.save(Settings.class);
     }
 
     public long timerStart;
     public long timerStop;
 
-    public String statusTrack="0";
+    public String statusTrack = "0";
 
-    public List<timer> timerList=new ArrayList<>();
+    public List<timer> timerList = new ArrayList<>();
 
 }

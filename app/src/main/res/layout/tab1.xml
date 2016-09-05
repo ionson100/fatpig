@@ -4,11 +4,13 @@
     android:id="@+id/tab1_panel"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:gravity="right|center_vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1">
+
         <ImageButton
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
@@ -16,20 +18,22 @@
             android:background="@null"
             android:src="@drawable/ic_settings2"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+            android:layout_height="wrap_content" />
     </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.45">
+
         <LinearLayout
             android:padding="20dp"
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <Button
                 android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
@@ -39,12 +43,14 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
+
         <LinearLayout
             android:padding="20dp"
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <Button
                 android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"
@@ -56,17 +62,20 @@
         </LinearLayout>
 
     </LinearLayout>
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.45">
+
         <LinearLayout
             android:padding="20dp"
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <Button
 
                 android:fontFamily="sans-serif-light"
@@ -77,12 +86,14 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
+
         <LinearLayout
             android:padding="20dp"
             android:gravity="center_horizontal|center_vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1">
+
             <Button
                 android:fontFamily="sans-serif-light"
                 android:textColor="@android:color/white"

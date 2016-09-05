@@ -1,6 +1,6 @@
 package Model;
 
-public  enum Sex{
-   men,
-   women
+public enum Sex {
+    men,
+    women
 }

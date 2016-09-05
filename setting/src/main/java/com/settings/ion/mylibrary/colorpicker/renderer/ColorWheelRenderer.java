@@ -6,13 +6,13 @@ import com.settings.ion.mylibrary.colorpicker.ColorCircle;
 import java.util.List;
 
 public interface ColorWheelRenderer {
-	float GAP_PERCENTAGE = 0.025f;
+    float GAP_PERCENTAGE = 0.025f;
 
-	void draw();
+    void draw();
 
-	ColorWheelRenderOption getRenderOption();
+    ColorWheelRenderOption getRenderOption();
 
-	void initWith(ColorWheelRenderOption colorWheelRenderOption);
+    void initWith(ColorWheelRenderOption colorWheelRenderOption);
 
-	List<ColorCircle> getColorCircleList();
+    List<ColorCircle> getColorCircleList();
 }

@@ -16,7 +16,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 
 import Model.ButtonBase;
-import orm.Configure;
 
 public class DialigEditButton extends DialogFragment {
 
@@ -45,7 +44,7 @@ public class DialigEditButton extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if(iActionDismiss!=null){
+        if (iActionDismiss != null) {
             iActionDismiss.Action(null);
         }
     }
@@ -58,8 +57,8 @@ public class DialigEditButton extends DialogFragment {
         vi = LayoutInflater.from(getActivity());
         View v = vi.inflate(R.layout.dialog_edit_button, null);
         builder.setView(v);
-        name= (EditText) v.findViewById(R.id.button_name2);
-        calorie= (EditText) v.findViewById(R.id.button_calories);
+        name = (EditText) v.findViewById(R.id.button_name2);
+        calorie = (EditText) v.findViewById(R.id.button_calories);
         CheckBox checkBox = (CheckBox) v.findViewById(R.id.button_check_isshow);
 
 
@@ -120,8 +119,8 @@ public class DialigEditButton extends DialogFragment {
         v.findViewById(R.id.bt_save1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validate()){
-                    if(iAction!=null){
+                if (validate()) {
+                    if (iAction != null) {
                         iAction.Action(button);
 
                     }
@@ -132,21 +131,18 @@ public class DialigEditButton extends DialogFragment {
         });
 
 
-
-
-
         return builder.create();
     }
 
     private boolean validate() {
-        if(button.name==null||button.name.trim().length()==0){
+        if (button.name == null || button.name.trim().length() == 0) {
 
             name.setError("Поле не заполнено");
 
             return false;
 
         }
-        if(button.calories==0d){
+        if (button.calories == 0d) {
 
             calorie.setError("Поле не заполнено");
 

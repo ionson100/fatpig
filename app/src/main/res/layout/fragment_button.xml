@@ -19,6 +19,6 @@
 
             android:divider="#FFCC00"
             android:dividerHeight="1dp"
-            android:listSelector="@drawable/listitem_selector"/>
+            android:listSelector="@drawable/listitem_selector" />
     </LinearLayout>
 </FrameLayout>

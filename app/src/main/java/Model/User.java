@@ -34,25 +34,23 @@ public class User {
     private int _sex;
 
     @Column("delta")
-    public double delta=1.2;
+    public double delta = 1.2;
 
 
-
-
-
-    public Sex getSex(){
-       return  _sex==0?Sex.men:Sex.women;
+    public Sex getSex() {
+        return _sex == 0 ? Sex.men : Sex.women;
     }
-    public void setSex(Sex sex){
-        _sex=sex==Sex.men?0:1;
+
+    public void setSex(Sex sex) {
+        _sex = sex == Sex.men ? 0 : 1;
     }
 
 
     public static User getUser() {
-        List<User> users= Configure.getSession().getList(User.class,null);
-        if(users.size()==0){
+        List<User> users = Configure.getSession().getList(User.class, null);
+        if (users.size() == 0) {
             return null;
-        }else{
+        } else {
             return users.get(0);
         }
 

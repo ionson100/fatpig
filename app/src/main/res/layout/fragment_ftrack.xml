@@ -17,10 +17,12 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.7">
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <com.omsk.bitnic.fatpig.PausableChronometer
                     android:gravity="center_vertical|center_horizontal"
                     android:textSize="55dp"
@@ -38,6 +40,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.1">
+
                     <ImageButton
                         android:layout_gravity="right|top"
                         android:layout_marginRight="5dp"
@@ -45,8 +48,8 @@
                         android:background="@null"
                         android:src="@drawable/ic_menu_map"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        />
+                        android:layout_height="wrap_content" />
+
                     <TextView
                         android:id="@+id/point_count"
                         android:gravity="center_horizontal"
@@ -58,9 +61,6 @@
             </LinearLayout>
 
 
-
-
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -68,12 +68,13 @@
                 <TextView
                     android:paddingLeft="5dp"
                     android:text="@string/distance"
-                   android:textSize="20dp"
+                    android:textSize="20dp"
                     style="@style/labelBase"
-                   android:textColor="@android:color/white"
+                    android:textColor="@android:color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7" />
+
                 <TextView
                     android:id="@+id/diastace"
                     android:textSize="25dp"
@@ -84,9 +85,11 @@
                     android:layout_weight="0.3" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:paddingLeft="5dp"
                     android:textSize="20dp"
@@ -96,6 +99,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7" />
+
                 <TextView
                     style="@style/labelBase"
                     android:id="@+id/calories"
@@ -107,9 +111,11 @@
                     android:layout_weight="0.3" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:paddingLeft="5dp"
                     android:text="@string/speed"
@@ -119,6 +125,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7" />
+
                 <TextView
                     android:text="0.0"
                     android:id="@+id/speed"
@@ -130,9 +137,11 @@
                     android:layout_weight="0.3" />
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     android:paddingLeft="5dp"
                     android:text="@string/speedCore"
@@ -142,6 +151,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.7" />
+
                 <TextView
                     android:text="0.0"
                     android:id="@+id/speed_core"
@@ -155,8 +165,6 @@
             </LinearLayout>
 
 
-
-
         </LinearLayout>
 
         <LinearLayout
@@ -164,37 +172,38 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.3">
+
             <ImageButton
 
                 android:tag="1"
                 android:id="@+id/tarack_run"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_start"
+                android:src="@drawable/select_start"
                 style="@style/buttonRound"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
+
             <ImageButton
                 android:tag="2"
                 android:id="@+id/tarack_pause"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_pause"
+                android:src="@drawable/select_pause"
                 style="@style/buttonRound"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
+
             <ImageButton
                 android:tag="3"
                 android:id="@+id/tarack_stop"
                 android:layout_margin="10dp"
-                android:src="@drawable/ic_stop"
+                android:src="@drawable/select_stop"
                 style="@style/buttonRound"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1" />
         </LinearLayout>
-
-
 
 
     </LinearLayout>

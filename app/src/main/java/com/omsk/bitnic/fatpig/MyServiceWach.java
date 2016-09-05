@@ -13,6 +13,7 @@ public class MyServiceWach extends Service {
     public IBinder onBind(Intent intent) {
         return null;
     }
+
     public void onTaskRemoved(Intent rootIntent) {
 
         //unregister listeners

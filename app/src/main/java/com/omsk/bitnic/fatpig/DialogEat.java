@@ -11,17 +11,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Date;
 
 import Model.OneEat;
-import Model.Product;
 import Model.ProductBase;
 
 /**
@@ -29,30 +26,32 @@ import Model.ProductBase;
  */
 public class DialogEat extends DialogFragment {
 
-    private static  String pref="Итого калорий: ";
+    private static String pref = "Итого калорий: ";
     private IAction iAction;
     private ProductBase product;
-    OneEat oneEat=new OneEat();
+    OneEat oneEat = new OneEat();
 
     private IAction iActionDismiss;
 
-    public DialogEat addIActionDismiss(IAction iAction){
-        this.iActionDismiss=iAction;
-        return  this;
+    public DialogEat addIActionDismiss(IAction iAction) {
+        this.iActionDismiss = iAction;
+        return this;
     }
-    public DialogEat addIAction(IAction iAction){
-        this.iAction=iAction;
-        return  this;
+
+    public DialogEat addIAction(IAction iAction) {
+        this.iAction = iAction;
+        return this;
     }
-    public DialogEat addProduct(ProductBase product){
-        this.product=product;
-        return  this;
+
+    public DialogEat addProduct(ProductBase product) {
+        this.product = product;
+        return this;
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if(iActionDismiss!=null){
+        if (iActionDismiss != null) {
             iActionDismiss.Action(null);
         }
     }
@@ -68,21 +67,21 @@ public class DialogEat extends DialogFragment {
 
 //        oneEat.product=product;
 //        oneEat.product_id=product.id;
-        oneEat.cal=product.calorieses;
-        oneEat.isGramm=true;
-        oneEat.date=Utils.dateToInt(new Date());
+        oneEat.cal = product.calorieses;
+        oneEat.isGramm = true;
+        oneEat.date = new Date().getTime();
 
 
-        final TextView textName= (TextView) v.findViewById(R.id.dialog_eat_name);
+        final TextView textName = (TextView) v.findViewById(R.id.dialog_eat_name);
         textName.setText(product.name + " (" + String.valueOf(product.calorieses) + "ккал)");
 
-        EditText editTextAmount= (EditText) v.findViewById(R.id.dialog_eat_amount);
+        EditText editTextAmount = (EditText) v.findViewById(R.id.dialog_eat_amount);
 
-        final TextView textTotal= (TextView) v.findViewById(R.id.dialog_eat_cal_total);
+        final TextView textTotal = (TextView) v.findViewById(R.id.dialog_eat_cal_total);
         textTotal.setText(pref + "0");
 
-        final RadioButton buttonGramm= (RadioButton) v.findViewById(R.id.radio_button_gram);
-        final RadioButton buttonOne= (RadioButton) v.findViewById(R.id.radio_button_one);
+        final RadioButton buttonGramm = (RadioButton) v.findViewById(R.id.radio_button_gram);
+        final RadioButton buttonOne = (RadioButton) v.findViewById(R.id.radio_button_one);
 
         buttonGramm.setChecked(true);
 
@@ -91,7 +90,7 @@ public class DialogEat extends DialogFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     textTotal.setText(pref + String.valueOf((oneEat.amount / 100) * product.calorieses));
-                    oneEat.isGramm=true;
+                    oneEat.isGramm = true;
 
                 }
             }
@@ -100,16 +99,11 @@ public class DialogEat extends DialogFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    textTotal.setText(pref + String.valueOf((oneEat.amount ) * product.calorieses));
-                    oneEat.isGramm=false;
+                    textTotal.setText(pref + String.valueOf((oneEat.amount) * product.calorieses));
+                    oneEat.isGramm = false;
                 }
             }
         });
-
-
-
-
-
 
 
         editTextAmount.addTextChangedListener(new TextWatcher() {
@@ -128,7 +122,7 @@ public class DialogEat extends DialogFragment {
                     if (buttonGramm.isChecked()) {
                         textTotal.setText(pref + String.valueOf((oneEat.amount / 100) * product.calorieses));
                     } else {
-                        textTotal.setText(pref + String.valueOf((oneEat.amount ) * product.calorieses));
+                        textTotal.setText(pref + String.valueOf((oneEat.amount) * product.calorieses));
                     }
 
                 }
@@ -141,9 +135,8 @@ public class DialogEat extends DialogFragment {
         });
 
 
-
-        Button buttonCancel= (Button) v.findViewById(R.id.dialog_eat_cancal);
-        Button buttonOk= (Button) v.findViewById(R.id.dialog_eat_ok);
+        Button buttonCancel = (Button) v.findViewById(R.id.dialog_eat_cancal);
+        Button buttonOk = (Button) v.findViewById(R.id.dialog_eat_ok);
 
 
         buttonCancel.setOnClickListener(new View.OnClickListener() {

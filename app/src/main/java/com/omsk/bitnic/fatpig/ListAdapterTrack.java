@@ -13,26 +13,29 @@ public class ListAdapterTrack extends ArrayAdapter<Track> {
 
     public List<Track> trackList;
     private int resource;
+
     public ListAdapterTrack(Context context, int resource, List<Track> objects) {
         super(context, resource, objects);
-        this.trackList=objects;
-        this.resource=resource;
+        this.trackList = objects;
+        this.resource = resource;
     }
-    public Track getTrack(int i){
+
+    public Track getTrack(int i) {
         return trackList.get(i);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         final Track p = getItem(position);
-        final View mView  = LayoutInflater.from(getContext()).inflate(R.layout.item_track, null);
-        TextView trackDate= (TextView) mView.findViewById(R.id.track_date);
+        final View mView = LayoutInflater.from(getContext()).inflate(R.layout.item_track, null);
+        TextView trackDate = (TextView) mView.findViewById(R.id.track_date);
         trackDate.setText(p.name());
-        TextView trackCount= (TextView) mView.findViewById(R.id.track_count);
+        TextView trackCount = (TextView) mView.findViewById(R.id.track_count);
         trackCount.setText(String.valueOf(p.list.size()));
         mView.setTag(p);
         return mView;
     }
+
     @Override
     public boolean areAllItemsEnabled() {
         return false;

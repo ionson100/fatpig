@@ -4,87 +4,79 @@
     android:layout_height="match_parent"
     tools:context="com.omsk.bitnic.fatpig.FTimerWork">
 
-   <LinearLayout
+    <LinearLayout
 
-       android:orientation="vertical"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-      <LinearLayout
-          android:orientation="vertical"
-          android:id="@+id/data_track"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="0.7">
-
-
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/data_track"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.7">
 
 
-
-         <com.omsk.bitnic.fatpig.PausableChronometerWork
-             android:textSize="55dp"
-             android:fontFamily="sans-serif-light"
-             android:textColor="@android:color/white"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:id="@+id/chronometer"
-             android:layout_gravity="center_horizontal" />
-
+            <com.omsk.bitnic.fatpig.PausableChronometerWork
+                android:textSize="55dp"
+                android:fontFamily="sans-serif-light"
+                android:textColor="@android:color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/chronometer"
+                android:layout_gravity="center_horizontal" />
 
 
+            <com.omsk.bitnic.fatpig.Pupper
+                android:paddingLeft="15dp"
+                android:id="@+id/calories"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
 
-         <com.omsk.bitnic.fatpig.Pupper
-             android:paddingLeft="15dp"
-             android:id="@+id/calories"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.3">
+
+            <ImageButton
+
+                android:tag="1"
+                android:id="@+id/tarack_run"
+                android:layout_margin="10dp"
+                android:src="@drawable/select_start"
+                style="@style/buttonRound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:visibility="invisible"
+                android:tag="2"
+                android:id="@+id/tarack_pause"
+                android:layout_margin="10dp"
+                android:src="@drawable/select_pause"
+                style="@style/buttonRound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+
+            <ImageButton
+                android:tag="3"
+                android:id="@+id/tarack_stop"
+                android:layout_margin="10dp"
+                android:src="@drawable/select_stop"
+                style="@style/buttonRound"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
+        </LinearLayout>
 
 
-
-
-
-      </LinearLayout>
-
-      <LinearLayout
-          android:orientation="horizontal"
-          android:layout_width="match_parent"
-          android:layout_height="0dp"
-          android:layout_weight="0.3">
-         <ImageButton
-
-             android:tag="1"
-             android:id="@+id/tarack_run"
-             android:layout_margin="10dp"
-             android:src="@drawable/ic_start"
-             style="@style/buttonRound"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_weight="1" />
-         <ImageButton
-             android:visibility="invisible"
-             android:tag="2"
-             android:id="@+id/tarack_pause"
-             android:layout_margin="10dp"
-             android:src="@drawable/ic_pause"
-             style="@style/buttonRound"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_weight="1" />
-         <ImageButton
-             android:tag="3"
-             android:id="@+id/tarack_stop"
-             android:layout_margin="10dp"
-             android:src="@drawable/ic_stop"
-             style="@style/buttonRound"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:layout_weight="1" />
-      </LinearLayout>
-
-
-
-
-   </LinearLayout>
+    </LinearLayout>
 
 </FrameLayout>

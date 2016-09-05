@@ -2,7 +2,6 @@ package com.settings.ion.mylibrary;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
 
 import com.settings.ion.mylibrary.colorpicker.ColorPickerView;
 import com.settings.ion.mylibrary.colorpicker.OnColorSelectedListener;
@@ -17,16 +16,17 @@ public class ColorPickerDialogE {
     private Context context;
     private IAction iAction;
 
-    public ColorPickerDialogE(Context context,IAction iAction){
+    public ColorPickerDialogE(Context context, IAction iAction) {
         this.context = context;
 
         this.iAction = iAction;
     }
 
-    public interface IAction{
-       void Action(int color);
+    public interface IAction {
+        void Action(int color);
     }
-    public void show(int red,String name) {
+
+    public void show(int red, String name) {
 
         ColorPickerDialogBuilder
                 .with(context)
@@ -43,9 +43,9 @@ public class ColorPickerDialogE {
                 .setPositiveButton("ok", new ColorPickerClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int selectedColor, Integer[] allColors) {
-                      if(iAction!=null){
-                          iAction.Action(selectedColor);
-                      }
+                        if (iAction != null) {
+                            iAction.Action(selectedColor);
+                        }
                     }
                 })
                 .setNegativeButton("cancel", new DialogInterface.OnClickListener() {

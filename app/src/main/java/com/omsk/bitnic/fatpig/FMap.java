@@ -9,14 +9,12 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
-import android.widget.Button;
 
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.CoreProtocolPNames;
@@ -24,9 +22,7 @@ import org.osmdroid.DefaultResourceProxyImpl;
 import org.osmdroid.ResourceProxy;
 import org.osmdroid.http.HttpClientFactory;
 import org.osmdroid.http.IHttpClientFactory;
-import org.osmdroid.tileprovider.tilesource.ITileSource;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
-import org.osmdroid.tileprovider.tilesource.XYTileSource;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.PathOverlay;
@@ -35,7 +31,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.GeoData;
-import Transceiver.Transceiver;
 import orm.Configure;
 
 
@@ -45,19 +40,17 @@ public class FMap extends Fragment {
     private Settings mSettings;
     private MapView mMapView;
     private MyItemizedOverlay myItemizedOverlay = null;
-    private List<GeoData> mGeoDatas=new ArrayList<>();
+    private List<GeoData> mGeoDatas = new ArrayList<>();
     private MyBroadcastReceiver broadcastReceiver;
 
-    public FMap() {}
+    public FMap() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         mSettings = Settings.getSettings();
-
-
-
 
 
         View view = inflater.inflate(R.layout.fragment_fmap, container, false);
@@ -73,7 +66,6 @@ public class FMap extends Fragment {
         marker.setBounds(0, markerHeight, markerWidth, 0);
         ResourceProxy resourceProxy = new DefaultResourceProxyImpl(getActivity().getApplicationContext());
         myItemizedOverlay = new MyItemizedOverlay(marker, resourceProxy);
-
 
 
         // mMapView.setBuiltInZoomControls(false);
@@ -98,49 +90,49 @@ public class FMap extends Fragment {
         mMapView.getOverlays().add(myItemizedOverlay);
 
 
-        if(Settings.getSettings().getSateSystem()==StateSystem.MAP){
-            if(TrackSettings.getCore().getStatusTrack().equals("1")){
-                mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
-                List<GeoPoint> pointList=new ArrayList<>(mGeoDatas.size());
+        if (Settings.getSettings().getSateSystem() == StateSystem.MAP) {
+            if (TrackSettings.getCore().statusTrack.equals("1")) {
+                mGeoDatas = Configure.getSession().getList(GeoData.class, " track_name = " + TrackSettings.getCore().trackName);
+                List<GeoPoint> pointList = new ArrayList<>(mGeoDatas.size());
                 for (GeoData gd : mGeoDatas) {
-                    pointList.add(new GeoPoint(gd.latitude,gd.longitude));
+                    pointList.add(new GeoPoint(gd.latitude, gd.longitude));
                 }
                 for (int i = 0; i < pointList.size(); i++) {
                     myItemizedOverlay.addItem(pointList.get(i), "");
                 }
-                if(pointList.size()>0){
+                if (pointList.size() > 0) {
                     mMapView.getController().animateTo(pointList.get(0));
                 }
                 mMapView.invalidate();
-            }else{
+            } else {
                 GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
                 myItemizedOverlay.addItem(myPoint1, "myPoint1");
                 mMapView.getController().animateTo(myPoint1);
                 mMapView.invalidate();
             }
-        }else{
-            if(Settings.getSettings().trackshow==null){
+        } else {
+            if (Settings.getSettings().trackshow == null) {
                 GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
                 myItemizedOverlay.addItem(myPoint1, "myPoint1");
                 mMapView.getController().animateTo(myPoint1);
                 mMapView.invalidate();
-            }else{
-                mGeoDatas=Settings.getSettings().trackshow.list;
-                if(mGeoDatas!=null&&mGeoDatas.size()>0){
+            } else {
+                mGeoDatas = Settings.getSettings().trackshow.list;
+                if (mGeoDatas != null && mGeoDatas.size() > 0) {
                     PathOverlay myPath = new PathOverlay(Color.RED, getActivity());
-                    List<GeoPoint> pointList=new ArrayList<>(mGeoDatas.size());
+                    List<GeoPoint> pointList = new ArrayList<>(mGeoDatas.size());
                     for (GeoData geoData : mGeoDatas) {
-                        pointList.add(new GeoPoint(geoData.latitude,geoData.longitude));
+                        pointList.add(new GeoPoint(geoData.latitude, geoData.longitude));
                     }
                     for (GeoPoint point : pointList) {
                         myPath.addPoint(point);
                     }
                     mMapView.getOverlays().add(myPath);
-                    if(pointList.size()>0){
+                    if (pointList.size() > 0) {
                         mMapView.getController().animateTo(pointList.get(0));
                     }
                     mMapView.invalidate();
-                }else{
+                } else {
                     GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
                     myItemizedOverlay.addItem(myPoint1, "myPoint1");
                     mMapView.getController().animateTo(myPoint1);
@@ -149,14 +141,7 @@ public class FMap extends Fragment {
             }
 
 
-
         }
-
-
-
-
-
-
 
 
 /////////////////////////////////////////////////////////////центрирование в центре экрана
@@ -188,13 +173,13 @@ public class FMap extends Fragment {
 
     private void initBrodcast() {
 
-        if(TrackSettings.getCore().getStatusTrack().equals("1")&&Settings.getSettings().getSateSystem()==StateSystem.MAP){
-            if(!Utils.isMyServiceRunning(MyServiceGeo.class,getActivity())){
+        if (TrackSettings.getCore().statusTrack.equals("1") && Settings.getSettings().getSateSystem() == StateSystem.MAP) {
+            if (!Utils.isMyServiceRunning(MyServiceGeo.class, getActivity())) {
                 getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
             }
 
             broadcastReceiver = new MyBroadcastReceiver();
-            getActivity().registerReceiver(broadcastReceiver,new IntentFilter(MainActivity.BROADCAST_ACTION));
+            getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MainActivity.BROADCAST_ACTION));
         }
 
     }
@@ -207,14 +192,14 @@ public class FMap extends Fragment {
         mMapView.getTileProvider().clearTileCache();
         myItemizedOverlay = null;
         mMapView = null;
-        if(broadcastReceiver!=null){
+        if (broadcastReceiver != null) {
             getActivity().unregisterReceiver(broadcastReceiver);
         }
 
         System.gc();
     }
-    public class MyBroadcastReceiver extends BroadcastReceiver {
 
+    public class MyBroadcastReceiver extends BroadcastReceiver {
 
 
         @Override
@@ -224,18 +209,18 @@ public class FMap extends Fragment {
             double langitude = intent.getDoubleExtra(MainActivity.PARAM_LATITUDE, 0);
             double longitude = intent.getDoubleExtra(MainActivity.PARAM_LONGITUDE, 0);
             long date = intent.getLongExtra(MainActivity.PARAM_DATE, 0);
-            GeoData geoData=new GeoData();
-            geoData.latitude=langitude;
-            geoData.longitude=longitude;
-            geoData.date=date;
+            GeoData geoData = new GeoData();
+            geoData.latitude = langitude;
+            geoData.longitude = longitude;
+            geoData.date = date;
             mGeoDatas.add(geoData);
             GeoPoint point = new GeoPoint(langitude, longitude);
-            myItemizedOverlay.addItem(point,"");
+            myItemizedOverlay.addItem(point, "");
 
             mMapView.getController().animateTo(point);
             mMapView.invalidate();
-            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(longitude));
-            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(langitude));
+            Log.d("ZZZZZZZZZZZZZZZZ", String.valueOf(longitude));
+            Log.d("ZZZZZZZZZZZZZZZZ", String.valueOf(langitude));
         }
     }
 }

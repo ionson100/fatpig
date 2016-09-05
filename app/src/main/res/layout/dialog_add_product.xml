@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Название продукта:"
-        android:inputType="text"/>
+        android:inputType="text" />
 
     <EditText
         android:selectAllOnFocus="true"
@@ -23,7 +23,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Калории:"
-        android:inputType="number"/>
+        android:inputType="number" />
+
     <CheckBox
         style="@style/editBase"
         android:text="@string/select"
@@ -31,10 +32,12 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
     <LinearLayout
         android:paddingTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <Button
             android:id="@+id/bt_dialog_add_canell"
             style="@style/buttomHead"
@@ -42,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
+
         <Button
             android:id="@+id/bt_dialog_add_ok"
             style="@style/buttomHead"
@@ -50,8 +54,6 @@
             android:layout_height="wrap_content"
             android:layout_weight="1" />
     </LinearLayout>
-
-
 
 
 </LinearLayout>

@@ -1,11 +1,7 @@
 package com.omsk.bitnic.fatpig;
 
 
-import android.content.Context;
-
 import com.settings.ion.mylibrary.Reanimator;
-
-import java.io.IOException;
 
 import orm.Configure;
 
@@ -16,8 +12,8 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         Reanimator.intContext(getApplicationContext());
-        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(),false);
-      //  firstStart.execute(getBaseContext());
+        new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(), false);
+        //  firstStart.execute(getBaseContext());
     }
 
     @Override

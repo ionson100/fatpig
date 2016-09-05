@@ -41,7 +41,7 @@ public class FProduct extends Fragment {
     private ListAdapterProduct mAdapterProduct;
     private List<ProductBase> mProductList;
     private View mView;
-    private ListView  mListView;
+    private ListView mListView;
     private RelativeLayout mRelativeLayout;
     private LinearLayout mLinearLayout;
     private EditText mEditText;
@@ -61,10 +61,10 @@ public class FProduct extends Fragment {
                     @Override
                     public void Action(final Object o) {
 
-                     ProductBase product =   Linq.toStream(mProductList).firstOrDefault(new Predicate<ProductBase>() {
+                        ProductBase product = Linq.toStream(mProductList).firstOrDefault(new Predicate<ProductBase>() {
                             @Override
                             public boolean apply(ProductBase t) {
-                                return t.id==((Product)o).id;
+                                return t.id == ((Product) o).id;
                             }
                         });
 
@@ -109,7 +109,7 @@ public class FProduct extends Fragment {
             }
         });
 
-        if(Settings.getSettings().getSateSystem()==StateSystem.PRODUCT){
+        if (Settings.getSettings().getSateSystem() == StateSystem.PRODUCT) {
             menu.add("Сожрать").setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
                 @Override
                 public boolean onMenuItemClick(MenuItem item) {
@@ -141,19 +141,17 @@ public class FProduct extends Fragment {
                              final Bundle savedInstanceState) {
 
         mView = inflater.inflate(R.layout.fragment_product, container, false);
-        mRelativeLayout= (RelativeLayout) mView.findViewById(R.id.relative_text);
-        mLinearLayout= (LinearLayout) mView.findViewById(R.id.panel_buttons);
-        mEditText= (EditText) mView.findViewById(R.id.editText);
-        parentView = mView. findViewById(R.id.list11);
+        mRelativeLayout = (RelativeLayout) mView.findViewById(R.id.relative_text);
+        mLinearLayout = (LinearLayout) mView.findViewById(R.id.panel_buttons);
+        mEditText = (EditText) mView.findViewById(R.id.editText);
+        parentView = mView.findViewById(R.id.list11);
 
-        if(Settings.getSettings().getSateSystem()==StateSystem.PRODUCT){
-            mProductList =new ArrayList<ProductBase>(Configure.getSession().getList(Product.class, null)) ;
-        }else{
-            mProductList =new ArrayList<ProductBase>(Configure.getSession().getList(Work.class, null)) ;
+        if (Settings.getSettings().getSateSystem() == StateSystem.PRODUCT) {
+            mProductList = new ArrayList<ProductBase>(Configure.getSession().getList(Product.class, null));
+        } else {
+            mProductList = new ArrayList<ProductBase>(Configure.getSession().getList(Work.class, null));
         }
         mListView = (ListView) mView.findViewById(R.id.list_product);
-
-
 
 
         mListView.setOnCreateContextMenuListener(this);
@@ -216,7 +214,6 @@ public class FProduct extends Fragment {
         });
 
 
-
         mView.findViewById(R.id.bt_select_product).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -267,12 +264,12 @@ public class FProduct extends Fragment {
         return mView;
     }
 
-    void sort(){
+    void sort() {
 
         mView.findViewById(R.id.product_name).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              List<ProductBase> products=  mAdapterProduct.productList;
+                List<ProductBase> products = mAdapterProduct.productList;
                 Collections.sort(products, new Comparator<ProductBase>() {
                     @Override
                     public int compare(ProductBase lhs, ProductBase rhs) {
@@ -280,24 +277,24 @@ public class FProduct extends Fragment {
                     }
                 });
                 ActivateList(products);
-                sort=false;
+                sort = false;
             }
         });
 
         mView.findViewById(R.id.product_color).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                List<ProductBase> products=  mAdapterProduct.productList;
+                List<ProductBase> products = mAdapterProduct.productList;
                 Collections.sort(products, new Comparator<ProductBase>() {
                     @Override
                     public int compare(ProductBase lhs, ProductBase rhs) {
                         return Double.compare(lhs.calorieses, rhs.calorieses);
                     }
                 });
-                if(sort==false){
-                    sort=true;
-                }else {
-                    sort=false;
+                if (sort == false) {
+                    sort = true;
+                } else {
+                    sort = false;
                     Collections.reverse(products);
                 }
 
@@ -306,8 +303,8 @@ public class FProduct extends Fragment {
         });
     }
 
-    public void ActivateList(List<ProductBase> products){
-        mAdapterProduct =new ListAdapterProduct(getActivity(),R.layout.item_list_product,products);
+    public void ActivateList(List<ProductBase> products) {
+        mAdapterProduct = new ListAdapterProduct(getActivity(), R.layout.item_list_product, products);
         mListView.setAdapter(mAdapterProduct);
 
 
@@ -315,7 +312,7 @@ public class FProduct extends Fragment {
 
     private void createListABC() {
         ListView listView = (ListView) mView.findViewById(R.id.list_abc_plan);
-        String[] res= Utils.listABC;
+        String[] res = Utils.listABC;
         android.widget.ArrayAdapter<String> adapter = new android.widget.ArrayAdapter<>(getActivity(), R.layout.item_list_stock_alphavit, res);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -335,8 +332,7 @@ public class FProduct extends Fragment {
     }
 
 
-
-    public void setListnerToRootView(View view, final IKeyboardVisibilityListener listener){
+    public void setListnerToRootView(View view, final IKeyboardVisibilityListener listener) {
 
 
         parentView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {

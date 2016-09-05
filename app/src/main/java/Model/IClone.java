@@ -1,6 +1,7 @@
 package Model;
 
-public interface IClone<T>{
+public interface IClone<T> {
     T cloneE();
+
     void unclone(T t);
 }

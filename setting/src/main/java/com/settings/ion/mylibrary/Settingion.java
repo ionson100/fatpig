@@ -29,7 +29,7 @@ public class Settingion extends LinearLayout {
     private static final Map<Class, List<InnerAttribute>> map = new HashMap<>();
     private TableLayout table;
     private Class aClass;
-    boolean selectorColorPickerModeShow= true;
+    boolean selectorColorPickerModeShow = true;
 
 
     private Context context;
@@ -153,11 +153,11 @@ public class Settingion extends LinearLayout {
                         switch21.setChecked(val);
                     }
                 });
-                final TableRow ee=row;
+                final TableRow ee = row;
                 switch21.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     @Override
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        Burbulus( ee);
+                        Burbulus(ee);
 
                         try {
                             Field field = ob.getClass().getDeclaredField(ia.fieldName);
@@ -276,7 +276,7 @@ public class Settingion extends LinearLayout {
 
             if (selectorColorPickerModeShow) {
 
-                ColorPickerDialogE dialogE=new ColorPickerDialogE(context, new ColorPickerDialogE.IAction() {
+                ColorPickerDialogE dialogE = new ColorPickerDialogE(context, new ColorPickerDialogE.IAction() {
                     @Override
                     public void Action(int color) {
                         Object o = Reanimator.get(aClass);
@@ -295,13 +295,13 @@ public class Settingion extends LinearLayout {
                     }
                 });
 
-                int color=settingField.defaultColor();
-                if(val!=0){
-                    color=val;
+                int color = settingField.defaultColor();
+                if (val != 0) {
+                    color = val;
                 }
-                dialogE.show(color,context.getString(settingField.title()));
+                dialogE.show(color, context.getString(settingField.title()));
 
-            }else{
+            } else {
 
                 ColorPickerDialog ef = new ColorPickerDialog(context, new ColorPickerDialog.OnColorChangedListener() {
                     @Override
@@ -325,9 +325,6 @@ public class Settingion extends LinearLayout {
                 }, val, f);
                 ef.show();
             }
-
-
-
 
 
         } else if (settingField.typeField() == TypeField.list) {

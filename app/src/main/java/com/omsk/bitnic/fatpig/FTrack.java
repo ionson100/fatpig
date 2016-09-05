@@ -5,23 +5,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-
 import android.os.Bundle;
-
-import android.os.StrictMode;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
-
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import java.util.Date;
 import java.util.List;
@@ -31,9 +24,9 @@ import Model.User;
 import orm.Configure;
 
 
-public class FTrack extends Fragment implements View.OnClickListener{
+public class FTrack extends Fragment implements View.OnClickListener {
 
-    TextView distance,calories,speed,speedCore,pointCount;
+    TextView distance, calories, speed, speedCore, pointCount;
 
     View parentView;
 
@@ -50,39 +43,37 @@ public class FTrack extends Fragment implements View.OnClickListener{
 
 
     MyBroadcastReceiver broadcastReceiver;
-    private int anInt=0;
+    private int anInt = 0;
 
     public FTrack() {
         // Required empty public constructor
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        mView=inflater.inflate(R.layout.fragment_ftrack, container, false);
-        parentView =mView.findViewById(R.id.panel_base);
+        mView = inflater.inflate(R.layout.fragment_ftrack, container, false);
+        parentView = mView.findViewById(R.id.panel_base);
 
-        distance= (TextView) mView.findViewById(R.id.diastace);
+        distance = (TextView) mView.findViewById(R.id.diastace);
 
         mView.findViewById(R.id.menu_map).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Settings.getSettings().setStateSystem(StateSystem.MAP,getActivity());
+                Settings.getSettings().setStateSystem(StateSystem.MAP, getActivity());
             }
         });
 
 
-        speed= (TextView) mView.findViewById(R.id.speed);
+        speed = (TextView) mView.findViewById(R.id.speed);
 
-        speedCore= (TextView) mView.findViewById(R.id.speed_core);
+        speedCore = (TextView) mView.findViewById(R.id.speed_core);
 
 
+        calories = (TextView) mView.findViewById(R.id.calories);
 
-        calories= (TextView) mView.findViewById(R.id.calories);
-
-        pointCount= (TextView) mView.findViewById(R.id.point_count);
+        pointCount = (TextView) mView.findViewById(R.id.point_count);
 
 
         mBtRunn = (ImageButton) mView.findViewById(R.id.tarack_run);
@@ -93,42 +84,36 @@ public class FTrack extends Fragment implements View.OnClickListener{
         mBtStop.setOnClickListener(this);
 
 
-        user=User.getUser();
+        user = User.getUser();
 
 
-
-
-
-
-        mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
-        Toast.makeText(getActivity(),String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
-
-
-
-
-
+        mGeoDatas = Configure.getSession().getList(GeoData.class, " track_name = " + TrackSettings.getCore().trackName);
+        Toast.makeText(getActivity(), String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
 
 
         broadcastReceiver = new MyBroadcastReceiver();
-        getActivity().registerReceiver(broadcastReceiver,new IntentFilter(MainActivity.BROADCAST_ACTION));
-        if(TrackSettings.getCore().timeTimeDelta!=0){
-            long del=new Date().getTime()- TrackSettings.getCore().timeTimeDelta;
-            long dd= TrackSettings.getCore().timeWhenStopped;
-            long res= TrackSettings.getCore().timeWhenStopped-del;
-            // Log.d("ssssssssssssssss",String.valueOf(res));
-            TrackSettings.getCore().timeWhenStopped=res;
-            TrackSettings.getCore().timeTimeDelta=0;
-            TrackSettings.save();
-        }
+        getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MainActivity.BROADCAST_ACTION));
         activateChrono();
-        TrackSettings tt=TrackSettings.getCore();
-        if(tt.getStatusTrack().equals("1")){
+        if (TrackSettings.getCore().statusTrack.equals("2")) {
+
+
+        }
+
+
+
+        TrackSettings tt = TrackSettings.getCore();
+        if (tt.statusTrack.equals("1")) {
+
+          long df= (TrackSettings.getCore().trackName-new Date().getTime());
+
+            chronometer.setTimeWhenStopped(df);
             start();
-        }else if(tt.getStatusTrack().equals("2")){
+        } else if (tt.statusTrack.equals("2")) {
+            chronometer.setBase(SystemClock.elapsedRealtime()+TrackSettings.getCore().stoper);
             pause();
-        }else if(tt.getStatusTrack().equals("3")){
+        } else if (tt.statusTrack.equals("3")) {
             stop();
-        }else{
+        } else {
             mBtRunn.setEnabled(true);
             mBtPause.setEnabled(false);
             mBtStop.setEnabled(false);
@@ -138,15 +123,16 @@ public class FTrack extends Fragment implements View.OnClickListener{
         calculate();
         return mView;
     }
-    void activateChrono(){
+
+    void activateChrono() {
         chronometer = (PausableChronometer) mView.findViewById(R.id.chronometer);
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
 
 
-                if(anInt++>20){
-                    anInt=0;
+                if (anInt++ > 20) {
+                    anInt = 0;
                     FillData.fill(getActivity());
                 }
 
@@ -159,17 +145,17 @@ public class FTrack extends Fragment implements View.OnClickListener{
     @Override
     public void onDestroy() {
         super.onDestroy();
-        chronometer.destoryStop();
-        getActivity(). unregisterReceiver(broadcastReceiver);
+       // chronometer.destoryStop();
+        getActivity().unregisterReceiver(broadcastReceiver);
     }
 
 
     @Override
     public void onClick(View v) {
-        String tag= (String) v.getTag();
+        String tag = (String) v.getTag();
         parentView.setVisibility(View.INVISIBLE);
-        if(tag.equals("1")){
-            DialogRequest request=new DialogRequest();
+        if (tag.equals("1")) {
+            DialogRequest request = new DialogRequest();
             request.setOnAction(new DialogRequest.IAction() {
                 @Override
                 public void action() {
@@ -180,11 +166,11 @@ public class FTrack extends Fragment implements View.OnClickListener{
                 public void action() {
                     parentView.setVisibility(View.VISIBLE);
                 }
-            }).show(getActivity().getSupportFragmentManager(),"dd0");
+            }).show(getActivity().getSupportFragmentManager(), "dd0");
 
-        }else if(tag.equals("2")){
+        } else if (tag.equals("2")) {
 
-            DialogRequest request=new DialogRequest();
+            DialogRequest request = new DialogRequest();
             request.setOnAction(new DialogRequest.IAction() {
                 @Override
                 public void action() {
@@ -195,13 +181,12 @@ public class FTrack extends Fragment implements View.OnClickListener{
                 public void action() {
                     parentView.setVisibility(View.VISIBLE);
                 }
-            }).show(getActivity().getSupportFragmentManager(),"dd1");
+            }).show(getActivity().getSupportFragmentManager(), "dd1");
 
 
+        } else if (tag.equals("3")) {
 
-        }else if(tag.equals("3")){
-
-            DialogRequest request=new DialogRequest();
+            DialogRequest request = new DialogRequest();
             request.setOnAction(new DialogRequest.IAction() {
                 @Override
                 public void action() {
@@ -212,80 +197,90 @@ public class FTrack extends Fragment implements View.OnClickListener{
                 public void action() {
                     parentView.setVisibility(View.VISIBLE);
                 }
-            }).show(getActivity().getSupportFragmentManager(),"dd2");
+            }).show(getActivity().getSupportFragmentManager(), "dd2");
 
         }
     }
-    void start(){
-        boolean first=TrackSettings.getCore().trackName==0;
+
+    void start() {
         chronometer.start();
         mBtRunn.setEnabled(false);
         mBtPause.setEnabled(true);
         mBtStop.setEnabled(true);
-        if(!Utils.isMyServiceRunning(MyServiceGeo.class,getActivity())){
+        if (!Utils.isMyServiceRunning(MyServiceGeo.class, getActivity())) {
             getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
         }
 
-        if(first){
-            mGeoDatas= Configure.getSession().getList(GeoData.class," track_name = "+TrackSettings.getCore().trackName);
-            Toast.makeText(getActivity(),String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
-            calculate();
+        if (TrackSettings.getCore().trackName == 0) {
+            TrackSettings.getCore().trackName=new Date().getTime();
+
+
         }
+        mGeoDatas = Configure.getSession().getList(GeoData.class, " track_name = " + TrackSettings.getCore().trackName);
+      //  Toast.makeText(getActivity(), String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
+        TrackSettings.getCore().statusTrack="1";
+        TrackSettings.save();
         FillData.fill(getActivity());
+        calculate();
     }
-    void pause(){
+
+    void pause() {
+
         chronometer.stop();
         mBtRunn.setEnabled(true);
         mBtPause.setEnabled(false);
         mBtStop.setEnabled(true);
+        TrackSettings.getCore().statusTrack="2";
+        TrackSettings.getCore().stoper =chronometer.getTimeWhenStopped();
+        TrackSettings.save();
         getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
     }
-    void stop(){
+
+    void stop() {
         chronometer.setBase(SystemClock.elapsedRealtime());
         chronometer.reset();
         mBtRunn.setEnabled(true);
         mBtPause.setEnabled(false);
         mBtStop.setEnabled(false);
         getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
+        TrackSettings.getCore().trackName=0;
+        TrackSettings.getCore().statusTrack="3";
+        TrackSettings.save();
     }
 
-    void calculate(){
+    void calculate() {
 
-        double disbleack=Calculation.getDistance(mGeoDatas);
-        double dis=  Utils.round(disbleack,3);
+        double disbleack = Calculation.getDistance(mGeoDatas);
+        double dis = Utils.round(disbleack, 3);
 
         Track.getTrackLive();
 
 
+        long dd = new Date().getTime() - TrackSettings.getCore().trackName;
+        double time = ((double) dd)/1000d/60d / 60d;
+        double speedcores = disbleack / time;
 
-        long dd=Utils.dateToInt(new Date())-TrackSettings.getCore().trackName;
-        double time=((double)dd)/60d/60d;
-        double speedcores=disbleack/time;
-
-        speedCore.setText(String.valueOf(Utils.round(speedcores,2)));
-
+        speedCore.setText(String.valueOf(Utils.round(speedcores, 2)));
 
 
         distance.setText(String.valueOf(dis));
-        double a= Utils.round(Calculation.getSpeed(mGeoDatas),2);
+        double a = Utils.round(Calculation.getSpeed(mGeoDatas), 2);
 
-        if(a>0){
-            String ss=Double.toString(a);
+        if (a > 0) {
+            String ss = Double.toString(a);
             speed.setText(ss);
         }
 
 
-        double cal=Utils.round(Calculation.getCalories(mGeoDatas,user),2);
-        String df=String.valueOf(cal);
+        double cal = Utils.round(Calculation.getCalories(mGeoDatas, user), 2);
+        String df = String.valueOf(cal);
 
         calories.setText(df);
         pointCount.setText(String.valueOf(mGeoDatas.size()));
     }
 
 
-
     public class MyBroadcastReceiver extends BroadcastReceiver {
-
 
 
         @Override
@@ -297,12 +292,12 @@ public class FTrack extends Fragment implements View.OnClickListener{
             long date = intent.getLongExtra(MainActivity.PARAM_DATE, 0);
             float speed = intent.getFloatExtra(MainActivity.PARAM_SPEED, 0);
             float altitude = intent.getFloatExtra(MainActivity.PARAM_ALTITUDE, 0);
-            GeoData geoData=new GeoData();
-            geoData.latitude=langitude;
-            geoData.longitude=longitude;
-            geoData.date=date;
-            geoData.speed=speed;
-            geoData.altitude=altitude;
+            GeoData geoData = new GeoData();
+            geoData.latitude = langitude;
+            geoData.longitude = longitude;
+            geoData.date = date;
+            geoData.speed = speed;
+            geoData.altitude = altitude;
             mGeoDatas.add(geoData);
             calculate();
 //

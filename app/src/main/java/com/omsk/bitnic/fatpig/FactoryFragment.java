@@ -12,22 +12,22 @@ import Model.FButtonEat;
 
 public class FactoryFragment {
 
-    public static void Action( AppCompatActivity activity) {
+    public static void Action(AppCompatActivity activity) {
 
         FillData.fill(activity);
-        Settings mSettings=Settings.getSettings();
-                ((LinearLayout) activity.findViewById(R.id.panel_base)).removeAllViews();
-         android.support.v4.app.FragmentManager mFragmentManager = activity.getSupportFragmentManager();
-         FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
-        removeFragment(mFragmentManager,mFragmentTransaction);
+        Settings mSettings = Settings.getSettings();
+        ((LinearLayout) activity.findViewById(R.id.panel_base)).removeAllViews();
+        android.support.v4.app.FragmentManager mFragmentManager = activity.getSupportFragmentManager();
+        FragmentTransaction mFragmentTransaction = mFragmentManager.beginTransaction();
+        removeFragment(mFragmentManager, mFragmentTransaction);
 
-        if(mSettings.getSateSystem()==StateSystem.HOME){
+        if (mSettings.getSateSystem() == StateSystem.HOME) {
             MainActivity.LISTTRAFIC.clear();
-        }else{
-            if(MainActivity.LISTTRAFIC.size()>0&&MainActivity.LISTTRAFIC.get(MainActivity.LISTTRAFIC.size()-1)!=mSettings.getSateSystem()){
+        } else {
+            if (MainActivity.LISTTRAFIC.size() > 0 && MainActivity.LISTTRAFIC.get(MainActivity.LISTTRAFIC.size() - 1) != mSettings.getSateSystem()) {
                 MainActivity.LISTTRAFIC.add(mSettings.getSateSystem());
             }
-            if(MainActivity.LISTTRAFIC.size()==0){
+            if (MainActivity.LISTTRAFIC.size() == 0) {
                 MainActivity.LISTTRAFIC.add(mSettings.getSateSystem());
             }
 
@@ -142,7 +142,6 @@ public class FactoryFragment {
     }
 
 
-
     private static void showProduct(FragmentTransaction mFragmentTransaction) {
         mFragmentTransaction.add(R.id.panel_base, new FProduct(), "product");
         mFragmentTransaction.commit();
@@ -158,7 +157,7 @@ public class FactoryFragment {
         mFragmentTransaction.commit();
     }
 
-    private static void removeFragment(android.support.v4.app.FragmentManager mFragmentManager,FragmentTransaction mFragmentTransaction) {
+    private static void removeFragment(android.support.v4.app.FragmentManager mFragmentManager, FragmentTransaction mFragmentTransaction) {
 
         List<Fragment> df = mFragmentManager.getFragments();
         if (df != null && df.size() > 0) {

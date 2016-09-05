@@ -8,15 +8,18 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
+
                 <EditText
                     android:selectAllOnFocus="true"
                     android:inputType="numberDecimal"
@@ -25,6 +28,7 @@
                     android:id="@+id/edit_mas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
+
                 <EditText
                     android:selectAllOnFocus="true"
                     android:hint="Давление:"
@@ -52,19 +56,22 @@
 
 
             </LinearLayout>
+
             <LinearLayout
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
+
                 <Button
                     android:text="@string/cancel"
                     android:id="@+id/bt_cancel"
-                   style="@style/buttomHead"
+                    style="@style/buttomHead"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
+
                 <Button
                     android:text="@string/save"
                     android:id="@+id/bt_save"
@@ -74,8 +81,6 @@
                     android:layout_weight="1" />
 
             </LinearLayout>
-
-
 
 
         </LinearLayout>

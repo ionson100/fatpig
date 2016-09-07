@@ -24,10 +24,8 @@
                 android:layout_height="wrap_content">
 
                 <com.omsk.bitnic.fatpig.PausableChronometer
+                    style="@style/chonometer"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="55dp"
-                    android:fontFamily="sans-serif-light"
-                    android:textColor="@android:color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/chronometer"

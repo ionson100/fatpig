@@ -64,10 +64,9 @@
 
     </style>
 
-    <style name="ButtonCalc">
-
-        <item name="android:fontFamily">sans-serif-light</item>
-    </style>
+   <style name="chonometer">
+       <item name="android:fontFamily"></item>
+   </style>
 
 
 </resources>

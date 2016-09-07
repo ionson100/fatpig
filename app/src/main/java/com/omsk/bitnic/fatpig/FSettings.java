@@ -39,6 +39,6 @@ public class FSettings extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Reanimator.unOnSetListenerchanges();
+        Reanimator.onSetListenerСhanges(null);
     }
 }

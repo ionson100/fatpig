@@ -7,11 +7,19 @@
     </style>
 
     <style name="ButtonCalc">
-
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textSize">25dp</item>
         <item name="android:background">@drawable/button_background_round</item>
         <item name="android:textColor">#FFFFFF</item>
 
-        <item name="android:fontFamily">sans-serif-light</item>
+
     </style>
+
+    <style name="chonometer">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textSize">55dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+
 </resources>

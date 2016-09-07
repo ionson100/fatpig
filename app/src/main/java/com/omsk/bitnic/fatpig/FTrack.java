@@ -55,51 +55,30 @@ public class FTrack extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         mView = inflater.inflate(R.layout.fragment_ftrack, container, false);
         parentView = mView.findViewById(R.id.panel_base);
-
         distance = (TextView) mView.findViewById(R.id.diastace);
-
         mView.findViewById(R.id.menu_map).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Settings.getSettings().setStateSystem(StateSystem.MAP, getActivity());
             }
         });
-
-
         speed = (TextView) mView.findViewById(R.id.speed);
-
         speedCore = (TextView) mView.findViewById(R.id.speed_core);
-
-
         calories = (TextView) mView.findViewById(R.id.calories);
-
         pointCount = (TextView) mView.findViewById(R.id.point_count);
-
-
         mBtRunn = (ImageButton) mView.findViewById(R.id.tarack_run);
         mBtPause = (ImageButton) mView.findViewById(R.id.tarack_pause);
         mBtStop = (ImageButton) mView.findViewById(R.id.tarack_stop);
         mBtRunn.setOnClickListener(this);
         mBtPause.setOnClickListener(this);
         mBtStop.setOnClickListener(this);
-
-
         user = User.getUser();
-
-
         mGeoDatas = Configure.getSession().getList(GeoData.class, " track_name = " + TrackSettings.getCore().trackName);
-        Toast.makeText(getActivity(), String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
-
-
+        //Toast.makeText(getActivity(), String.valueOf(mGeoDatas.size()), Toast.LENGTH_LONG).show();
         broadcastReceiver = new MyBroadcastReceiver();
         getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MainActivity.BROADCAST_ACTION));
+
         activateChrono();
-        if (TrackSettings.getCore().statusTrack.equals("2")) {
-
-
-        }
-
-
 
         TrackSettings tt = TrackSettings.getCore();
         if (tt.statusTrack.equals("1")) {
@@ -129,23 +108,17 @@ public class FTrack extends Fragment implements View.OnClickListener {
         chronometer.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener() {
             @Override
             public void onChronometerTick(Chronometer chronometer) {
-
-
                 if (anInt++ > 20) {
                     anInt = 0;
                     FillData.fill(getActivity());
                 }
-
             }
         });
-        chronometer.setFormat("00:%s");
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-       // chronometer.destoryStop();
         getActivity().unregisterReceiver(broadcastReceiver);
     }
 

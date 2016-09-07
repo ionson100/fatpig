@@ -16,17 +16,17 @@ class ColorPickerDialog extends Dialog {
     private final InnerAttribute attribute;
     private final OnColorChangedListener mListener;
     private final int mInitialColor;
-    private final int mDefaultColor;
+    private  int mDefaultColor;
     private final String mKey;
 
-    public ColorPickerDialog(Context context, OnColorChangedListener listener, int initialColor, InnerAttribute attribute) {
+    public ColorPickerDialog(Context context, OnColorChangedListener listener, int initialColor, InnerAttribute attribute, int mDefaultColor) {
         super(context);
 
         this.attribute = attribute;
         mListener = listener;
         mKey = "sdd";
         mInitialColor = initialColor;
-        mDefaultColor = Color.BLACK;
+        this.mDefaultColor = mDefaultColor;
     }
 
     @Override

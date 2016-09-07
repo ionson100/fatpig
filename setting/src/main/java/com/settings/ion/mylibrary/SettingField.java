@@ -17,11 +17,11 @@ public @interface SettingField {
 
     int index();
 
+    int defaultColor() default Color.BLACK;
+
     int image() default 0;
 
     int styleTitle() default 0;
-
-    int defaultColor() default Color.RED;
 
     int styleDescription() default 0;
 

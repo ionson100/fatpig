@@ -1,4 +1,7 @@
 <resources>
+
+
+
     <string name="app_name">fatpig</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>

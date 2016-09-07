@@ -54,9 +54,11 @@ public class SimpleDialog extends DialogFragment {
                     } else {
                         field.set(curObject, value);
                     }
-
-                    Reanimator.save(curObject.getClass());
-                    Reanimator.notify(curObject, field.getName(), null, value);
+                    if (Reanimator.mIListener != null) {
+                        Reanimator.notify(curObject, field.getName(), null, value);
+                    } else {
+                        Reanimator.save(curObject.getClass());
+                    }
 
 
                 } catch (Exception e) {

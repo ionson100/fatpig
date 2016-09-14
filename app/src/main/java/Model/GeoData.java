@@ -28,4 +28,6 @@ public class GeoData {
 
     @Column("altitude")
     public double altitude;
+
+    public float distancion;
 }

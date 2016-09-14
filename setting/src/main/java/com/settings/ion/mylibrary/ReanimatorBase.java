@@ -1,7 +1,9 @@
 package com.settings.ion.mylibrary;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Build;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,21 +24,45 @@ public class ReanimatorBase extends ContextWrapper {
         innerGetSave(aClass, ReanimatorBase.ActionBase.save);
     }
 
-    private static synchronized Object innerGetSave(Class aClass,ReanimatorBase.ActionBase actionBase){
+    @TargetApi(Build.VERSION_CODES.KITKAT)
+    private static synchronized Object innerGetSave(Class aClass, ReanimatorBase.ActionBase actionBase){
 
         Object res=null;
         if(actionBase== ReanimatorBase.ActionBase.get){
             if (map.containsKey(aClass)) {
-                return map.get(aClass);
+                Object o = map.get(aClass);
+                if(o ==null){
+                    try {
+                        o =aClass.newInstance();
+                    } catch (InstantiationException |IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                res= o;
             } else {
-                Object dd=  SqliteStorage.getObject(aClass);
-                map.put(aClass,dd);
-                res= dd;
+                Object o =  SqliteStorage.getObject(aClass);
+                if(o ==null){
+                    try {
+                        o =aClass.newInstance();
+                    } catch (InstantiationException |IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                map.put(aClass, o);
+                res= o;
             }
         }
         if(actionBase== ReanimatorBase.ActionBase.save){
-            Object o = map.get(aClass);
-            SqliteStorage.saveObject(o,aClass);
+
+                Object o = map.get(aClass);
+                if(o==null){
+                    try {
+                        o=aClass.newInstance();
+                    } catch (InstantiationException |IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+                SqliteStorage.saveObject(o,aClass);
         }
         return  res;
     }

@@ -5,7 +5,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Chronometer;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Date;
 import java.util.List;
@@ -34,6 +36,7 @@ public class FTrack extends Fragment implements View.OnClickListener {
     ImageButton mBtRunn;
     ImageButton mBtPause;
     ImageButton mBtStop;
+    LinearLayout panel1,panel2;
 
     List<GeoData> mGeoDatas;
 
@@ -99,6 +102,8 @@ public class FTrack extends Fragment implements View.OnClickListener {
         }
 
 
+        panel2= (LinearLayout) mView.findViewById(R.id.graph2);
+        panel2.addView(Painter.getView(getActivity(),mGeoDatas));
         calculate();
         return mView;
     }
@@ -259,25 +264,18 @@ public class FTrack extends Fragment implements View.OnClickListener {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-
-            double langitude = intent.getDoubleExtra(MainActivity.PARAM_LATITUDE, 0);
-            double longitude = intent.getDoubleExtra(MainActivity.PARAM_LONGITUDE, 0);
-            long date = intent.getLongExtra(MainActivity.PARAM_DATE, 0);
-            float speed = intent.getFloatExtra(MainActivity.PARAM_SPEED, 0);
-            float altitude = intent.getFloatExtra(MainActivity.PARAM_ALTITUDE, 0);
+            List<Parcelable> parcelables=intent.getParcelableArrayListExtra("ss");
+            Location loc= (Location) parcelables.get(0);
             GeoData geoData = new GeoData();
-            geoData.latitude = langitude;
-            geoData.longitude = longitude;
-            geoData.date = date;
-            geoData.speed = speed;
-            geoData.altitude = altitude;
+            geoData.latitude = loc.getLatitude();
+            geoData.longitude = loc.getLongitude();
+            geoData.date = loc.getTime();
+            geoData.speed = loc.getSpeed();
+            geoData.altitude = loc.getAltitude();
             mGeoDatas.add(geoData);
             calculate();
-//
-//
-//
-//            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(longitude));
-//            Log.d("ZZZZZZZZZZZZZZZZ",String.valueOf(langitude));
+            Painter.invalidate(mGeoDatas);
+
         }
     }
 }

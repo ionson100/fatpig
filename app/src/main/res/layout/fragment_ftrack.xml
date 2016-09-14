@@ -16,12 +16,13 @@
             android:id="@+id/data_track"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.7">
+            android:layout_weight="0.75">
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="0.25">
 
                 <com.omsk.bitnic.fatpig.PausableChronometer
                     style="@style/chonometer"
@@ -58,109 +59,175 @@
                 </LinearLayout>
             </LinearLayout>
 
-
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="0.35">
 
-                <TextView
-                    android:paddingLeft="5dp"
-                    android:text="@string/distance"
-                    android:textSize="20dp"
-                    style="@style/labelBase"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:gravity="center"
+                            android:id="@+id/diastace"
+                            android:textSize="25dp"
+                            style="@style/labelBase"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="@string/distance"
+                            android:textSize="@dimen/text_track"
+                            style="@style/labelBase"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/diastace"
-                    android:textSize="25dp"
-                    style="@style/labelBase"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:gravity="center"
+                            style="@style/labelBase"
+                            android:id="@+id/calories"
+                            android:textSize="25dp"
+
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:gravity="center"
+                            android:paddingLeft="5dp"
+                            android:textSize="@dimen/text_track"
+                            style="@style/labelBase"
+                            android:text="@string/calories"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
+
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:gravity="center"
+                            android:text="0.0"
+                            android:id="@+id/speed"
+                            android:textSize="25dp"
+                            style="@style/labelBase"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="@string/speed"
+                            android:textSize="@dimen/text_track"
+                            style="@style/labelBase"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1">
+                        <TextView
+                            android:gravity="center"
+                            android:text="0.0"
+                            android:id="@+id/speed_core"
+                            android:textSize="25dp"
+                            style="@style/labelBase"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+                        <TextView
+                            android:gravity="center"
+                            android:paddingLeft="5dp"
+                            android:text="@string/speedCore"
+                            android:textSize="@dimen/text_track"
+                            style="@style/labelBase"
+                            android:textColor="@android:color/white"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:layout_weight="1" />
+
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+
 
             </LinearLayout>
 
             <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="0dp"
+                android:layout_weight="0.40">
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/graph1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                <TextView
-                    android:paddingLeft="5dp"
-                    android:textSize="20dp"
-                    style="@style/labelBase"
-                    android:text="@string/calories"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7" />
+                </LinearLayout>
+                <LinearLayout
+                    android:background="@color/panel_1"
+                    android:orientation="horizontal"
+                    android:id="@+id/graph2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1">
 
-                <TextView
-                    style="@style/labelBase"
-                    android:id="@+id/calories"
-                    android:textSize="25dp"
-
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <TextView
-                    android:paddingLeft="5dp"
-                    android:text="@string/speed"
-                    android:textSize="20dp"
-                    style="@style/labelBase"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7" />
 
-                <TextView
-                    android:text="0.0"
-                    android:id="@+id/speed"
-                    android:textSize="25dp"
-                    style="@style/labelBase"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:paddingLeft="5dp"
-                    android:text="@string/speedCore"
-                    android:textSize="20dp"
-                    style="@style/labelBase"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.7" />
-
-                <TextView
-                    android:text="0.0"
-                    android:id="@+id/speed_core"
-                    android:textSize="25dp"
-                    style="@style/labelBase"
-                    android:textColor="@android:color/white"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.3" />
-
-            </LinearLayout>
 
 
         </LinearLayout>
@@ -169,7 +236,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.3">
+            android:layout_weight="0.25">
 
             <ImageButton
 

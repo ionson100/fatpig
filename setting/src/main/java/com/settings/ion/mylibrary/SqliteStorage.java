@@ -79,8 +79,13 @@ public class SqliteStorage {
                 if (c.moveToFirst()) {
 
                     String str= c.getString(0);
-                    Gson ss = new Gson();
-                    resO=  ss.fromJson(str,aClass);
+                    if(str==null){
+                        resO = aClass.newInstance();
+                    }else {
+                        Gson ss = new Gson();
+                        resO=  ss.fromJson(str,aClass);
+                    }
+
                 }
                 c.close();
                 stringSet.add(getTableName(aClass));
@@ -93,12 +98,12 @@ public class SqliteStorage {
         return resO;
     }
     public static void saveObject(Object o,Class aClass){
-
-        Gson sd3 = new Gson();
-        String str=  sd3.toJson(o);
-
-        write().beginTransaction();
         try{
+            Gson sd3 = new Gson();
+            String str=  sd3.toJson(o);
+
+            write().beginTransaction();
+
             write().execSQL("UPDATE " + getTableName(aClass)+ " SET ass = '"+str+"' WHERE _id = 1");
             write().setTransactionSuccessful();
             write().endTransaction();

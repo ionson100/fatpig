@@ -29,7 +29,9 @@ public class Calculation {
             Location location11 = new Location("locationA1");
             location11.setLatitude(geoDatas.get(is).latitude);
             location11.setLongitude(geoDatas.get(is).longitude);
-            res = res + location1.distanceTo(location11);
+            float f=location1.distanceTo(location11);
+            geoDatas.get(is).distancion=f;
+            res = res + f;
         }
         return res / 1000;
     }

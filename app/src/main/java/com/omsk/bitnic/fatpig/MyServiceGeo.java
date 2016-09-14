@@ -8,7 +8,11 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import Model.GeoData;
 import orm.Configure;
@@ -92,8 +96,12 @@ public class MyServiceGeo extends Service {
             if (anInt++ < 2) return;
             anInt = 0;
 
-            if (BuildConfig.DEBUG) {
+            if(location.getAccuracy()>10) return;
+            if(location.getAltitude()==0) return;
 
+            if (BuildConfig.DEBUG) {
+                if (cur == location.getLatitude() && cur1 == location.getLongitude())
+                    return;
             } else {
                 if (cur == location.getLatitude() && cur1 == location.getLongitude())
                     return;
@@ -114,10 +122,9 @@ public class MyServiceGeo extends Service {
             Configure.getSession().insert(data);
 
             Intent intent = new Intent(MainActivity.BROADCAST_ACTION);
-            intent.putExtra(MainActivity.PARAM_LATITUDE, location.getLatitude());
-            intent.putExtra(MainActivity.PARAM_LONGITUDE, location.getLongitude());
-            intent.putExtra(MainActivity.PARAM_DATE, data.date);
-            sendBroadcast(intent);
+            List<Parcelable> parcell=new ArrayList<>(1);
+            parcell.add(location);
+            intent.putParcelableArrayListExtra("ss", (ArrayList<? extends Parcelable>) parcell);
             sendBroadcast(intent);
 
 

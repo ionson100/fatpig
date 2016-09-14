@@ -7,6 +7,12 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Shader;
 import android.support.v4.app.FragmentActivity;
 
 import java.io.BufferedReader;
@@ -14,7 +20,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+import Model.GeoData;
 import Model.Sex;
 import Model.User;
 
@@ -175,5 +185,54 @@ public class Utils {
             }
         });
 
+    }
+   public static void drawPaint(Canvas canvas, Paint paint, Paint paint1, List<GeoData> mGeoDatas) {
+
+        if(mGeoDatas.size()<2) return;
+        paint.setShader(new LinearGradient(0, 0, 0, canvas.getHeight(), Color.WHITE, R.color.basescene, Shader.TileMode.MIRROR));
+        float maxAltitude=0;
+        float minAltitude=1000000000;
+        float distance=0;
+        for (GeoData m : mGeoDatas) {
+
+            if(m.altitude>=maxAltitude){
+                maxAltitude= (float) m.altitude;
+            }
+            if(m.altitude<=minAltitude){
+                minAltitude= (float) m.altitude;
+            }
+            distance=distance+m.distancion;
+        }
+        double ff= distance/canvas.getWidth();
+        float v = (minAltitude   + (maxAltitude - minAltitude) / 2) / (canvas.getHeight() / 2);
+
+        Path path=new Path();
+        path.moveTo(0,canvas.getHeight());
+        Map<Float,Float> map=new HashMap<>();
+
+        double gg=0;
+        float rr=1000;
+        for (int i = 0; i < mGeoDatas.size(); i++) {
+            gg=gg+mGeoDatas.get(i).distancion;
+            float dd=(float) (gg/ff);
+            float h= (float) (mGeoDatas.get(i).altitude/v);
+            float dh= (canvas.getHeight())-h;
+            if(i==0) {
+                path.lineTo(0,dh);
+                continue;
+            }
+            path.lineTo(dd,dh);
+            if(gg>=rr){
+                map.put(dd,dh);
+                rr=rr+1000;
+            }
+
+        }
+        path.lineTo(canvas.getWidth(),canvas.getHeight());
+        canvas.drawPath(path,paint);
+
+        for (Float key : map.keySet()) {
+            canvas.drawLine(key,map.get(key),key,canvas.getHeight(),paint1);
+        }
     }
 }

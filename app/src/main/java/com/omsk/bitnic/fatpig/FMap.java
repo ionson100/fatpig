@@ -175,6 +175,7 @@ public class FMap extends Fragment {
 
         if (TrackSettings.getCore().statusTrack.equals("1") && Settings.getSettings().getSateSystem() == StateSystem.MAP) {
             if (!Utils.isMyServiceRunning(MyServiceGeo.class, getActivity())) {
+               Utils.start();
                 getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
             }
 

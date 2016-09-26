@@ -27,6 +27,7 @@ import java.util.Map;
 import Model.GeoData;
 import Model.Sex;
 import Model.User;
+import orm.Configure;
 
 public class Utils {
 
@@ -132,7 +133,7 @@ public class Utils {
         return dateFormat.format(new Date(date));
     }
 
-    public static boolean isMyServiceRunning(Class<?> serviceClass, Activity activity) {
+    public static boolean isMyServiceRunning(Class<?> serviceClass, Context activity) {
         ActivityManager manager = (ActivityManager) activity.getSystemService(Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
             if (serviceClass.getName().equals(service.service.getClassName())) {
@@ -235,4 +236,11 @@ public class Utils {
             canvas.drawLine(key,map.get(key),key,canvas.getHeight(),paint1);
         }
     }
+    public static void start(){
+        Configure.getSession().execSQL("update service  set 'value' = 0  where id= 1");
+    }
+    public static void stop(){
+        Configure.getSession().execSQL("update service  set 'value' = 1  where id= 1");
+    }
+
 }

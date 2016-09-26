@@ -186,6 +186,7 @@ public class FTrack extends Fragment implements View.OnClickListener {
         mBtPause.setEnabled(true);
         mBtStop.setEnabled(true);
         if (!Utils.isMyServiceRunning(MyServiceGeo.class, getActivity())) {
+            Utils.start();
             getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
         }
 
@@ -211,6 +212,7 @@ public class FTrack extends Fragment implements View.OnClickListener {
         TrackSettings.getCore().statusTrack="2";
         TrackSettings.getCore().stoper =chronometer.getTimeWhenStopped();
         TrackSettings.save();
+        Utils.stop();
         getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
     }
 
@@ -220,6 +222,7 @@ public class FTrack extends Fragment implements View.OnClickListener {
         mBtRunn.setEnabled(true);
         mBtPause.setEnabled(false);
         mBtStop.setEnabled(false);
+        Utils.stop();
         getActivity().stopService(new Intent(getContext(), MyServiceGeo.class));
         TrackSettings.getCore().trackName=0;
         TrackSettings.getCore().statusTrack="3";

@@ -15,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Model.GeoData;
+import orm.Column;
 import orm.Configure;
+import orm.PrimaryKey;
+import orm.Table;
 
 
 public class MyServiceGeo extends Service {
@@ -58,6 +61,10 @@ public class MyServiceGeo extends Service {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, listener);
         }
 
+        if (Utils.isMyServiceRunning(MyServiceGeoRunner.class, getBaseContext())) {
+            getBaseContext().stopService(new Intent(getBaseContext(), MyServiceGeoRunner.class));
+        }
+
 
         return Service.START_STICKY;
     }
@@ -74,6 +81,19 @@ public class MyServiceGeo extends Service {
 
             }
             locationManager.removeUpdates(listener);
+
+            List<Ser>  list=Configure.getSession().getList(Ser.class,null);
+            if(list.size()!=0){
+                Ser ser=list.get(0);
+                if(ser.value==false){
+                    if (!Utils.isMyServiceRunning(MyServiceGeoRunner.class, getBaseContext())) {
+                        getBaseContext().startService(new Intent(getBaseContext(), MyServiceGeoRunner.class));
+                    }
+                }
+            }
+
+
+
         } catch (Exception ex) {
             String msg = "onDestroy geo servis" + ex.getMessage();
 
@@ -146,5 +166,14 @@ public class MyServiceGeo extends Service {
 
         }
     }
+}
+@Table("service")
+class Ser{
+
+    @PrimaryKey("id")
+    public int id;
+
+    @Column("value")
+    public boolean value;
 }
 

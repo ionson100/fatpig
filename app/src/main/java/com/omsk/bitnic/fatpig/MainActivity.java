@@ -192,6 +192,7 @@ public class MainActivity extends AppCompatActivity
         super.onResume();
         if (TrackSettings.getCore().statusTrack.equals("1")) {
             if (!Utils.isMyServiceRunning(MyServiceGeo.class, this)) {
+                Utils.start();
                 startService(new Intent(this, MyServiceGeo.class));
             }
         }

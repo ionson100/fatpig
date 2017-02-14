@@ -14,6 +14,27 @@ class AnotationOrm {
         return t.name;
     }
 
+    public static String getWhere(Class aClass) {
+        Temp t = new Temp();
+        getWhereInner(aClass, t);
+        return t.where;
+    }
+
+    private static void getWhereInner(Class aClass, Temp t) {
+        if (aClass == null) return;
+        try {
+            if (aClass.isAnnotationPresent(Where.class)) {
+                t.where = ((Where) aClass.getAnnotation(Where.class)).value();
+            } else {
+                Class superClazz = aClass.getSuperclass();
+                getWhereInner(superClazz, t);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public static ItemField getKeyName(Class aClass) {
 
         ItemField res = null;
@@ -43,6 +64,13 @@ class AnotationOrm {
                 fi.columnName = key.value();
                 fi.fieldName = f.getName();
                 fi.type = f.getType();
+                /////////////////////
+                final UserField ss = f.getAnnotation(UserField.class);
+                if (ss != null) {
+                    fi.isUserType = true;
+                    fi.aClassUserType = ss.IUserType();
+                }
+                //////////////////////////
                 list.add(fi);
                 fi.field = f;
             }
@@ -77,6 +105,7 @@ class AnotationOrm {
 
     static class Temp {
         public String name;
+        public String where;
 
 //        public Temp() {
 //            this.name = s;

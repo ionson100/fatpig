@@ -10,6 +10,8 @@ public interface ISession {
 
     <T> int update(T item);
 
+    <T> int updateWhere(T item, String whereSql);
+
     <T> int insert(T item);
 
     <T> int delete(T item);
@@ -30,9 +32,11 @@ public interface ISession {
 
     void endTransaction();
 
-    void close();
+//    void close();
 
-    void deleteTable(String tableName);
+    int deleteTable(String tableName);
+
+    int deleteTable(String tableName, String where, Object... objects);
 
 
 }

@@ -8,6 +8,7 @@ class cacheMetaDate<T> {
     public List<ItemField> listColumn = null;
     public ItemField keyColumn = null;
     String tableName = null;
+    String where = null;
     private int isIAction = 0;
     private Class result = null;
 
@@ -26,6 +27,9 @@ class cacheMetaDate<T> {
         }
         if (tableName == null) {
             tableName = AnotationOrm.getTableName(tClass);
+        }
+        if (where == null) {
+            where = AnotationOrm.getWhere(tClass);
         }
         if (keyColumn == null) {
             keyColumn = AnotationOrm.getKeyName(tClass);

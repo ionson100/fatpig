@@ -4,6 +4,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteQuery;
 import android.util.Log;
 
+
 import com.omsk.bitnic.fatpig.BuildConfig;
 
 import java.lang.reflect.Field;
@@ -29,7 +30,7 @@ public class Loger {
     public static void printSql(Cursor cursor) {
         if (isWrite) {
             try {
-                Field[] dd = cursor.getClass().getDeclaredFields();
+
                 Field ddd = cursor.getClass().getDeclaredField("mQuery");
                 ddd.setAccessible(true);
                 SQLiteQuery v = (SQLiteQuery) ddd.get(cursor);

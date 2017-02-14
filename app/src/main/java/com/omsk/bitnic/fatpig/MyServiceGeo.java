@@ -82,15 +82,16 @@ public class MyServiceGeo extends Service {
             }
             locationManager.removeUpdates(listener);
 
-            List<Ser>  list=Configure.getSession().getList(Ser.class,null);
-            if(list.size()!=0){
-                Ser ser=list.get(0);
-                if(ser.value==false){
+//            new Configure(getApplicationInfo().dataDir + "/ion100.sqlite", getApplicationContext(), false);
+//            List<Ser>  list=Configure.getSession().getList(Ser.class,null);
+//            if(list.size()!=0){
+//                Ser ser=list.get(0);
+//                if(ser.value==false){
                     if (!Utils.isMyServiceRunning(MyServiceGeoRunner.class, getBaseContext())) {
                         getBaseContext().startService(new Intent(getBaseContext(), MyServiceGeoRunner.class));
                     }
-                }
-            }
+//                }
+//            }
 
 
 

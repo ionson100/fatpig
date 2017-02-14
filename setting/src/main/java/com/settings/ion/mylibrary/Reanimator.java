@@ -6,13 +6,31 @@ import android.os.Environment;
 
 public class Reanimator {
 
-    protected static iListenerСhanges mIListener;
+
+    public interface IErrornic{
+        void SaveError(String msg);
+    }
+
+    public static void setErrorrnic(IErrornic iErrornic){
+        Reanimator.iErrornic=iErrornic;
+    }
+
+    public static IErrornic iErrornic;
+
+    public static void close(){
+        if(isBase){
+            ReanimatorBase.close();
+        }
+
+    }
+
+    static iListenerСhanges mIListener;
 
     private final static boolean isBase = true;
 
-    public static final String filePath = Environment.getExternalStorageDirectory().toString() + "/omsksettings";
+     static final String filePath = Environment.getExternalStorageDirectory().toString() + "/omsksettings";
 
-    public static Object get(Class aClass) {
+    public static  Object get(Class aClass) {
 
         if (isBase) {
             return ReanimatorBase.get(aClass);
@@ -21,7 +39,14 @@ public class Reanimator {
         }
     }
 
-    public static void save(Class aClass) {
+    public  static void save(Class aClass) {
+
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         if (isBase) {
             ReanimatorBase.save(aClass);
         } else {
@@ -46,7 +71,7 @@ public class Reanimator {
      * @param oldValue   старое значение поля
      * @param newValue   новое значение поля
      */
-     public static void notify(Object thisObject, String fieldName, Object oldValue, Object newValue) {
+     static void notify(Object thisObject, String fieldName, Object oldValue, Object newValue) {
          if (mIListener != null) {
              mIListener.OnCallListen(thisObject.getClass(), fieldName, oldValue, newValue);
          }
@@ -66,6 +91,7 @@ public class Reanimator {
     public static void intContext(Context context) {
         if (isBase) {
             ReanimatorBase.intContext(context);
+           // SqliteStorage.start();
         } else {
             ReanimatorFile.intContext(context);
         }

@@ -1,7 +1,7 @@
 package orm;
 
 
-interface IActionOrm<T> {
+public  interface IActionOrm<T> {
     void actionBeforeUpdate(T t);
 
     void actionAfterUpdate(T t);

@@ -12,11 +12,13 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+
 
 public class Configure implements ISession {
 
-    public static String dataBaseName;
+    static String dataBaseName;
     private static DataBaseHelper myDbHelper;
     private static boolean reloadBase = false;
 
@@ -24,23 +26,16 @@ public class Configure implements ISession {
     private SQLiteDatabase sqLiteDatabaseForWritable = null;
 
     private Configure() {
-
-
         sqLiteDatabaseForReadable = GetSqLiteDatabaseForReadable();
         sqLiteDatabaseForWritable = GetSqLiteDatabaseForWritable();
     }
 
-
     public Configure(String dataBaseName, Context context, boolean reloadBase) {
         Configure.reloadBase = reloadBase;
-        new Configure(dataBaseName, context);
-    }
-
-
-    private Configure(String dataBaseName, Context context) {
         Configure.dataBaseName = dataBaseName;
 
         myDbHelper = new DataBaseHelper(context, Configure.dataBaseName);
+
         if (reloadBase) {
             myDbHelper.getReadableDatabase();
             try {
@@ -52,10 +47,47 @@ public class Configure implements ISession {
             if (!myDbHelper.checkDataBase()) {
                 myDbHelper.createDataBase();
             }
-
         }
+    }
 
+    //////////////////////////////////////////////////// bulk
+    public static <T> void bulk(Class<T> tClass, List<T> tList, ISession ses) {
 
+        List<List<T>> sd = partition(tList, 500);
+        for (List<T> ts : sd) {
+            Configure.InsertBulk s = Configure.getInsertBulk(tClass);
+            for (T t : ts) {
+                s.add(t);
+            }
+            String sql = s.getSql();
+            if (sql != null) {
+                try {
+                    ses.execSQL(sql);
+                } catch (Exception ex) {
+                    //int i = 0;
+                }
+            }
+        }
+    }
+    /////////////////////////////////////////////////////////////////////
+
+    private static <T> List<List<T>> partition(Collection<T> members, int maxSize) {
+        List<List<T>> res = new ArrayList<>();
+
+        List<T> internal = new ArrayList<>();
+
+        for (T member : members) {
+            internal.add(member);
+
+            if (internal.size() == maxSize) {
+                res.add(internal);
+                internal = new ArrayList<>();
+            }
+        }
+        if (!internal.isEmpty()) {
+            res.add(internal);
+        }
+        return res;
     }
 
     public static boolean isLive() {
@@ -86,7 +118,7 @@ public class Configure implements ISession {
         try {
             f.createNewFile();
         } catch (IOException e) {
-            throw new RuntimeException(" orm create stoper :" + e.getMessage());
+            throw new RuntimeException(" orm create base :" + e.getMessage());
         }
     }
 
@@ -108,11 +140,20 @@ public class Configure implements ISession {
     }
 
     private static String pizdaticusField(ItemField field) {
-        if (field.type == double.class || field.type == float.class || field.type == Double.class || field.type == Float.class) {
+        if (field.type == double.class ||
+                field.type == float.class ||
+                field.type == Double.class ||
+                field.type == Float.class) {
             return " REAL DEFAULT 0, ";
         }
-        if (field.type == int.class || field.type == Enum.class || field.type == long.class || field.type == short.class || field.type == byte.class || field.type == Integer.class ||
-                field.type == Long.class || field.type == Short.class) {
+        if (field.type == int.class ||
+                field.type == Enum.class ||
+                field.type == long.class ||
+                field.type == short.class ||
+                field.type == byte.class ||
+                field.type == Integer.class ||
+                field.type == Long.class ||
+                field.type == Short.class) {
             return " INTEGER DEFAULT 0, ";
         }
         if (field.type == String.class) {
@@ -146,8 +187,15 @@ public class Configure implements ISession {
     }
 
     // пакетная вставка
-    public static InsertBulk getInsertBulk(Class aClass) {
+    private static InsertBulk getInsertBulk(Class aClass) {
         return new InsertBulk(aClass);
+    }
+
+    //@Override
+    public static synchronized void close() {
+        if (myDbHelper != null) {
+            myDbHelper.close();
+        }
     }
 
     @Override
@@ -174,8 +222,44 @@ public class Configure implements ISession {
             ((IActionOrm) item).actionBeforeUpdate(item);
         }
         int i = con.update(d.tableName, values, d.keyColumn.columnName + " = ?", new String[]{key.toString()});
+
         if (i == -1) {
             throw new RuntimeException("ORM simple update -  res=-1");
+        } else {
+            if (d.isIAction()) {
+                ((IActionOrm) item).actionAfterUpdate(item);
+            }
+        }
+        return i;
+    }
+
+    @Override
+    public <T> int updateWhere(T item, String whereSql) {
+        SQLiteDatabase con = sqLiteDatabaseForWritable;
+        cacheMetaDate d = CacheDictionary.getCacheMetaDate(item.getClass());
+        ContentValues values = null;
+        try {
+            values = getContentValues(item, d);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        Object key = null;
+        try {
+            Field field = d.keyColumn.field;
+            field.setAccessible(true);
+            key = field.get(item);
+        } catch (Exception e) {
+            Loger.LogE(e.getMessage());
+            throw new RuntimeException("Config Update:" + e.getMessage());
+        }
+        assert key != null;
+        if (d.isIAction()) {
+            ((IActionOrm) item).actionBeforeUpdate(item);
+        }
+        int i = con.update(d.tableName, values, d.keyColumn.columnName + " = ? and " + whereSql, new String[]{key.toString()});
+
+        if (i == -1) {
+            // throw new RuntimeException("ORM simple update -  res=-1");
         } else {
             if (d.isIAction()) {
                 ((IActionOrm) item).actionAfterUpdate(item);
@@ -199,12 +283,9 @@ public class Configure implements ISession {
             ((IActionOrm) item).actionBeforeInsert(item);
         }
         int i = (int) con.insert(d.tableName, null, values);
+
         if (i == -1) {
-            try {
-                throw new Exception("Not insert");
-            } catch (Exception e) {
-                throw new RuntimeException(e.getMessage());
-            }
+            throw new RuntimeException(" no insert record");
         } else {
             if (d.isIAction()) {
                 ((IActionOrm) item).actionAfterInsert(item);
@@ -222,107 +303,52 @@ public class Configure implements ISession {
 
     private <T> ContentValues getContentValues(T item, cacheMetaDate<?> d) throws NoSuchFieldException {
         ContentValues values = new ContentValues();
-        for (ItemField str : d.listColumn) {
-            Field field = str.field;//item.getClass().getDeclaredField(str.fieldName);
-            field.setAccessible(true);
+        try {
+            for (ItemField str : d.listColumn) {
+                Field field = str.field;//item.getClass().getDeclaredField(str.fieldName);
+                field.setAccessible(true);
 
-            if (str.type == String.class)
-                try {
-
-                    values.put(str.columnName, (String) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-
-            if (str.type == int.class)
-                try {
-                    values.put(str.columnName, (int) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            if (str.type == long.class)
-                try {
-                    values.put(str.columnName, (long) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            if (str.type == short.class)
-                try {
-                    values.put(str.columnName, (short) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            if (str.type == byte.class)
-                try {
-                    values.put(str.columnName, (byte) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-
-            if (str.type == Short.class)
-                try {
-                    values.put(str.columnName, (Short) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            if (str.type == Long.class)
-                try {
-                    values.put(str.columnName, (Long) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-
-            if (str.type == Integer.class)
-                try {
-                    values.put(str.columnName, (Integer) field.get(item));
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
-                }
-            if (str.type == Double.class)
-                try {
-                    values.put(str.columnName, (Double) field.get(item));
-                } catch (Exception e) {
-                    Loger.LogE(e.getMessage());
-                    throw new RuntimeException(e.getMessage());
-                }
-
-            if (str.type == Float.class)
-                try {
-                    values.put(str.columnName, (Float) field.get(item));
-                } catch (Exception e) {
-                    Loger.LogE(e.getMessage());
-                    throw new RuntimeException(e.getMessage());
-                }
-
-
-            if (str.type == byte[].class)
-                try {
-                    values.put(str.columnName, (byte[]) field.get(item));
-                } catch (Exception e) {
-                    Loger.LogE(e.getMessage());
-                    throw new RuntimeException(e.getMessage());
-                }
-
-            if (str.type == double.class)
-                try {
-                    values.put(str.columnName, (double) field.get(item));
-                } catch (Exception e) {
-                    Loger.LogE(e.getMessage());
-                    throw new RuntimeException(e.getMessage());
-                }
-
-            if (str.type == boolean.class)
-                try {
-                    boolean val = (boolean) field.get(item);
-                    if (val) {
-                        values.put(str.columnName, 1);
-                    } else {
-                        values.put(str.columnName, 0);
+                if (str.isUserType) {
+                    Object date = str.aClassUserType.newInstance();
+                    String json = ((IUserType) date).getString(field.get(item));
+                    values.put(str.columnName, json);
+                } else {
+                    if (str.type == String.class)
+                        values.put(str.columnName, (String) field.get(item));
+                    if (str.type == int.class)
+                        values.put(str.columnName, (int) field.get(item));
+                    if (str.type == long.class)
+                        values.put(str.columnName, (long) field.get(item));
+                    if (str.type == short.class)
+                        values.put(str.columnName, (short) field.get(item));
+                    if (str.type == byte.class)
+                        values.put(str.columnName, (byte) field.get(item));
+                    if (str.type == Short.class)
+                        values.put(str.columnName, (Short) field.get(item));
+                    if (str.type == Long.class)
+                        values.put(str.columnName, (Long) field.get(item));
+                    if (str.type == Integer.class)
+                        values.put(str.columnName, (Integer) field.get(item));
+                    if (str.type == Double.class)
+                        values.put(str.columnName, (Double) field.get(item));
+                    if (str.type == Float.class)
+                        values.put(str.columnName, (Float) field.get(item));
+                    if (str.type == byte[].class)
+                        values.put(str.columnName, (byte[]) field.get(item));
+                    if (str.type == double.class)
+                        values.put(str.columnName, (double) field.get(item));
+                    if (str.type == boolean.class) {
+                        boolean val = (boolean) field.get(item);
+                        if (val) {
+                            values.put(str.columnName, 1);
+                        } else {
+                            values.put(str.columnName, 0);
+                        }
                     }
-
-                } catch (Exception e) {
-                    throw new RuntimeException(e.getMessage());
                 }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
         return values;
     }
@@ -354,18 +380,30 @@ public class Configure implements ISession {
         return res;
     }
 
+    private String wherower(String where, cacheMetaDate cacheMetaDate) {
+        if (cacheMetaDate.where != null) {
+            where = " " + cacheMetaDate.where.trim() + (where == null ? "" : " and " + where) + " ";
+        }
+        return where;
+    }
+
     @Override
     public SQLiteDatabase getSqLiteDatabase() {
         return sqLiteDatabaseForReadable;
     }
 
     @Override
-    public <T> List<T> getList(Class<T> tClass, String where, Object... objects) {
-        List<T> list = new ArrayList<>();
+    public <T> List<T> getList(Class<T> tClass, String where, Object... objects) throws SQLException {
+        List<T> list = null;
         SQLiteDatabase con;
         try {
             con = sqLiteDatabaseForReadable;
             cacheMetaDate d = CacheDictionary.getCacheMetaDate(tClass);
+
+            //////////////////////// add where
+            where = wherower(where, d);
+            ////////////////////////////////
+
             Cursor c = null;
             String[] sdd = d.getStringSelect();
             if (where == null && objects == null || where == null && objects.length == 0) {
@@ -383,7 +421,9 @@ public class Configure implements ISession {
                 }
                 c = con.query(d.tableName, sdd, where, str, null, null, null, null);
             }
+
             if (c != null) {
+                list = new ArrayList<>(c.getCount());
                 Loger.printSql(c);
                 try {
                     if (c.moveToFirst()) {
@@ -397,11 +437,8 @@ public class Configure implements ISession {
                     c.close();
                 }
             }
-        } catch (SQLException e) {
-            new RuntimeException("ORM getList ---" + e.getMessage());
-            return null;
         } catch (Exception e) {
-            new RuntimeException("ORM getList---" + e.getMessage());
+            new RuntimeException("ORM getList ---" + e.getMessage());
         }
         return list;
     }
@@ -409,57 +446,86 @@ public class Configure implements ISession {
     private void Companaund(List<ItemField> listIf, ItemField key, Cursor c, Object o) throws NoSuchFieldException, IllegalAccessException {
         for (ItemField str : listIf) {
             int i = c.getColumnIndex(str.columnName);
-            Field res = str.field;// o.getClass().getDeclaredField(str.fieldName);
+            Field res = str.field;
             res.setAccessible(true);
-            if (str.type == int.class) {
-                res.setInt(o, c.getInt(i));
-            }
-            if (str.type == String.class) {
-                res.set(o, c.getString(i));
-            }
-            if (str.type == double.class) {
-                res.setDouble(o, c.getDouble(i));
-            }
-            if (str.type == float.class) {
-                res.setFloat(o, c.getFloat(i));
-            }
-            if (str.type == long.class) {
-                res.setLong(o, c.getLong(i));
-            }
-            if (str.type == short.class) {
-                res.setShort(o, c.getShort(i));
-            }
-            if (str.type == byte[].class) {
-                res.set(o, c.getBlob(i));
-            }
-            if (str.type == byte.class) {
-                res.setByte(o, (byte) c.getLong(i));
-            }
-            if (str.type == Integer.class) {
-                int ii = c.getInt(i);
-                res.set(o, ii);
-            }
-            ////////
-            if (str.type == Double.class) {
-                Double d = c.getDouble(i);
-                res.set(o, d);
-            }
-            if (str.type == Float.class) {
-                Float f = c.getFloat(i);
-                res.set(o, f);
-            }
-            if (str.type == Long.class) {
-                Long l = c.getLong(i);
-                res.set(o, l);
-            }
-            if (str.type == Short.class) {
-                Short sh = c.getShort(i);
-                res.set(o, sh);
-            }
-            if (str.type == boolean.class) {
-                boolean val;
-                val = c.getInt(i) != 0;
-                res.setBoolean(o, val);
+
+
+            if (str.isUserType) {
+                IUserType data = null;
+                try {
+                    data = (IUserType) str.aClassUserType.newInstance();
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                }
+                Object sdd = data.getObject(c.getString(i));
+                res.set(o, sdd);
+            } else {
+                if (str.type == int.class) {
+                    res.setInt(o, c.getInt(i));
+                } else if (str.type == String.class) {
+                    res.set(o, c.getString(i));
+                } else if (str.type == double.class) {
+                    res.setDouble(o, c.getDouble(i));
+                } else if (str.type == float.class) {
+                    res.setFloat(o, c.getFloat(i));
+                } else if (str.type == long.class) {
+                    res.setLong(o, c.getLong(i));
+                } else if (str.type == short.class) {
+                    res.setShort(o, c.getShort(i));
+                } else if (str.type == byte[].class) {
+                    res.set(o, c.getBlob(i));
+                } else if (str.type == byte.class) {
+                    res.setByte(o, (byte) c.getLong(i));
+                } else if (str.type == Integer.class) {
+                    if (c.isNull(i)) {
+                        res.set(o, null);
+                    } else {
+                        Integer ii = c.getInt(i);
+                        res.set(o, ii);
+                    }
+                } else if (str.type == Double.class) {
+                    if (c.isNull(i)) {
+                        res.set(o, null);
+                    } else {
+                        Double d = c.getDouble(i);
+                        res.set(o, d);
+                    }
+                } else if (str.type == Float.class) {
+                    if (c.isNull(i)) {
+                        res.set(o, null);
+                    } else {
+                        Float f = c.getFloat(i);
+                        res.set(o, f);
+                    }
+                } else if (str.type == Long.class) {
+                    if (c.isNull(i)) {
+                        res.set(o, null);
+                    } else {
+                        Long l = c.getLong(i);
+                        res.set(o, l);
+                    }
+                } else if (str.type == Short.class) {
+                    if (c.isNull(i)) {
+                        res.set(o, null);
+                    } else {
+                        Short sh = c.getShort(i);
+                        res.set(o, sh);
+                    }
+                } else if (str.type == boolean.class) {
+                    boolean val;
+                    val = c.getInt(i) != 0;
+                    res.setBoolean(o, val);
+                } else if (str.type == Boolean.class) {
+                    if (c.isNull(i)) {
+                        res.set(o, null);
+                    } else {
+                        boolean val;
+                        val = c.getInt(i) != 0;
+                        res.setBoolean(o, val);
+                    }
+                }else {
+                    new RuntimeException("Error orm set values");
+                }
             }
         }
         try {
@@ -488,12 +554,16 @@ public class Configure implements ISession {
             if (id == null || id.toString().trim().length() == 0) {
                 return null;
             }
-            res = getList(tClass, " idu = ? ", id.toString());
+            String where = wherower("idu = ?", d);
+
+            res = getList(tClass, where, id.toString());
         } else {
             res = getList(tClass, d.keyColumn.columnName + "=?", id);
         }
 
         if (res.size() == 0) return null;
+
+
         if (res.size() > 1) {
             throw new RuntimeException("orm (get) more than one");
         }
@@ -535,10 +605,35 @@ public class Configure implements ISession {
     }
 
     @Override
-    public void deleteTable(String tableName) {
+    public int deleteTable(String tableName) {
 
         int i = sqLiteDatabaseForWritable.delete(tableName, null, null);
         Loger.LogI("DELETE FROM " + tableName + "; RES=" + String.valueOf(i));
+        return i;
+    }
+
+    @Override
+    public int deleteTable(String tableName, String where, Object... objects) {
+        if (tableName == null || tableName.trim().length() == 0) return 0;
+        String[] par = null;
+        if (objects != null) {
+            par = new String[objects.length];
+            for (int i = 0; i < objects.length; i++) {
+                par[i] = objects[i].toString();
+            }
+        }
+        int i = 0;
+        if (where == null) {
+            i = sqLiteDatabaseForWritable.delete(tableName, null, null);
+        }
+        if (where != null && par == null) {
+            i = sqLiteDatabaseForWritable.delete(tableName, where, null);
+        }
+        if (where != null && par != null) {
+            i = sqLiteDatabaseForWritable.delete(tableName, where, par);
+        }
+        Loger.LogI("DELETE FROM " + tableName + "; RES=" + String.valueOf(i));
+        return i;
     }
 
     @Override
@@ -554,11 +649,6 @@ public class Configure implements ISession {
     @Override
     public void endTransaction() {
         myDbHelper.getWritableDatabase().endTransaction();
-    }
-
-    @Override
-    public void close() {
-        myDbHelper.close();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -598,13 +688,13 @@ public class Configure implements ISession {
         return null;
     }
 
-    public static class InsertBulk<F> {
+    private static class InsertBulk<F> {
         final private StringBuilder sql = new StringBuilder();
         private int it = 0;
         private cacheMetaDate metaDate = null;
         private Class<F> aClass;
 
-        public InsertBulk(Class<F> aClass) {
+        InsertBulk(Class<F> aClass) {
             metaDate = CacheDictionary.getCacheMetaDate(aClass);
             sql.append(" INSERT INTO ");
             sql.append(metaDate.tableName).append(" (");
@@ -620,6 +710,41 @@ public class Configure implements ISession {
 
         }
 
+        private static <T> List<List<T>> partition(Collection<T> members, int maxSize) {
+            List<List<T>> res = new ArrayList<>();
+            List<T> internal = new ArrayList<>();
+            for (T member : members) {
+                internal.add(member);
+                if (internal.size() == maxSize) {
+                    res.add(internal);
+                    internal = new ArrayList<>();
+                }
+            }
+            if (!internal.isEmpty()) {
+                res.add(internal);
+            }
+            return res;
+        }
+
+        public static <T> void bulk(Class<T> tClass, List<T> tList, ISession ses) {
+
+            List<List<T>> sd = partition(tList, 500);
+            for (List<T> ts : sd) {
+                Configure.InsertBulk s = Configure.getInsertBulk(tClass);
+                for (T t : ts) {
+                    s.add(t);
+                }
+                String sql = s.getSql();
+                if (sql != null) {
+                    try {
+                        ses.execSQL(sql);
+                    } catch (Exception ex) {
+                        int i = 0;
+                    }
+                }
+            }
+        }
+
         public void add(F o) {
             it++;
             sql.append("(");
@@ -627,26 +752,20 @@ public class Configure implements ISession {
                 ItemField f = (ItemField) metaDate.listColumn.get(i);
                 try {
                     Object value = f.field.get(o);
-
                     sql.append(getString(value, f.field.getType()));
-
-
                     if (i < metaDate.listColumn.size() - 1) {
                         sql.append(", ");
                     } else {
-
                     }
-
 
                 } catch (IllegalAccessException e) {
                     throw new RuntimeException("InsertBulk:" + e.getMessage());
                 }
-
             }
             sql.append(") ,");
         }
 
-        public String getSql() {
+        String getSql() {
             if (it == 0) {
                 return null;
             } else {
@@ -661,14 +780,14 @@ public class Configure implements ISession {
                 if (o == null) {
                     return "null";
                 } else {
-                    return "'" + String.valueOf(o) + "'";
+                    return "'" + String.valueOf(o).replace("'", " ") + "'";
                 }
             } else if (fClass == boolean.class) {
 
                 if (o == null) {
                     return "0";
                 } else {
-                    if ((boolean) o) {
+                    if ((Boolean) o) {
                         return "1";
                     } else {
                         return "0";
@@ -685,35 +804,29 @@ public class Configure implements ISession {
                         return "0";
                     }
                 }
-            } else if (fClass == int.class || fClass == float.class || fClass == double.class || fClass == short.class) {
-
-
+            } else if (fClass == int.class ||
+                    fClass == long.class ||
+                    fClass == float.class ||
+                    fClass == double.class ||
+                    fClass == short.class) {
                 if (o == null) {
                     return "0";
                 } else {
                     return String.valueOf(o);
                 }
-            } else if (fClass == Integer.class) {
-
+            } else if (fClass == Integer.class ||
+                    fClass == Float.class ||
+                    fClass == Double.class ||
+                    fClass == Long.class ||
+                    fClass == Short.class) {
                 if (o == null) {
                     return "null";
-                } else {
-                    return String.valueOf(o);
-                }
-            } else if (fClass == Integer.class || fClass == Float.class || fClass == Double.class || fClass == Short.class) {
-
-                if (o == null) {
-                    return "0";
                 } else {
                     return String.valueOf(o);
                 }
             } else {
                 throw new RuntimeException("InsertBulk:не могу определить тип");
             }
-
-
         }
-
     }
-
 }

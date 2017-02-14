@@ -9,12 +9,12 @@ import com.settings.ion.mylibrary.colorpicker.OnColorSelectedListener;
 import com.settings.ion.mylibrary.colorpicker.builder.ColorPickerClickListener;
 import com.settings.ion.mylibrary.colorpicker.builder.ColorPickerDialogBuilder;
 
-public class ColorPickerDialogE {
+class ColorPickerDialogE {
 
     private Context context;
     private IAction iAction;
 
-    public ColorPickerDialogE(Context context,IAction iAction){
+    ColorPickerDialogE(Context context, IAction iAction){
         this.context = context;
 
         this.iAction = iAction;

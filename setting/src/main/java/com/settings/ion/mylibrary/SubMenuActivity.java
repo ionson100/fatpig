@@ -1,4 +1,4 @@
-package com.settings.ion.mylibrary;
+package com.settings.ion.mylibrary;//package com.settings.ion.mylibrary;
 
 //class SubMenuActivity extends Activity {
 //

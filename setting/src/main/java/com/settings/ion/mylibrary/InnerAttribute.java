@@ -1,7 +1,7 @@
 package com.settings.ion.mylibrary;
 
-public class InnerAttribute {
-    public SettingField settingField;
+class InnerAttribute {
+    SettingField settingField;
     public String fieldName;
     public Class aClass;
 }

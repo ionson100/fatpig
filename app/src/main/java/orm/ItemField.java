@@ -8,5 +8,7 @@ class ItemField {
     public String columnName;
     public String fieldName;
     public Type type;
+    public boolean isUserType;
+    public Class aClassUserType;
 }
 

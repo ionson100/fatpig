@@ -1,6 +1,6 @@
 package com.settings.ion.mylibrary;
 
-public enum ShowTypes {
+enum ShowTypes {
     Activity,
     Dialog
 }

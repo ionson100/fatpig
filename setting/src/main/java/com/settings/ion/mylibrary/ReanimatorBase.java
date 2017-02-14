@@ -20,12 +20,12 @@ public class ReanimatorBase extends ContextWrapper {
     }
 
 
-    public static void save(Class aClass){
+    public  static void save(Class aClass){
         innerGetSave(aClass, ReanimatorBase.ActionBase.save);
     }
 
-    @TargetApi(Build.VERSION_CODES.KITKAT)
-    private static synchronized Object innerGetSave(Class aClass, ReanimatorBase.ActionBase actionBase){
+    @TargetApi(Build.VERSION_CODES.KITKAT)//
+    private static   Object innerGetSave(Class aClass, ReanimatorBase.ActionBase actionBase){//synchronized
 
         Object res=null;
         if(actionBase== ReanimatorBase.ActionBase.get){
@@ -39,7 +39,7 @@ public class ReanimatorBase extends ContextWrapper {
                     }
                 }
                 res= o;
-            } else {
+            } else  {
                 Object o =  SqliteStorage.getObject(aClass);
                 if(o ==null){
                     try {
@@ -64,6 +64,10 @@ public class ReanimatorBase extends ContextWrapper {
                 }
                 SqliteStorage.saveObject(o,aClass);
         }
+
+        if(actionBase== ActionBase.close){
+            SqliteStorage.close();
+        }
         return  res;
     }
 
@@ -83,7 +87,11 @@ public class ReanimatorBase extends ContextWrapper {
         return   reanimator.getApplicationContext();
     }
 
+    public static void close() {
+        innerGetSave(null, ActionBase.close);
+    }
+
     private enum ActionBase{
-        get,save
+        get, close, save
     }
 }

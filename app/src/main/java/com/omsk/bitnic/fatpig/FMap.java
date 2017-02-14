@@ -1,47 +1,49 @@
 package com.omsk.bitnic.fatpig;
 
 
+import android.annotation.TargetApi;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.CoreProtocolPNames;
-import org.osmdroid.DefaultResourceProxyImpl;
-import org.osmdroid.ResourceProxy;
-import org.osmdroid.http.HttpClientFactory;
-import org.osmdroid.http.IHttpClientFactory;
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Overlay;
 import org.osmdroid.views.overlay.PathOverlay;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import Model.GeoData;
 import orm.Configure;
 
+import static com.omsk.bitnic.fatpig.R.id.mapView;
 
-public class FMap extends Fragment {
+
+public class FMap extends Fragment implements ViewTreeObserver.OnGlobalLayoutListener {
 
 
-    private Settings mSettings;
     private MapView mMapView;
-    private MyItemizedOverlay myItemizedOverlay = null;
-    private List<GeoData> mGeoDatas = new ArrayList<>();
+
+
     private MyBroadcastReceiver broadcastReceiver;
+    private List<GeoPoint> pointList;
+    private PathOverlay myPath;
+    private boolean[] run = {true};
+    private ViewTreeObserver vto;
+    private List<GeoData> mGeoDatas=new ArrayList<>();
 
     public FMap() {
     }
@@ -50,77 +52,38 @@ public class FMap extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mSettings = Settings.getSettings();
-
-
         View view = inflater.inflate(R.layout.fragment_fmap, container, false);
-
-
         mMapView = (MapView) view.findViewById(R.id.mapview);
         mMapView.setBuiltInZoomControls(true);
         mMapView.setClickable(true);
-        Drawable marker = getResources().getDrawable(R.drawable.ic_point2);
-
-        int markerWidth = marker.getIntrinsicWidth();
-        int markerHeight = marker.getIntrinsicHeight();
-        marker.setBounds(0, markerHeight, markerWidth, 0);
-        ResourceProxy resourceProxy = new DefaultResourceProxyImpl(getActivity().getApplicationContext());
-        myItemizedOverlay = new MyItemizedOverlay(marker, resourceProxy);
-
-
-        // mMapView.setBuiltInZoomControls(false);
-
         mMapView.setBuiltInZoomControls(true);
-
-
         mMapView.setMultiTouchControls(true);
-
         mMapView.setClickable(true);
-        HttpClientFactory.setFactoryInstance(new IHttpClientFactory() {
-            @Override
-            public org.apache.http.client.HttpClient createHttpClient() {
-                final DefaultHttpClient client = new DefaultHttpClient();
-                client.getParams().setParameter(CoreProtocolPNames.USER_AGENT, "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36");
-                return client;
-            }
-        });
-
         mMapView.setTileSource(TileSourceFactory.MAPNIK);
         mMapView.getController().setZoom(16);
-        mMapView.getOverlays().add(myItemizedOverlay);
-
 
         if (Settings.getSettings().getSateSystem() == StateSystem.MAP) {
             if (TrackSettings.getCore().statusTrack.equals("1")) {
-                mGeoDatas = Configure.getSession().getList(GeoData.class, " track_name = " + TrackSettings.getCore().trackName);
-                List<GeoPoint> pointList = new ArrayList<>(mGeoDatas.size());
+                 mGeoDatas = Configure.getSession().getList(GeoData.class, " track_name = " + TrackSettings.getCore().trackName);
+                pointList = new ArrayList<>(mGeoDatas.size());
                 for (GeoData gd : mGeoDatas) {
-                    pointList.add(new GeoPoint(gd.latitude, gd.longitude));
+                    double d1 = gd.latitude, d2 = gd.longitude;
+                    GeoPoint geoPoint = new GeoPoint(d1, d2);
+                    pointList.add(geoPoint);
                 }
-                for (int i = 0; i < pointList.size(); i++) {
-                    myItemizedOverlay.addItem(pointList.get(i), "");
+                myPath = new PathOverlay(Color.RED, getActivity());
+                for (GeoPoint point : pointList) {
+                    myPath.addPoint(point);
                 }
-                if (pointList.size() > 0) {
-                    mMapView.getController().animateTo(pointList.get(0));
-                }
-                mMapView.invalidate();
-            } else {
-                GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
-                myItemizedOverlay.addItem(myPoint1, "myPoint1");
-                mMapView.getController().animateTo(myPoint1);
-                mMapView.invalidate();
+                mMapView.getOverlays().add(myPath);
+
             }
         } else {
-            if (Settings.getSettings().trackshow == null) {
-                GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
-                myItemizedOverlay.addItem(myPoint1, "myPoint1");
-                mMapView.getController().animateTo(myPoint1);
-                mMapView.invalidate();
-            } else {
-                mGeoDatas = Settings.getSettings().trackshow.list;
+
+             mGeoDatas = Settings.getSettings().trackshow.list;
                 if (mGeoDatas != null && mGeoDatas.size() > 0) {
-                    PathOverlay myPath = new PathOverlay(Color.RED, getActivity());
-                    List<GeoPoint> pointList = new ArrayList<>(mGeoDatas.size());
+                    myPath = new PathOverlay(Color.RED, getActivity());
+                    pointList = new ArrayList<>(mGeoDatas.size());
                     for (GeoData geoData : mGeoDatas) {
                         pointList.add(new GeoPoint(geoData.latitude, geoData.longitude));
                     }
@@ -131,21 +94,13 @@ public class FMap extends Fragment {
                     if (pointList.size() > 0) {
                         mMapView.getController().animateTo(pointList.get(0));
                     }
-                    mMapView.invalidate();
-                } else {
-                    GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
-                    myItemizedOverlay.addItem(myPoint1, "myPoint1");
-                    mMapView.getController().animateTo(myPoint1);
-                    mMapView.invalidate();
-                }
-            }
 
+                }
 
         }
 
-
-/////////////////////////////////////////////////////////////центрирование в центре экрана
-        final boolean[] run = {true};
+        mMapView.invalidate();
+///////////////////////////////////////////////////////////центрирование в центре экрана
 
         mMapView.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -155,73 +110,119 @@ public class FMap extends Fragment {
             }
         });
 
-        ViewTreeObserver vto = view.getViewTreeObserver();
-        vto.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                if (run[0]) {
-                    GeoPoint myPoint1 = new GeoPoint(56.819715, 60.640623);
-
-                }
-            }
-        });
-
+        vto = view.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(this);
+        /////////////////////////////
         initBrodcast();
-
         return view;
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        if (run[0]) {
+            if (pointList != null && pointList.size() > 0) {
+                mMapView.getController().setCenter(pointList.get(0));
+            }
+
+        }
     }
 
     private void initBrodcast() {
 
         if (TrackSettings.getCore().statusTrack.equals("1") && Settings.getSettings().getSateSystem() == StateSystem.MAP) {
             if (!Utils.isMyServiceRunning(MyServiceGeo.class, getActivity())) {
-               Utils.start();
+                Utils.start();
                 getActivity().startService(new Intent(getContext(), MyServiceGeo.class));
             }
-
             broadcastReceiver = new MyBroadcastReceiver();
             getActivity().registerReceiver(broadcastReceiver, new IntentFilter(MainActivity.BROADCAST_ACTION));
         }
 
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public void onDestroy() {
         super.onDestroy();
+        try {
+            if (broadcastReceiver != null) {
+                getActivity().unregisterReceiver(broadcastReceiver);
+            }
+            mMapView.getOverlays().remove(myPath);
+            mMapView.getTileProvider().clearTileCache();
+//            mMapView = null;
+            if(vto!=null&&vto.isAlive()){
+                vto.removeOnGlobalLayoutListener(this);
 
-        mMapView.getOverlays().remove(myItemizedOverlay);
-        mMapView.getTileProvider().clearTileCache();
-        myItemizedOverlay = null;
-        mMapView = null;
-        if (broadcastReceiver != null) {
-            getActivity().unregisterReceiver(broadcastReceiver);
+            }
+            vto=null;
+
+
+        } catch (Exception ignored) {
+
+        } finally {
+            System.gc();
         }
 
-        System.gc();
+
     }
+
 
     public class MyBroadcastReceiver extends BroadcastReceiver {
 
-
         @Override
         public void onReceive(Context context, Intent intent) {
+//            double langitude = intent.getDoubleExtra(MainActivity.PARAM_LATITUDE, 0);
+//            double longitude = intent.getDoubleExtra(MainActivity.PARAM_LONGITUDE, 0);
+//            GeoData  geoData=new GeoData();
+//            geoData.altitude=langitude;
+//            geoData.longitude=longitude;
+//            mGeoDatas.add(geoData);
+//
+////            int dynamicOverlayIndex = mMapView.getOverlays().size();
+////            mMapView.getOverlays().remove(dynamicOverlayIndex-1);
+//            mMapView.getOverlays().remove(myPath);
+//           // mMapView.invalidate();
+//            mMapView.getOverlayManager().clear();
+//            mMapView.invalidate();
+//
+//            pointList = new ArrayList<>(mGeoDatas.size());
+//            for (GeoData gd : mGeoDatas) {
+//                double d1 = gd.latitude, d2 = gd.longitude;
+//                GeoPoint geoPoint = new GeoPoint(d1, d2);
+//                pointList.add(geoPoint);
+//            }
+//            myPath = new PathOverlay(Color.RED, getActivity());
+//            for (GeoPoint point : pointList) {
+//                myPath.addPoint(point);
+//            }
+//
+//            List<Overlay> getOver=mMapView.getOverlays();
+//
+//            mMapView.getOverlays().add(myPath);
+//
+//
+//
+//            mMapView.invalidate();
 
 
-            double langitude = intent.getDoubleExtra(MainActivity.PARAM_LATITUDE, 0);
-            double longitude = intent.getDoubleExtra(MainActivity.PARAM_LONGITUDE, 0);
-            long date = intent.getLongExtra(MainActivity.PARAM_DATE, 0);
-            GeoData geoData = new GeoData();
-            geoData.latitude = langitude;
-            geoData.longitude = longitude;
-            geoData.date = date;
-            mGeoDatas.add(geoData);
-            GeoPoint point = new GeoPoint(langitude, longitude);
-            myItemizedOverlay.addItem(point, "");
+//            GeoPoint point = new GeoPoint(langitude, longitude);
+//            PathOverlay dds=new PathOverlay(Color.RED, getActivity());
+//            dds.addPoint(point);
+//            mMapView.getOverlays().clear();
+//            mMapView.invalidate();
+//            myPath.addPoint(point);
+//            myPath. clearPath();
+//            mMapView.getOverlays().add(myPath);
 
-            mMapView.getController().animateTo(point);
-            mMapView.invalidate();
-            Log.d("ZZZZZZZZZZZZZZZZ", String.valueOf(longitude));
-            Log.d("ZZZZZZZZZZZZZZZZ", String.valueOf(langitude));
+
+
+
+
+
+
+
+
         }
     }
 }

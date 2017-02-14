@@ -9,9 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 class DataBaseHelper extends SQLiteOpenHelper {
 
 
-    private static final SQLiteDatabase myDataBase = null;
+   // private static final SQLiteDatabase myDataBase = null;
 
-    public DataBaseHelper(Context context, String databasePath) {
+    DataBaseHelper(Context context, String databasePath) {
         super(context, databasePath, null, 1);
     }
 
@@ -34,4 +34,5 @@ class DataBaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
 }

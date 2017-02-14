@@ -14,7 +14,7 @@ import java.io.OutputStream;
 class DataBaseHelper extends SQLiteOpenHelper {
 
 
-    private static final SQLiteDatabase myDataBase = null;
+    // private static final SQLiteDatabase myDataBase = null;
     private static String DB_PATH = "";
     private static Context mContext;
 
@@ -83,16 +83,6 @@ class DataBaseHelper extends SQLiteOpenHelper {
         return this.getWritableDatabase();
     }
 
-    @Override
-    public synchronized void close() {
-        if (myDataBase != null)
-            myDataBase.close();
-        super.close();
-    }
-
-    public void Close() {
-        close();
-    }
 
     @Override
     public void onCreate(SQLiteDatabase db) {

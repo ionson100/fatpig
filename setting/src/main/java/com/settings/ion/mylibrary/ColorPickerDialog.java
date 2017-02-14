@@ -19,7 +19,7 @@ class ColorPickerDialog extends Dialog {
     private  int mDefaultColor;
     private final String mKey;
 
-    public ColorPickerDialog(Context context, OnColorChangedListener listener, int initialColor, InnerAttribute attribute, int mDefaultColor) {
+    ColorPickerDialog(Context context, OnColorChangedListener listener, int initialColor, InnerAttribute attribute, int mDefaultColor) {
         super(context);
 
         this.attribute = attribute;
@@ -47,7 +47,7 @@ class ColorPickerDialog extends Dialog {
         getWindow().setBackgroundDrawableResource(R.drawable.dialog_style);
     }
 
-    public interface OnColorChangedListener {
+    interface OnColorChangedListener {
         void colorChanged(String key, int color);
     }
 

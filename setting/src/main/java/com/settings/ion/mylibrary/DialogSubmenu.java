@@ -8,9 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-/**
- *
- */
+
 public class DialogSubmenu extends DialogFragment {
 
     private InnerAttribute innerAttribute;
@@ -27,7 +25,6 @@ public class DialogSubmenu extends DialogFragment {
     }
 
     public void showDialog(Object host, InnerAttribute attribute, FragmentManager manager) {
-        Object hostObject = host;
         innerAttribute = attribute;
         show(manager, "");
     }
